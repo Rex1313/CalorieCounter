@@ -6,17 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.example.caloriecounter.database.Entry
+import android.content.ClipData.Item
 
-class FoodListAdapter(private val context: Context,
-                      private val dataSource: ArrayList<Entry>) : BaseAdapter() {
+
+class FoodListAdapter(
+     val context: Context,
+     val entries: ArrayList<Entry>
+) : BaseAdapter() {
 
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+            val foodCard = inflater.inflate(R.layout.food_card, parent, false)
+
+            return foodCard;
     }
 
-    override fun getItem(position: Int): Any {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getItem(position: Int): Entry? {
+        return entries.get(position)
     }
 
     override fun getItemId(position: Int): Long {
@@ -24,9 +31,9 @@ class FoodListAdapter(private val context: Context,
     }
 
     override fun getCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return entries.count()
     }
 
-    private val inflater: LayoutInflater
-            = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    private val inflater: LayoutInflater =
+        context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 }
