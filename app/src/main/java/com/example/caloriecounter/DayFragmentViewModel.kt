@@ -8,13 +8,23 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
-class DayFragmentViewModel : BaseViewModel() {
+class DayFragmentViewModel(val date:String) : BaseViewModel() {
 
     val entriesLiveData = MutableLiveData<List<Entry>>()
 
+    init {
+        runBlocking {
+            GlobalScope.async {
+                repository.getEntriesForDate(date)
+            }.await().let {
+                entriesLiveData.value = it
+            }
+
+        }
+    }
 
     //Date format is YYYY-mm-DD
-    fun getEntriesForDate(date: String) {
+    fun getEntries(date: String) {
         runBlocking {
             GlobalScope.async {
                 repository.getEntriesForDate(date)
