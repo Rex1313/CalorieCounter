@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
 class DayFragment : Fragment() {
@@ -28,6 +29,13 @@ class DayFragment : Fragment() {
     // You can use this for accessing the views they will be iniflated here
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        fragmentViewModel.entriesLiveData.observe(this, Observer {
+//                entries->
+//            val adapter = FoodListAdapter(this, entries)
+//            listView.adapter = adapter
+//        })
+//        val adapter = FoodListAdapter(this, entries)
+//        listView.adapter = adapter
     }
 
     companion object {
