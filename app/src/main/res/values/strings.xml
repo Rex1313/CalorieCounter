@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">CalorieCounter</string>
+
+    <string name="day">Today</string>
+    <string name="textDayCalculation">Limit- eaten calories = left today</string>
+    <string name="textDayLabelName">Name</string>
+    <string name="textDayLabelCalories">Calories</string>
+    <string name="cardItemName">bread</string>
+    <string name="cardItemCalories">calories</string>
+
+
 </resources>
