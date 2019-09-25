@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/card_view"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/card_view_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cardItemName"
+        android:gravity="start"
+        android:padding="@dimen/spacerMedium"
+        android:textSize="20sp"/>
+    <TextView
+        android:id="@+id/card_view_calories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cardItemCalories"
+        android:gravity="end"
+        android:padding="@dimen/spacerMedium"
+        android:textSize="20sp"/>
+
+</com.google.android.material.card.MaterialCardView>

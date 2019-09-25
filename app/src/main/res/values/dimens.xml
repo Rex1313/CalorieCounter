@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mtrl_card_spacing">10dp</dimen>
+    <dimen name="spacerMedium">20dp</dimen>
+    <dimen name="spacerSmall">10dp</dimen>
+    <dimen name="textMedium">20sp</dimen>
+    <dimen name="spacerLarge">30dp</dimen>
+
+</resources>
