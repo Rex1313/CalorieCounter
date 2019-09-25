@@ -6,6 +6,7 @@ import androidx.room.Room
 import com.example.caloriecounter.database.CalorieCounterDatabase
 import com.example.caloriecounter.database.DailySetting
 import com.example.caloriecounter.database.DatabaseConstants
+import com.example.caloriecounter.database.Entry
 
 object CalorieCounterRepository {
 
@@ -31,4 +32,11 @@ object CalorieCounterRepository {
     fun getDailySetting(date: String): DailySetting? {
         return db?.dailySettingsDao()?.get(date)?.first()
     }
+
+    // Date needs to be in format YYYY-mm-DD
+    fun getEntriesForDate(date:String):List<Entry> {
+        return db?.entriesDao()?.get(date)?: mutableListOf()
+    }
+
+
 }

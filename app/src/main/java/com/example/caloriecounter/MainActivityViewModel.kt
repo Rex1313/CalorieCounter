@@ -4,6 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.caloriecounter.base.BaseViewModel
 import com.example.caloriecounter.database.DailySetting
 import com.example.caloriecounter.database.Entry
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 
 class MainActivityViewModel : BaseViewModel() {
 
@@ -11,17 +14,17 @@ class MainActivityViewModel : BaseViewModel() {
     val entriesLiveData = MutableLiveData<List<Entry>>()
 
 
-    fun getData() {
-        val dailySettings = repository.getDailySetting("19998-12-12")
-        dailySettingsLiveData.value = dailySettings
+    //Date format is YYYY-mm-DD
+    fun getEntriesForDate(date: String) {
+        runBlocking {
+            GlobalScope.async {
+                repository.getEntriesForDate(date)
+            }.await().let {
+                entriesLiveData.value = it
+            }
+
+        }
     }
 
 
-    fun getEntries() {
-        val entries = mutableListOf(
-            Entry(null, 100f, "tofu"),
-            Entry(null, 200f, "sausage")
-        )
-        entriesLiveData.value = entries
-    }
 }

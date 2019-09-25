@@ -9,4 +9,5 @@ import androidx.room.RoomDatabase
 )
 abstract class CalorieCounterDatabase : RoomDatabase() {
     abstract fun dailySettingsDao(): DailySettingsDao
+    abstract fun entriesDao(): EntryDao
 }

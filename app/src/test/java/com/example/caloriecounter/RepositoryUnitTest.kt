@@ -109,7 +109,7 @@ class RepositoryUnitTest {
         runBlocking {
             GlobalScope.async {
                 repository.db?.dailySettingsDao()?.insertAll(testData)
-                // try to retrieve dailySetting for 13 01 2018 expected result from 15 01 2018
+                // try to retrieve dailySetting for 13 01 2018 expected result from 12 01 2018
                 val dailySetting = repository.getDailySetting("2018-02-12")
                 dailySetting
 

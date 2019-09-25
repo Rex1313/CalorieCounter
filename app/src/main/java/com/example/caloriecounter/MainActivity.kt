@@ -3,7 +3,7 @@ package com.example.caloriecounter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.lifecycle.ViewModelProviders
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,17 +12,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        viewModel = MainActivityViewModel()
-
-            viewModel.getData()
-            viewModel.dailySettingsLiveData.observe(this, Observer {
-            dailySetting->
-                text2.setText(dailySetting.caloriesLimit)
-
-        })
+        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
 
         viewModel.entriesLiveData.observe(this, Observer {
-//            val entryAdapter = EntryAdapter(it, context)
+            //            val entryAdapter = EntryAdapter(it, context)
 //            list.setAdapter(entryAdapter)
         })
 
