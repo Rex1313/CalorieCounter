@@ -7,6 +7,7 @@ import com.example.caloriecounter.database.CalorieCounterDatabase
 import com.example.caloriecounter.database.DailySetting
 import com.example.caloriecounter.database.DatabaseConstants
 import com.example.caloriecounter.database.Entry
+import kotlinx.coroutines.*
 
 object CalorieCounterRepository {
 
@@ -29,13 +30,32 @@ object CalorieCounterRepository {
         db?.dailySettingsDao()?.insert(dailySetting)
     }
 
-    fun getDailySetting(date: String): DailySetting? {
-        return db?.dailySettingsDao()?.get(date)?.first()
+   suspend fun getDailySetting(date: String): DailySetting? = withContext(Dispatchers.IO){
+       kotlinx.coroutines.delay(2000)
+        return@withContext db?.dailySettingsDao()?.get(date)?.firstOrNull()?: DailySetting("1920-12-12", 1200)
     }
 
     // Date needs to be in format YYYY-mm-DD
-    fun getEntriesForDate(date:String):List<Entry> {
-        return db?.entriesDao()?.get(date)?: mutableListOf()
+   suspend fun getEntriesForDate(date:String):List<Entry> = withContext(Dispatchers.IO) {
+            kotlinx.coroutines.delay(10000)
+          return@withContext  db?.entriesDao()?.get(date)?: mutableListOf()
+    }
+
+    fun addSomeEntries() {
+        runBlocking {
+            GlobalScope.async {
+                db?.entriesDao()?.insertAll(mutableListOf(Entry(null, "1220-12-12", 1000F),
+                    Entry(null, "1720-11-14", 1500F, "Mamas"),
+                    Entry(null, "1920-12-12", 1600F, "Bread")))
+
+                db?.dailySettingsDao()?.insert(DailySetting("2019-09-26",1450))
+            }
+        }
+    }
+    fun addEntry(entry:Entry){
+        GlobalScope.async {
+            db?.entriesDao()?.insert(entry)
+        }
     }
 
 

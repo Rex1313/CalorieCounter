@@ -6,4 +6,5 @@ import com.example.caloriecounter.repository.CalorieCounterRepository
 open class BaseViewModel: ViewModel() {
     val repository = CalorieCounterRepository
 
+
 }

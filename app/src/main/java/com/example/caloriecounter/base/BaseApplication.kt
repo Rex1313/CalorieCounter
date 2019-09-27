@@ -8,5 +8,6 @@ class BaseApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         CalorieCounterRepository.initDatabase(this)
+        CalorieCounterRepository.addSomeEntries()
     }
 }
