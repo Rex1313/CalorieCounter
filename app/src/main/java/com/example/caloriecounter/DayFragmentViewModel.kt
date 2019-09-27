@@ -36,9 +36,15 @@ class DayFragmentViewModel() : BaseViewModel() {
             )
             withContext(Dispatchers.Main) {
                 println("eaten calories $eatenCalories , left calories $leftCalories ${Thread.currentThread().name}")
+                uiModelLiveData.value = DayScreenUIModel(
+                    entries,
+                    setting!!.caloriesLimit,
+                    eatenCalories,
+                    leftCalories
+                )
             }
         }
-    
+
 
     //Date format is YYYY-mm-DD
     suspend fun getEntries(date: String) {

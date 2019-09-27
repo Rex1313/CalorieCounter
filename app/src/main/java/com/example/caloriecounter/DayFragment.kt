@@ -42,13 +42,14 @@ class DayFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         println("DayFragment: Get Entries taken from db again...")
         GlobalScope.launch {
-            fragmentViewModel.getEntries("1920-12-12")
             fragmentViewModel.getData("1920-12-12")
         }
-        fragmentViewModel.entriesLiveData.observe(this, Observer {
-                entries->
-            val adapter = FoodListAdapter(activity?.baseContext , entries)
+
+        fragmentViewModel.uiModelLiveData.observe(this, Observer { uiModel ->
+            val adapter = FoodListAdapter(activity?.baseContext, uiModel.entries)
             list_view_food.adapter = adapter
+            text_view_calculation.text =
+                uiModel.limit.toInt().toString() + '-' + uiModel.eatenCalories.toInt().toString() + '=' + uiModel.leftCalories.toInt().toString()
         })
     }
 
