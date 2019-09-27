@@ -8,5 +8,11 @@
     <string name="cardItemName">bread</string>
     <string name="cardItemCalories">calories</string>
 
+    <string name="popupAddNew">Add new meal</string>
+    <string name="popupName">Name (optional)</string>
+    <string name="popupCalories">Calories</string>
+    <string name="popupBarcode">Barcode scan (optional)</string>
+    <string name="cancel">cancel</string>
+    <string name="add">add</string>
 
 </resources>
