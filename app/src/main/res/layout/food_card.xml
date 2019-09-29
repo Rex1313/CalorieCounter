@@ -11,17 +11,17 @@
         android:id="@+id/card_view_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/cardItemName"
+        android:text="@string/card_item_name"
         android:gravity="start"
-        android:padding="@dimen/spacerMedium"
+        android:padding="@dimen/spacer_medium"
         android:textSize="20sp"/>
     <TextView
         android:id="@+id/card_view_calories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/cardItemCalories"
+        android:text="@string/card_item_calories"
         android:gravity="end"
-        android:padding="@dimen/spacerMedium"
+        android:padding="@dimen/spacer_medium"
         android:textSize="20sp"/>
 
 </com.google.android.material.card.MaterialCardView>

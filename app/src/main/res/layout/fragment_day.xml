@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/spacerSmall"
-    android:paddingStart="@dimen/spacerLarge"
-    android:paddingEnd="@dimen/spacerLarge"
+    android:padding="@dimen/spacer_small"
+    android:paddingStart="@dimen/spacer_large"
+    android:paddingEnd="@dimen/spacer_large"
 
     tools:context=".DayFragment">
 
@@ -16,10 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:paddingTop="@dimen/spacerSmall"
-        android:paddingBottom="@dimen/spacerMedium"
+        android:paddingTop="@dimen/spacer_small"
+        android:paddingBottom="@dimen/spacer_medium"
         android:text="@string/day"
-        android:textSize="@dimen/textMedium" />
+        android:textSize="@dimen/text_medium" />
 
     <TextView
         android:id="@+id/text_view_calculation"
@@ -28,9 +28,9 @@
         android:layout_below='@id/text_view_day'
         android:background="@drawable/text_view_lines"
         android:gravity="center_horizontal"
-        android:paddingTop="@dimen/spacerMedium"
-        android:paddingBottom="@dimen/spacerMedium"
-        android:text="@string/textDayCalculation"
+        android:paddingTop="@dimen/spacer_medium"
+        android:paddingBottom="@dimen/spacer_medium"
+        android:text="@string/text_day_calculation"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -40,9 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_below='@id/text_view_calculation'
         android:gravity="start"
-        android:paddingTop="@dimen/spacerSmall"
-        android:paddingBottom="@dimen/spacerSmall"
-        android:text="@string/textDayLabelName"
+        android:paddingTop="@dimen/spacer_small"
+        android:paddingBottom="@dimen/spacer_small"
+        android:text="@string/text_day_label_name"
         android:textSize="16sp" />
 
     <TextView
@@ -51,9 +51,9 @@
         android:layout_height="wrap_content"
         android:layout_below='@id/text_view_calculation'
         android:gravity="end"
-        android:paddingTop="@dimen/spacerSmall"
-        android:paddingBottom="@dimen/spacerSmall"
-        android:text="@string/textDayLabelCalories"
+        android:paddingTop="@dimen/spacer_small"
+        android:paddingBottom="@dimen/spacer_small"
+        android:text="@string/text_day_label_calories"
         android:textSize="16sp" />
 
     <ListView
@@ -64,7 +64,7 @@
 
         />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floating_action_button"
+        android:id="@+id/floating_action_button_add_meal"
         style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/spacerSmall"
-    android:paddingStart="@dimen/spacerLarge"
-    android:paddingEnd="@dimen/spacerLarge"
-
-    tools:context=".NewEntryDialog">
+    android:layout_height="@dimen/new_entry_dialog_height">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/new_entry_dialog_height"
+    android:padding="@dimen/spacer_small"
+    android:paddingStart="@dimen/spacer_large"
+    android:paddingEnd="@dimen/spacer_large"
+    tools:context=".NewEntryDialogFragment">
 
     <TextView
         android:id="@+id/text_view_add_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:paddingTop="@dimen/spacerSmall"
-        android:paddingBottom="@dimen/spacerMedium"
-        android:text="@string/popupAddNew"
-        android:textSize="@dimen/textMedium" />
+        android:paddingTop="@dimen/spacer_small"
+        android:paddingBottom="@dimen/spacer_medium"
+        android:text="@string/popup_add_new"
+        android:textSize="@dimen/text_medium" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_calories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/popupCalories"
-        app:endIconMode="clear_text">
+        android:layout_below='@id/text_view_add_new'
+        android:hint="@string/popup_calories"
+
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/text_input_calories"
@@ -34,10 +39,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/popupName"
-        app:endIconMode="clear_text">
+        android:layout_below='@id/text_input_layout_calories'
+        android:hint="@string/popup_name"
+
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/text_input_name"
@@ -46,16 +54,27 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/button_cancel"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/cancel" />
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/button_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add" />
+        <Button
+            android:id="@+id/button_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel" />
+
+        <Button
+            android:id="@+id/button_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/add" />
+    </LinearLayout>
+
 
 </RelativeLayout>
+</LinearLayout>

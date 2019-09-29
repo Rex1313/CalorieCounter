@@ -32,6 +32,7 @@ class DayFragment : Fragment() {
 
         fragmentViewModel =
             ViewModelProviders.of(this).get(DayFragmentViewModel::class.java)
+        fragmentViewModel.dayDate="1220-12-12";
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_day, container, false)
     }
@@ -42,7 +43,7 @@ class DayFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         println("DayFragment: Get Entries taken from db again...")
         GlobalScope.launch {
-            fragmentViewModel.getData("1920-12-12")
+            fragmentViewModel.getData()
         }
 
         fragmentViewModel.uiModelLiveData.observe(this, Observer { uiModel ->
@@ -51,6 +52,7 @@ class DayFragment : Fragment() {
             text_view_calculation.text =
                 uiModel.limit.toInt().toString() + '-' + uiModel.eatenCalories.toInt().toString() + '=' + uiModel.leftCalories.toInt().toString()
         })
+        floating_action_button_add_meal.setOnClickListener { NewEntryDialogFragment.newInstance().show(childFragmentManager, "NewEntry") }
     }
 
     companion object {

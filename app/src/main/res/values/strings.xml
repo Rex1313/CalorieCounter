@@ -2,16 +2,16 @@
     <string name="app_name">CalorieCounter</string>
 
     <string name="day">Today</string>
-    <string name="textDayCalculation">Limit- eaten calories = left today</string>
-    <string name="textDayLabelName">Name</string>
-    <string name="textDayLabelCalories">Calories</string>
-    <string name="cardItemName">bread</string>
-    <string name="cardItemCalories">calories</string>
+    <string name="text_day_calculation">Limit- eaten calories = left today</string>
+    <string name="text_day_label_name">Name</string>
+    <string name="text_day_label_calories">Calories</string>
+    <string name="card_item_name">bread</string>
+    <string name="card_item_calories">calories</string>
 
-    <string name="popupAddNew">Add new meal</string>
-    <string name="popupName">Name (optional)</string>
-    <string name="popupCalories">Calories</string>
-    <string name="popupBarcode">Barcode scan (optional)</string>
+    <string name="popup_add_new">Add new meal</string>
+    <string name="popup_name">Name (optional)</string>
+    <string name="popup_calories">Calories</string>
+    <string name="popup_barcode">Barcode scan (optional)</string>
     <string name="cancel">cancel</string>
     <string name="add">add</string>
 

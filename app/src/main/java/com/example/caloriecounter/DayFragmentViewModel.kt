@@ -2,7 +2,6 @@ package com.example.caloriecounter
 
 import androidx.lifecycle.MutableLiveData
 import com.example.caloriecounter.base.BaseViewModel
-import com.example.caloriecounter.database.DailySetting
 import com.example.caloriecounter.database.Entry
 import com.example.caloriecounter.models.DayScreenUIModel
 import com.example.caloriecounter.utils.CalculationUtils
@@ -12,6 +11,8 @@ class DayFragmentViewModel() : BaseViewModel() {
 
     val entriesLiveData = MutableLiveData<List<Entry>>()
     val uiModelLiveData = MutableLiveData<DayScreenUIModel>()
+    val wartosc = "Hello World"
+    lateinit var dayDate: String
 //
 //    init {
 //        runBlocking {
@@ -25,10 +26,11 @@ class DayFragmentViewModel() : BaseViewModel() {
 //    }
 
 
-    suspend fun getData(date: String) =
+    suspend fun getData() =
         withContext(Dispatchers.IO) {
-            val entries = repository.getEntriesForDate(date)
-            val setting = repository.getDailySetting(date)
+      println("daydate $dayDate")
+            val entries = repository.getEntriesForDate(dayDate)
+            val setting = repository.getDailySetting(dayDate)
             val eatenCalories = CalculationUtils.calculateEatenCalories(entries = entries)
             val leftCalories = CalculationUtils.calculateLeftCalories(
                 entries = entries,
@@ -47,7 +49,7 @@ class DayFragmentViewModel() : BaseViewModel() {
 
 
     //Date format is YYYY-mm-DD
-    suspend fun getEntries(date: String) {
+    private suspend fun getEntries(date: String) {
         val entries = GlobalScope.async(Dispatchers.IO) { repository.getEntriesForDate(date) }
         withContext(Dispatchers.Main) {
             entriesLiveData.value = entries.await()
@@ -55,5 +57,14 @@ class DayFragmentViewModel() : BaseViewModel() {
 
     }
 
+    fun addNewEntry(inputCalories: String, inputName: String) {
+        val calories = inputCalories.toFloat()
+        val name = if (inputName.isEmpty()) null else {
+            inputName
+        }
+        repository.addEntry(Entry(null, dayDate, calories, name))
+    }
+
+    suspend fun refreshData() = getData()
 
 }

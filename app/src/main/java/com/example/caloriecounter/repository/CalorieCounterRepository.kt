@@ -31,13 +31,11 @@ object CalorieCounterRepository {
     }
 
    suspend fun getDailySetting(date: String): DailySetting? = withContext(Dispatchers.IO){
-       kotlinx.coroutines.delay(2000)
         return@withContext db?.dailySettingsDao()?.get(date)?.firstOrNull()?: DailySetting("1920-12-12", 1200)
     }
 
     // Date needs to be in format YYYY-mm-DD
    suspend fun getEntriesForDate(date:String):List<Entry> = withContext(Dispatchers.IO) {
-            kotlinx.coroutines.delay(10000)
           return@withContext  db?.entriesDao()?.get(date)?: mutableListOf()
     }
 
