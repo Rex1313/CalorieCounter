@@ -7,4 +7,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
+fun Double.format(digits: Int) = java.lang.String.format("%.${digits}f", this)
+
+fun Float.format(digits: Int) = java.lang.String.format("%.${digits}f", this)
 

@@ -50,10 +50,9 @@ object CalorieCounterRepository {
             }
         }
     }
-    fun addEntry(entry:Entry){
-        GlobalScope.async {
+   suspend fun addEntry(entry:Entry)= withContext(Dispatchers.IO){
             db?.entriesDao()?.insert(entry)
-        }
+
     }
 
 

@@ -8,11 +8,12 @@ import android.widget.BaseAdapter
 import com.example.caloriecounter.database.Entry
 import android.content.ClipData.Item
 import android.widget.TextView
+import com.example.caloriecounter.models.UIEntry
 
 
 class FoodListAdapter(
     val context: Context?,
-    val entries: List<Entry>
+    val entries: List<UIEntry>
 ) : BaseAdapter() {
 
 
@@ -27,19 +28,19 @@ class FoodListAdapter(
     }
 
 
-    fun bind(itemView: View?, entry: Entry) {
+    fun bind(itemView: View?, entry: UIEntry) {
         itemView?.let {
-            it.findViewById<TextView>(R.id.card_view_name).text = entry.entryName
-            it.findViewById<TextView>(R.id.card_view_calories).text = entry.entryCalories.toString()
+            it.findViewById<TextView>(R.id.card_view_name).text = entry.name
+            it.findViewById<TextView>(R.id.card_view_calories).text = entry.calories
         }
     }
 
-    override fun getItem(position: Int): Entry? {
+    override fun getItem(position: Int): UIEntry? {
         return entries.get(position)
     }
 
     override fun getItemId(position: Int): Long {
-        return entries.get(position).id?.toLong()?:0
+        return position.toLong()
     }
 
     override fun getCount(): Int {

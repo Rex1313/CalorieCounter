@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.new_entry_fragment.*
 import kotlinx.coroutines.GlobalScope
@@ -25,7 +23,8 @@ class NewEntryDialogFragment() : DialogFragment() {
 
         parentFragment?.let {
             fragmentViewModel = ViewModelProviders.of(
-                it).get(DayFragmentViewModel::class.java)
+                it
+            ).get(DayFragmentViewModel::class.java)
         }
         return inflater.inflate(R.layout.new_entry_fragment, container, false)
 
@@ -35,14 +34,18 @@ class NewEntryDialogFragment() : DialogFragment() {
     // You can use this for accessing the views they will be iniflated here
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-isCancelable=false
+        isCancelable = false
 
         button_cancel.setOnClickListener {
             dismiss()
         }
         button_add.setOnClickListener {
-            fragmentViewModel.addNewEntry(text_input_calories.text.toString(),text_input_name.text.toString())
+
             GlobalScope.launch {
+                fragmentViewModel.addNewEntry(
+                    text_input_calories.text.toString(),
+                    text_input_name.text.toString()
+                )
                 fragmentViewModel.refreshData()
             }
             dismiss()
