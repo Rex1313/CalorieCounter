@@ -14,5 +14,6 @@
     <string name="popup_barcode">Barcode scan (optional)</string>
     <string name="cancel">cancel</string>
     <string name="add">add</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
