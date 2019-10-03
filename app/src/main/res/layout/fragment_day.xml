@@ -7,6 +7,7 @@
     android:padding="@dimen/spacer_small"
     android:paddingStart="@dimen/spacer_large"
     android:paddingEnd="@dimen/spacer_large"
+    android:layout_marginTop="?attr/actionBarSize"
 
     tools:context=".DayFragment">
 
