@@ -6,8 +6,10 @@ class DayScreenUIModel(
     val entries: List<UIEntry>,
     val limit: String,
     val eatenCalories: String,
-    val leftCalories: String
+    val leftCalories: String,
+    val date: String
 ) {
 
+    var dateDescription:String? = null
 
 }

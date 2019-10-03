@@ -12,6 +12,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
+import org.joda.time.LocalDate
+import org.joda.time.LocalDateTime
 
 class DayFragmentViewModel() : BaseViewModel() {
 
@@ -29,13 +31,18 @@ class DayFragmentViewModel() : BaseViewModel() {
                 entries = entries,
                 limit = setting.caloriesLimit.toFloat()
             )
+            val dateDescription =
+            if(LocalDate.now()==LocalDate.parse(dayDate)) "Today"
+            else if(LocalDate.now().minusDays(1) == LocalDate.parse(dayDate)) "Yesterday"
+            else{""}
+
             withContext(Dispatchers.Main) {
                 uiModelLiveData.value = DayScreenUIModel(
                     entries.map { UIEntry(it.entryName, it.entryCalories.format(0)) },
                     setting.caloriesLimit.toString(),
                     eatenCalories.toString(),
-                    leftCalories.toString()
-                )
+                    leftCalories.toString(), dayDate
+                ).apply { this.dateDescription = "$dateDescription ($dayDate)" }
             }
         }
 

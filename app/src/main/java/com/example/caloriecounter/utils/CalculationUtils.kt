@@ -1,6 +1,7 @@
 package com.example.caloriecounter.utils
 
 import com.example.caloriecounter.database.Entry
+import org.joda.time.LocalDate
 
 
 class CalculationUtils {
@@ -12,7 +13,6 @@ class CalculationUtils {
 
         fun calculateLeftCalories(entries: List<Entry>, limit: Float): Int {
             return limit.toInt() - calculateEatenCalories(entries)
-
         }
 
 
