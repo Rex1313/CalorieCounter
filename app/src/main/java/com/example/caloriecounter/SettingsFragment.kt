@@ -32,11 +32,15 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SettingsFragmentViewModel::class.java)
 
-        button_settings_add.setOnClickListener{
+        button_settings_add.setOnClickListener {
             GlobalScope.launch {
                 viewModel.addDailySetting(text_input_daily_limit.text.toString())
             }
+            activity!!.supportFragmentManager.popBackStack()
 
+        }
+        button_settings_cancel.setOnClickListener{
+            activity!!.supportFragmentManager.popBackStack()
         }
     }
 

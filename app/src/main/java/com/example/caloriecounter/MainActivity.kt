@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         R.id.action_settings -> {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, settingsFragment)
+                .addToBackStack(null)
                 .commit()
             true
         }
