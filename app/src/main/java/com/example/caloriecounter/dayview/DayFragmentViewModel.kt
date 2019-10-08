@@ -1,4 +1,4 @@
-package com.example.caloriecounter
+package com.example.caloriecounter.dayview
 
 import androidx.lifecycle.MutableLiveData
 import com.example.caloriecounter.base.BaseViewModel
@@ -13,7 +13,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import org.joda.time.LocalDate
-import org.joda.time.LocalDateTime
 
 class DayFragmentViewModel() : BaseViewModel() {
 

@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
+import com.example.caloriecounter.dayview.DayFragment
 import kotlinx.android.synthetic.main.splash_screen_fragment.*
 
 
@@ -24,10 +26,9 @@ class SplashScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as AppCompatActivity).supportActionBar?.hide()
-        val dayFragment = DayFragment.newInstance()
+        val dayFragment = DaysFragment.newInstance()
         button_welcome.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, dayFragment)
-                .commit()
+            findNavController().navigate(R.id.action_splashScreenFragment_to_daysFragment)
         }
 
     }

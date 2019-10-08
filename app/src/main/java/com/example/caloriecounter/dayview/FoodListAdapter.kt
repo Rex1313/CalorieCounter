@@ -1,13 +1,12 @@
-package com.example.caloriecounter
+package com.example.caloriecounter.dayview
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import com.example.caloriecounter.database.Entry
-import android.content.ClipData.Item
 import android.widget.TextView
+import com.example.caloriecounter.R
 import com.example.caloriecounter.models.UIEntry
 
 

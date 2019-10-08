@@ -9,14 +9,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.viewpager.widget.ViewPager
+import com.example.caloriecounter.MainActivityViewModel
+import com.example.caloriecounter.R
+import com.example.caloriecounter.dayview.viewpager.DayFragmentViewPagerAdapter
+import com.example.caloriecounter.dayview.viewpager.ViewPagerValues
 import kotlinx.android.synthetic.main.fragment_day.*
+import kotlinx.android.synthetic.main.fragment_days.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.joda.time.LocalDate
 
-class DayFragment : Fragment() {
+class DaysFragment : Fragment() {
 
     lateinit var activityViewModel: MainActivityViewModel
-    lateinit var fragmentViewModel: DayFragmentViewModel
+
     lateinit var date: String
 
     // do not access the views here they are not inflated yet
@@ -27,14 +34,8 @@ class DayFragment : Fragment() {
         activityViewModel = ViewModelProviders.of(activity as FragmentActivity)
             .get(MainActivityViewModel::class.java)
 
-
-
-        fragmentViewModel =
-            ViewModelProviders.of(this).get(DayFragmentViewModel::class.java)
-
-        fragmentViewModel.dayDate = date
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_day, container, false)
+        return inflater.inflate(R.layout.fragment_days, container, false)
     }
 
 
@@ -42,29 +43,35 @@ class DayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar?.show()
+        val adapter = DayFragmentViewPagerAdapter(childFragmentManager, LocalDate.now())
+        viewpager.adapter = adapter
+        viewpager.setCurrentItem(ViewPagerValues.LIMIT_SWIPING_BACK)
+        viewpager.offscreenPageLimit = 0
+        viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
-        GlobalScope.launch {
-            fragmentViewModel.getData()
-        }
+            override fun onPageScrollStateChanged(state: Int) {
 
-        fragmentViewModel.uiModelLiveData.observe(this, Observer { uiModel ->
+            }
 
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
 
-            val adapter = FoodListAdapter(activity?.baseContext, uiModel.entries)
-            text_view_day.text = uiModel.dateDescription
-            list_view_food.adapter = adapter
-            text_view_calculation.text =
-                uiModel.limit + '-' + uiModel.eatenCalories + '=' + uiModel.leftCalories
+            override fun onPageSelected(position: Int) {
+                adapter.selectedPosition = position
+            }
+
         })
-        floating_action_button_add_meal.setOnClickListener {
-            NewEntryDialogFragment.newInstance().show(childFragmentManager, "NewEntry")
-        }
+        adapter.notifyDataSetChanged()
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(): DayFragment {
-            return DayFragment()
+        fun newInstance(): DaysFragment {
+            return DaysFragment()
         }
     }
 

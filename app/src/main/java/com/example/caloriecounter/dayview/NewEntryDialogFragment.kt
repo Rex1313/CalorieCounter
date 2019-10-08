@@ -1,4 +1,4 @@
-package com.example.caloriecounter
+package com.example.caloriecounter.dayview
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
+import com.example.caloriecounter.R
 import kotlinx.android.synthetic.main.new_entry_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

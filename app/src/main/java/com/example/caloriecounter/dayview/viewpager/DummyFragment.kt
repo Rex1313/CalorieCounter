@@ -1,4 +1,4 @@
-package com.example.caloriecounter.viewpager
+package com.example.caloriecounter.dayview.viewpager
 
 import android.os.Bundle
 import android.view.LayoutInflater

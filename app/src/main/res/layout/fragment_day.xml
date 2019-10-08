@@ -9,7 +9,7 @@
     android:paddingEnd="@dimen/spacer_large"
     android:layout_marginTop="?attr/actionBarSize"
 
-    tools:context=".DayFragment">
+    tools:context=".dayview.DayFragment">
 
 
     <TextView

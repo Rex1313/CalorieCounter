@@ -1,4 +1,4 @@
-package com.example.caloriecounter.viewpager
+package com.example.caloriecounter.dayview.viewpager
 
 class ViewPagerValues {
 

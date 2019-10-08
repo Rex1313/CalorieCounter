@@ -10,7 +10,7 @@
     android:padding="@dimen/spacer_small"
     android:paddingStart="@dimen/spacer_large"
     android:paddingEnd="@dimen/spacer_large"
-    tools:context=".NewEntryDialogFragment">
+    tools:context=".dayview.NewEntryDialogFragment">
 
     <TextView
         android:id="@+id/text_view_add_new"

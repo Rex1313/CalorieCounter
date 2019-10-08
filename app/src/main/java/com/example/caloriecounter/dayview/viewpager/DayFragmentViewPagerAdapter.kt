@@ -1,10 +1,9 @@
-package com.example.caloriecounter.viewpager
+package com.example.caloriecounter.dayview.viewpager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.example.caloriecounter.DayFragment
+import com.example.caloriecounter.dayview.DayFragment
 import org.joda.time.LocalDate
 
 
@@ -14,7 +13,8 @@ class DayFragmentViewPagerAdapter(fragmentManager: FragmentManager,val startDate
     var lastPosition = 1
 
 
-    val fragments = mutableListOf(DayFragment.newInstance(),
+    val fragments = mutableListOf(
+        DayFragment.newInstance(),
         DayFragment.newInstance(),
         DayFragment.newInstance(),
         DayFragment.newInstance())

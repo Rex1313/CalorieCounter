@@ -37,8 +37,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
+    //ROOM ANNOTATION
     kapt "androidx.room:room-compiler:$room_version"
-
+    // JODA TIME
     implementation "joda-time:joda-time:2.10.4"
 
     implementation "androidx.room:room-runtime:$room_version"
@@ -49,6 +50,9 @@ dependencies {
     implementation "com.google.android.material:material:1.0.0"
     implementation "com.github.debop:koda-time:2.0.0"
     implementation "joda-time:joda-time:2.10.4"
+
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
