@@ -15,5 +15,6 @@
     <string name="cancel">cancel</string>
     <string name="add">add</string>
     <string name="text_view_welcome">Hello in Calorie Counter</string>
+    <string name="buttons_splash_screen">Start counting</string>
 
 </resources>
