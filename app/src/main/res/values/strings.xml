@@ -14,5 +14,12 @@
     <string name="popup_barcode">Barcode scan (optional)</string>
     <string name="cancel">cancel</string>
     <string name="add">add</string>
+    <string name="action_settings">Settings</string>
+    <string name="Save">save</string>
+    <string name="settings_calorie_limit">Your daily calorie limit</string>
+    <string name="settings_username">Your name</string>
+    <string name="settings_header">Change your settings</string>
+    <string name="text_view_welcome">Hello in Calorie Counter</string>
+    <string name="buttons_splash_screen">Start counting</string>
 
 </resources>

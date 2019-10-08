@@ -2,6 +2,7 @@ package com.example.caloriecounter.database
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
@@ -15,11 +16,12 @@ interface DailySettingsDao {
     @Query("SELECT * FROM daily_settings")
     fun getAll():List<DailySetting>
 
-    @Insert()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(dailySetting: DailySetting)
 
 
-    @Insert()
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(dailySetting: List<DailySetting>)
 
 }
