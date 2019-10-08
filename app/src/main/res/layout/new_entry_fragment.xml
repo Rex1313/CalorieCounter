@@ -29,12 +29,14 @@
         android:layout_below='@id/text_view_add_new'
         android:hint="@string/popup_calories"
 
+
         >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/text_input_calories"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal|numberSigned"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

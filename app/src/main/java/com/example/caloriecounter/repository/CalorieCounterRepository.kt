@@ -26,32 +26,38 @@ object CalorieCounterRepository {
         db = Room.inMemoryDatabaseBuilder(context, CalorieCounterDatabase::class.java).build()
     }
 
-    fun addDailySetting(dailySetting: DailySetting) {
+    suspend fun addDailySetting(dailySetting: DailySetting) = withContext(Dispatchers.IO) {
         db?.dailySettingsDao()?.insert(dailySetting)
     }
 
-   suspend fun getDailySetting(date: String): DailySetting? = withContext(Dispatchers.IO){
-        return@withContext db?.dailySettingsDao()?.get(date)?.firstOrNull()?: DailySetting("1920-12-12", 1200)
+    suspend fun getDailySetting(date: String): DailySetting? = withContext(Dispatchers.IO) {
+        return@withContext db?.dailySettingsDao()?.get(date)?.firstOrNull()
+            ?: DailySetting("1920-12-12", 1200)
     }
 
     // Date needs to be in format YYYY-mm-DD
-   suspend fun getEntriesForDate(date:String):List<Entry> = withContext(Dispatchers.IO) {
-          return@withContext  db?.entriesDao()?.get(date)?: mutableListOf()
+    suspend fun getEntriesForDate(date: String): List<Entry> = withContext(Dispatchers.IO) {
+        return@withContext db?.entriesDao()?.get(date) ?: mutableListOf()
     }
 
     fun addSomeEntries() {
         runBlocking {
             GlobalScope.async {
-                db?.entriesDao()?.insertAll(mutableListOf(Entry(null, "1220-12-12", 1000F),
-                    Entry(null, "1720-11-14", 1500F, "Mamas"),
-                    Entry(null, "1920-12-12", 1600F, "Bread")))
+                db?.entriesDao()?.insertAll(
+                    mutableListOf(
+                        Entry(null, "1220-12-12", 1000F),
+                        Entry(null, "1720-11-14", 1500F, "Mamas"),
+                        Entry(null, "1920-12-12", 1600F, "Bread")
+                    )
+                )
 
-                db?.dailySettingsDao()?.insert(DailySetting("2019-09-26",1450))
+                db?.dailySettingsDao()?.insert(DailySetting("2019-09-26", 1450))
             }
         }
     }
-   suspend fun addEntry(entry:Entry)= withContext(Dispatchers.IO){
-            db?.entriesDao()?.insert(entry)
+
+    suspend fun addEntry(entry: Entry) = withContext(Dispatchers.IO) {
+        db?.entriesDao()?.insert(entry)
 
     }
 
