@@ -48,7 +48,7 @@ class DayFragment : Fragment() {
 
 
             val adapter = FoodListAdapter(activity?.baseContext, uiModel.entries)
-            text_view_day.text=uiModel.dateDescription
+            text_view_day.text = uiModel.dateDescription
             list_view_food.adapter = adapter
             text_view_calculation.text =
                 uiModel.limit + '-' + uiModel.eatenCalories + '=' + uiModel.leftCalories
@@ -60,11 +60,8 @@ class DayFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(date: String):DayFragment {
-
-            val dayFragment = DayFragment()
-            dayFragment.date = date
-            return dayFragment
+        fun newInstance(): DayFragment {
+            return DayFragment()
         }
     }
 

@@ -5,20 +5,23 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.example.caloriecounter.viewpager.DayFragmentViewPagerAdapter
+import com.example.caloriecounter.viewpager.ViewPagerValues
 import kotlinx.android.synthetic.main.activity_main.*
+import org.joda.time.LocalDate
 
 class MainActivity : FragmentActivity() {
 
     lateinit var viewModel: MainActivityViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
 
-        val adapter = DayFragmentViewPagerAdapter(supportFragmentManager)
+        val adapter = DayFragmentViewPagerAdapter(supportFragmentManager, LocalDate.now())
         viewpager.adapter = adapter
-        viewpager.setCurrentItem(1)
+        viewpager.setCurrentItem(ViewPagerValues.LIMIT_SWIPING_BACK)
         viewpager.offscreenPageLimit = 0
         viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
@@ -34,12 +37,7 @@ class MainActivity : FragmentActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                if(position<adapter.lastPosition)
-                {
-                    adapter.realPosition = adapter.realPosition-1
-                }else{
-                    adapter.realPosition = adapter.realPosition+1
-                }
+                adapter.selectedPosition = position
             }
 
         })
