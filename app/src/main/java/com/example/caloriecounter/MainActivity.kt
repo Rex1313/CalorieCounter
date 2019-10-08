@@ -21,12 +21,12 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-        val splashScreenFragment= SplashScreenFragment.newInstance()
-
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, splashScreenFragment)
-        val dayFragment = DayFragment.newInstance()
+        val splashScreenFragment = SplashScreenFragment.newInstance()
         settingsFragment = SettingsFragment.newInstance()
 
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, splashScreenFragment)
+            .commit()
 
 
     }
