@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.github.debop.kodatimes.now
 import kotlinx.android.synthetic.main.settings_fragment.*
 import kotlinx.coroutines.GlobalScope
@@ -45,26 +46,25 @@ class SettingsFragment : Fragment() {
 
         })
         text_input_daily_limit.onChange {
-            GlobalScope.launch {
-                viewModel.addDailySetting(it.toString())
+            if (it.isNotEmpty()) {
+                GlobalScope.launch {
+                    viewModel.addDailySetting(it.toString())
+                }
+            }
+            else {
+                Toast.makeText(activity!!.applicationContext,"Limit cant be empty",Toast.LENGTH_SHORT).show()
+                GlobalScope.launch {
+                    viewModel.addDailySetting("0")
+                }
             }
         }
+
         text_input_username.onChange {
-                viewModel.addUsername(it.toString(),activity!!.applicationContext)
+            viewModel.addUsername(it.toString(), activity!!.applicationContext)
 
         }
-        button_settings_add.setOnClickListener {
-            GlobalScope.launch {
-                viewModel.addDailySetting(text_input_daily_limit.text.toString())
-            }
-            viewModel.addUsername(text_input_username.text.toString(),activity!!.applicationContext)
 
-            activity!!.supportFragmentManager.popBackStack()
 
-        }
-        button_settings_cancel.setOnClickListener {
-            activity!!.supportFragmentManager.popBackStack()
-        }
     }
 
 }

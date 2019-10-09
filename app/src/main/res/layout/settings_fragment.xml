@@ -54,26 +54,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button_settings_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/cancel" />
-
-            <Button
-                android:id="@+id/button_settings_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/Save" />
-        </LinearLayout>
 
     </RelativeLayout>
 </LinearLayout>

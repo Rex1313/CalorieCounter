@@ -30,7 +30,7 @@ class SettingsFragmentViewModel : BaseViewModel() {
         withContext(Dispatchers.IO) {
             val today = LocalDate.now().toString(DateUtils.DB_DATE_FORMAT)
             val calorieLimit = repository.getDailySetting(today)?.caloriesLimit.toString()
-            val username = SharedPreferencesUtils.getString("username",context)
+            val username = SharedPreferencesUtils.getString("username", context)
             withContext(Dispatchers.Main) {
 
                 uiModelLiveData.value = SettingsUIModel(calorieLimit, username)
