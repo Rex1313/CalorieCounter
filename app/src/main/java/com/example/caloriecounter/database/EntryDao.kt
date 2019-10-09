@@ -23,9 +23,6 @@ interface EntryDao {
     @Insert()
     fun insertAll(entries: List<Entry>)
 
-    @Delete()
-    fun delete(entry: Entry)
-
     @Query("DELETE FROM entries WHERE id = :id")
     fun deleteByEntryId(id: Int?)
 }
