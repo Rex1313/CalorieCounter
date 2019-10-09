@@ -61,5 +61,13 @@ object CalorieCounterRepository {
 
     }
 
+    suspend fun removeEntry(entry: Entry) = withContext(Dispatchers.IO) {
+        db?.entriesDao()?.delete(entry)
+    }
+
+    suspend fun removeEntryById(id: Int?) = withContext(Dispatchers.IO) {
+        db?.entriesDao()?.deleteByEntryId(id)
+
+    }
 
 }

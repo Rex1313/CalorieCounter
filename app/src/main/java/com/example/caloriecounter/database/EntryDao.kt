@@ -1,6 +1,7 @@
 package com.example.caloriecounter.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 
@@ -13,7 +14,7 @@ interface EntryDao {
 
 
     @Query("SELECT * FROM entries")
-    fun getAll():List<Entry>
+    fun getAll(): List<Entry>
 
     @Insert()
     fun insert(entry: Entry)
@@ -22,4 +23,9 @@ interface EntryDao {
     @Insert()
     fun insertAll(entries: List<Entry>)
 
+    @Delete()
+    fun delete(entry: Entry)
+
+    @Query("DELETE FROM entries WHERE id = :id")
+    fun deleteByEntryId(id: Int?)
 }

@@ -24,6 +24,7 @@ class DayFragmentViewModel() : BaseViewModel() {
     suspend fun getData() =
         withContext(Dispatchers.IO) {
             val entries = repository.getEntriesForDate(dayDate)
+
             val setting = repository.getDailySetting(dayDate) ?: DailySetting(dayDate, 1500)
             val eatenCalories = CalculationUtils.calculateEatenCalories(entries = entries)
             val leftCalories = CalculationUtils.calculateLeftCalories(
@@ -37,7 +38,7 @@ class DayFragmentViewModel() : BaseViewModel() {
 
             withContext(Dispatchers.Main) {
                 uiModelLiveData.value = DayScreenUIModel(
-                    entries.map { UIEntry(it.entryName, it.entryCalories.format(0)) },
+                    entries.map { UIEntry(it.entryName, it.entryCalories.format(0),it.id) },
                     setting.caloriesLimit.toString(),
                     eatenCalories.toString(),
                     leftCalories.toString(), dayDate
