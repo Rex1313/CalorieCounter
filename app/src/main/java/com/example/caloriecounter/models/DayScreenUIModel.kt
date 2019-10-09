@@ -11,5 +11,6 @@ class DayScreenUIModel(
 ) {
 
     var dateDescription:String? = null
+    var calculationText = "$limit -  $eatenCalories = $leftCalories"
 
 }

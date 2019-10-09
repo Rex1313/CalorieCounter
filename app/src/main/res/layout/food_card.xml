@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:layout_height="@dimen/card_view_height"
     android:layout_width="match_parent"
     app:cardCornerRadius="4dp"
-    app:cardElevation="8dp"
-    android:layout_margin="40dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<!--    tools:context=".dayview.DayFragment"-->
-
-
+    app:cardElevation="@dimen/cardview_default_elevation"
+    android:layout_marginBottom="@dimen/cardview_separation"
+    >
 
     <RelativeLayout
         android:id="@+id/relative_layout_wrapper"
@@ -22,9 +19,8 @@
         <ImageView
             android:layout_width="@dimen/imageview_card_size"
             android:layout_height="@dimen/imageview_card_size"
-            android:id="@+id/imageview"
+            android:id="@+id/imageview_type"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/calories"
             />
 
         <TextView
@@ -32,10 +28,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="1200 kcal"
+            android:text=""
             android:textColor="@color/title_material_colour"
             android:textSize="@dimen/title_text_size"
-            android:layout_toEndOf="@id/imageview"
+            android:layout_toEndOf="@id/imageview_type"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -45,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_view_title"
             android:text="@string/card_item_calories"
-            android:layout_toEndOf="@id/imageview"
+            android:layout_toEndOf="@id/imageview_type"
             android:textColor="@color/subtitle_material_colour"
             android:textSize="@dimen/subheader_text_size" />
 

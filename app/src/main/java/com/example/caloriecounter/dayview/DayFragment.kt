@@ -58,47 +58,47 @@ class DayFragment : Fragment() {
 
 
         fragmentViewModel.uiModelLiveData.observe(this, Observer { uiModel ->
-            val myOverflowClicked: (view: View, id: Int?) -> Unit = { view: View, id: Int? ->
-                val popupMenu = PopupMenu(context!!, view)
-                popupMenu.menuInflater.inflate(R.menu.food_card_menu, popupMenu.menu)
-                popupMenu.setOnMenuItemClickListener { item ->
-                    when (item.itemId) {
-                        R.id.menu_card_delete -> {
-                            GlobalScope.launch {
-                                fragmentViewModel.deleteEntryById(id)
-                                fragmentViewModel.refreshData()
+            context?.let { context ->
+                val myOverflowClicked: (view: View, id: Int?) -> Unit = { view: View, id: Int? ->
+                    val popupMenu = PopupMenu(context, view)
+                    popupMenu.menuInflater.inflate(R.menu.food_card_menu, popupMenu.menu)
+                    popupMenu.setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.menu_card_delete -> {
+                                GlobalScope.launch {
+                                    fragmentViewModel.deleteEntryById(id)
+                                    fragmentViewModel.refreshData()
+                                }
+                                true
                             }
-                            true
+//                        R.id.menu_card_edit -> {
+//                            //TODO code here for edit
+//                            true
+//                        }
+                            else -> false
                         }
-                        R.id.menu_card_edit -> {
-                            //TODO code here for edit
-                            true
-                        }
-                        else -> false
                     }
+
+                    popupMenu.show()
                 }
-
-                popupMenu.show()
+                // RecyclerView node initialized here
+                recycler_view_food.apply {
+                    // set a LinearLayoutManager to handle Android
+                    // RecyclerView behavior
+                    layoutManager = LinearLayoutManager(activity)
+                    // set the custom adapter to the RecyclerView
+                    adapter = FoodRecycleListAdapter(uiModel.entries, myOverflowClicked)
+                }
+                text_view_day.text = uiModel.dateDescription
+                text_view_calculation.text = uiModel.calculationText
             }
-
-
-            // RecyclerView node initialized here
-            recycler_view_food.apply {
-                // set a LinearLayoutManager to handle Android
-                // RecyclerView behavior
-                layoutManager = LinearLayoutManager(activity)
-                // set the custom adapter to the RecyclerView
-                adapter = FoodRecycleListAdapter(uiModel.entries, myOverflowClicked)
-            }
-
-            text_view_day.text = uiModel.dateDescription
-            text_view_calculation.text =
-                uiModel.limit + '-' + uiModel.eatenCalories + '=' + uiModel.leftCalories
         })
         floating_action_button_add_meal.setOnClickListener {
             NewEntryDialogFragment.newInstance()
                 .show(childFragmentManager, "NewEntry")
         }
+
+
     }
 
     companion object {

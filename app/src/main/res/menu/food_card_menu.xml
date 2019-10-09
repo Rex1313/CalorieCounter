@@ -6,11 +6,12 @@
         android:id="@+id/menu_card_delete"
         android:icon="@drawable/baseline_delete_black_18dp"
         android:title="@string/delete_entry"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"
+       />
 
-    <item
-        android:id="@+id/menu_card_edit"
-        android:icon="@drawable/outline_more_vert_black_18dp"
-        android:title="@string/edit_entry" />
+<!--    <item-->
+<!--        android:id="@+id/menu_card_edit"-->
+<!--        android:icon="@drawable/outline_more_vert_black_18dp"-->
+<!--        android:title="@string/edit_entry" />-->
 
 </menu>

@@ -8,6 +8,6 @@ import androidx.room.PrimaryKey
 class Entry(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int?, @ColumnInfo(name =EntryConstants.COLUMN_DATE) val date:String, @ColumnInfo(
         name = EntryConstants.COLUMN_CALORIES
-    ) val entryCalories: Float, @ColumnInfo(name = EntryConstants.COLUMN_NAME) val entryName: String = EntryConstants.NAME_DEFAULT_VALUE
-) {
+    ) val entryCalories: Float, @ColumnInfo(name = EntryConstants.COLUMN_NAME) val entryName: String? = EntryConstants.NAME_DEFAULT_VALUE
+, @ColumnInfo(name = EntryConstants.COLUMN_ENTRY_TYPE) val entryType:String) {
 }

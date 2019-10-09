@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.caloriecounter.R
+import com.example.caloriecounter.models.EntryTypeModel
 import kotlinx.android.synthetic.main.new_entry_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -45,12 +48,24 @@ class NewEntryDialogFragment() : DialogFragment() {
             GlobalScope.launch {
                 fragmentViewModel.addNewEntry(
                     text_input_calories.text.toString(),
-                    text_input_name.text.toString()
+                    text_input_name.text.toString(),
+                    (spinner_category.selectedItem as EntryTypeModel).type.toString()
                 )
                 fragmentViewModel.refreshData()
             }
             dismiss()
         }
+        context?.let {
+            val adapter = ArrayAdapter<EntryTypeModel>(
+                it, android.R.layout.simple_spinner_dropdown_item, fragmentViewModel.getEntryTypes()
+            )
+            spinner_category.adapter = adapter
+
+
+        }
+
+
+        spinner_category
     }
 
     companion object {
