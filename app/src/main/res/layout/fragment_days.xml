@@ -4,10 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/spacer_small"
-    android:paddingStart="@dimen/spacer_large"
-    android:paddingEnd="@dimen/spacer_large"
-    android:layout_marginTop="?attr/actionBarSize"
 
     tools:context=".dayview.DayFragment">
 

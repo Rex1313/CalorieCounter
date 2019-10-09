@@ -7,4 +7,12 @@
     <dimen name="spacer_large">30dp</dimen>
     <dimen name="new_entry_dialog_height">300dp</dimen>
 
+    <dimen name="card_padding">16dp</dimen>
+    <dimen name="header_subheader_separation">28dp</dimen>
+
+    <dimen name="title_text_size">20dp</dimen>
+    <dimen name="subheader_text_size">14dp</dimen>
+    <dimen name="card_view_height">80dp</dimen>
+    <dimen name="imageview_card_size">48dp</dimen>
+
 </resources>

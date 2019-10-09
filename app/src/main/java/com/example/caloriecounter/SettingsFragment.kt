@@ -31,7 +31,10 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SettingsFragmentViewModel::class.java)
-
+        GlobalScope.launch {
+            viewModel.getData()
+           // text_input_daily_limit.text=viewModel.uiModelLiveData.cal
+        }
         button_settings_add.setOnClickListener {
             GlobalScope.launch {
                 viewModel.addDailySetting(text_input_daily_limit.text.toString())

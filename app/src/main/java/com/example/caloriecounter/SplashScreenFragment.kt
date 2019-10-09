@@ -23,7 +23,7 @@ class SplashScreenFragment : Fragment() {
     ): View? {
         viewmodel = ViewModelProviders.of(this).get(SplashScreenFragmentViewModel::class.java)
         context?.let {
-            if (!viewmodel.getWelcomeScreenViewed(it)) {
+            if (viewmodel.getWelcomeScreenViewed(it)) {
                 findNavController().navigate(R.id.action_splashScreenFragment_to_daysFragment)
             }else{
                 viewmodel.setWelcomeScreenViewed(it)

@@ -4,64 +4,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/spacer_small"
-    android:paddingStart="@dimen/spacer_large"
-    android:paddingEnd="@dimen/spacer_large"
-    android:layout_marginTop="?attr/actionBarSize"
-
     tools:context=".dayview.DayFragment">
 
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:id="@+id/relative_layout_top"
+    android:background="@color/colorPrimary"
+    >
     <TextView
         android:id="@+id/text_view_day"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:paddingTop="@dimen/spacer_small"
-        android:paddingBottom="@dimen/spacer_medium"
         android:text="@string/day"
-        android:textSize="@dimen/text_medium" />
+        android:layout_marginStart="@dimen/card_padding"
+        android:textSize="@dimen/title_text_size"
+        android:textStyle="bold"
+        android:textColor="@color/title_material_colour_opposite"
+
+        />
 
     <TextView
         android:id="@+id/text_view_calculation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below='@id/text_view_day'
-        android:background="@drawable/text_view_lines"
-        android:gravity="center_horizontal"
         android:paddingTop="@dimen/spacer_medium"
         android:paddingBottom="@dimen/spacer_medium"
         android:text="@string/text_day_calculation"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textSize="@dimen/subheader_text_size"
+        android:textColor="@color/subtitle_material_colour_opposite"
+        />
 
-    <TextView
-        android:id="@+id/text_view_label_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below='@id/text_view_calculation'
-        android:gravity="start"
-        android:paddingTop="@dimen/spacer_small"
-        android:paddingBottom="@dimen/spacer_small"
-        android:text="@string/text_day_label_name"
-        android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/text_view_label_calories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below='@id/text_view_calculation'
-        android:gravity="end"
-        android:paddingTop="@dimen/spacer_small"
-        android:paddingBottom="@dimen/spacer_small"
-        android:text="@string/text_day_label_calories"
-        android:textSize="16sp" />
-
+</RelativeLayout>
     <ListView
         android:id="@+id/list_view_food"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below='@id/text_view_label_calories'
+        android:layout_below='@id/relative_layout_top'
 
         />
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -29,8 +29,8 @@ class FoodListAdapter(
 
     fun bind(itemView: View?, entry: UIEntry) {
         itemView?.let {
-            it.findViewById<TextView>(R.id.card_view_name).text = entry.name
-            it.findViewById<TextView>(R.id.card_view_calories).text = entry.calories
+            it.findViewById<TextView>(R.id.text_view_subtitle).text = entry.name
+            it.findViewById<TextView>(R.id.text_view_title).text = "${entry.calories} kcal"
         }
     }
 
