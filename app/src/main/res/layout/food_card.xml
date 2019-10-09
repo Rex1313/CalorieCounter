@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_height="@dimen/card_view_height"
     android:layout_width="match_parent"
@@ -8,6 +9,9 @@
     app:cardElevation="8dp"
     android:layout_margin="40dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
+<!--    tools:context=".dayview.DayFragment"-->
+
+
 
     <RelativeLayout
         android:id="@+id/relative_layout_wrapper"
@@ -48,7 +52,7 @@
        <ImageView
            android:layout_width="24dp"
            android:layout_height="24dp"
-           android:id="@+id/imageview_menu"
+           android:id="@+id/image_view_menu"
            android:background="@drawable/more_vert_black_24dp"
            android:layout_alignParentEnd="true"
            android:layout_centerVertical="true"

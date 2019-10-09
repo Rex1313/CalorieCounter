@@ -32,13 +32,15 @@ class DayFragmentViewModel() : BaseViewModel() {
                 limit = setting.caloriesLimit.toFloat()
             )
             val dateDescription =
-            if(LocalDate.now()==LocalDate.parse(dayDate)) "Today"
-            else if(LocalDate.now().minusDays(1) == LocalDate.parse(dayDate)) "Yesterday"
-            else{""}
+                if (LocalDate.now() == LocalDate.parse(dayDate)) "Today"
+                else if (LocalDate.now().minusDays(1) == LocalDate.parse(dayDate)) "Yesterday"
+                else {
+                    ""
+                }
 
             withContext(Dispatchers.Main) {
                 uiModelLiveData.value = DayScreenUIModel(
-                    entries.map { UIEntry(it.entryName, it.entryCalories.format(0),it.id) },
+                    entries.map { UIEntry(it.entryName, it.entryCalories.format(0), it.id) },
                     setting.caloriesLimit.toString(),
                     eatenCalories.toString(),
                     leftCalories.toString(), dayDate
@@ -68,4 +70,7 @@ class DayFragmentViewModel() : BaseViewModel() {
 
     suspend fun refreshData() = getData()
 
+    suspend fun deleteEntryById(id: Int?) {
+        repository.removeEntryById(id)
+    }
 }
