@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.example.caloriecounter.MainActivityViewModel
 import com.example.caloriecounter.R
 import kotlinx.android.synthetic.main.fragment_day.*
@@ -20,6 +23,8 @@ class DayFragment : Fragment() {
     lateinit var activityViewModel: MainActivityViewModel
     lateinit var fragmentViewModel: DayFragmentViewModel
     lateinit var date: String
+
+
 
     // do not access the views here they are not inflated yet
     override fun onCreateView(
@@ -40,6 +45,8 @@ class DayFragment : Fragment() {
     }
 
 
+
+
     // You can use this for accessing the views they will be iniflated here
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,16 +57,14 @@ class DayFragment : Fragment() {
 
         fragmentViewModel.uiModelLiveData.observe(this, Observer { uiModel ->
 
-
-            val adapter =
-                FoodListAdapter(
-                    activity?.baseContext,
-                    uiModel.entries
-                )
-            text_view_day.text = uiModel.dateDescription
-            list_view_food.adapter = adapter
-            text_view_calculation.text =
-                uiModel.limit + '-' + uiModel.eatenCalories + '=' + uiModel.leftCalories
+            // RecyclerView node initialized here
+            recycler_view_food.apply {
+                // set a LinearLayoutManager to handle Android
+                // RecyclerView behavior
+                layoutManager = LinearLayoutManager(activity)
+                // set the custom adapter to the RecyclerView
+                adapter = FoodRecycleListAdapter(uiModel.entries)
+            }
         })
         floating_action_button_add_meal.setOnClickListener {
             NewEntryDialogFragment.newInstance()

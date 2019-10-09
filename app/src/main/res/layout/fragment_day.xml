@@ -1,57 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".dayview.DayFragment">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="250dp"
-    android:id="@+id/relative_layout_top"
-    android:background="@color/colorPrimary"
-    >
-    <TextView
-        android:id="@+id/text_view_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/day"
-        android:layout_marginStart="@dimen/card_padding"
-        android:textSize="@dimen/title_text_size"
-        android:textStyle="bold"
-        android:textColor="@color/title_material_colour_opposite"
-
-        />
-
-    <TextView
-        android:id="@+id/text_view_calculation"
+    <RelativeLayout
+        android:id="@+id/relative_layout_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below='@id/text_view_day'
-        android:paddingTop="@dimen/spacer_medium"
-        android:paddingBottom="@dimen/spacer_medium"
-        android:text="@string/text_day_calculation"
-        android:textSize="@dimen/subheader_text_size"
-        android:textColor="@color/subtitle_material_colour_opposite"
-        />
+        android:layout_height="250dp"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/text_view_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_padding"
+            android:text="@string/day"
+            android:textColor="@color/title_material_colour_opposite"
+            android:textSize="@dimen/title_text_size"
+            android:textStyle="bold"
+
+            />
+
+        <TextView
+            android:id="@+id/text_view_calculation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below='@id/text_view_day'
+            android:paddingTop="@dimen/spacer_medium"
+            android:paddingBottom="@dimen/spacer_medium"
+            android:text="@string/text_day_calculation"
+            android:textColor="@color/subtitle_material_colour_opposite"
+            android:textSize="@dimen/subheader_text_size" />
 
 
-</RelativeLayout>
-    <ListView
-        android:id="@+id/list_view_food"
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/recycler_view_food"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below='@id/relative_layout_top'
+        android:scrollbars="vertical"
 
         />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_action_button_add_meal"
         style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        app:srcCompat="@drawable/add_white_24dp"/>
+        app:srcCompat="@drawable/add_white_24dp" />
 </RelativeLayout>

@@ -21,5 +21,7 @@
     <string name="settings_header">Change your settings</string>
     <string name="text_view_welcome">Hello in Calorie Counter</string>
     <string name="buttons_splash_screen">Start counting</string>
+    <string name="delete_entry">Delete entry</string>
+    <string name="edit_entry">Edit entry</string>
 
 </resources>
