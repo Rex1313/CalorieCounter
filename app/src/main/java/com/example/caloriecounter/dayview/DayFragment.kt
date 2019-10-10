@@ -1,25 +1,19 @@
 package com.example.caloriecounter.dayview
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.example.caloriecounter.MainActivityViewModel
 import com.example.caloriecounter.R
 import kotlinx.android.synthetic.main.delete_confirmation_dialog.view.*
-import kotlinx.android.synthetic.main.food_card.*
 import kotlinx.android.synthetic.main.fragment_day.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -107,10 +101,12 @@ class DayFragment : Fragment() {
                     // RecyclerView behavior
                     layoutManager = LinearLayoutManager(activity)
                     // set the custom adapter to the RecyclerView
-                    adapter = FoodRecycleListAdapter(uiModel.entries, myOverflowClicked)
+                    adapter = EntriesRecycleListAdapter(uiModel.entries, myOverflowClicked)
                 }
                 text_view_day.text = uiModel.dateDescription
-                text_view_calculation.text = uiModel.calculationText
+                textview_calories_eaten.text = uiModel.eatenCalories
+                text_view_calories_left.text = uiModel.leftCalories
+                textview_limit.text = uiModel.limit
             }
         })
         floating_action_button_add_meal.setOnClickListener {

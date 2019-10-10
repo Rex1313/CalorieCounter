@@ -3,6 +3,7 @@
 
     <string name="day">Today</string>
     <string name="text_day_calculation">Limit- eaten calories = left today</string>
+    <string name="text_calories_left">Calories left</string>
     <string name="text_day_label_name">Name</string>
     <string name="text_day_label_calories">Calories</string>
     <string name="card_item_name">bread</string>

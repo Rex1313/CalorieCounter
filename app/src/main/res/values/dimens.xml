@@ -16,4 +16,9 @@
     <dimen name="imageview_card_size">48dp</dimen>
     <dimen name="cardview_separation">8dp</dimen>
 
+
+    <dimen name="calories_left_text">48dp</dimen>
+    <dimen name="calories_eaten_text">30dp</dimen>
+    <dimen name="calories_limit_text">30dp</dimen>
+
 </resources>

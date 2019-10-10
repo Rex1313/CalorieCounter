@@ -1,6 +1,5 @@
 package com.example.caloriecounter.dayview
 
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,10 @@ import com.example.caloriecounter.models.EntryType
 import com.example.caloriecounter.models.UIEntry
 
 
-class FoodRecycleListAdapter(
+class EntriesRecycleListAdapter(
     val entries: List<UIEntry>,
     val onOverflowClicked: (view: View, id: Int?) -> Unit
-) : RecyclerView.Adapter<FoodRecycleListAdapter.FoodCardViewHolder>() {
+) : RecyclerView.Adapter<EntriesRecycleListAdapter.FoodCardViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodCardViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -50,8 +49,8 @@ class FoodRecycleListAdapter(
             menuIcon?.setOnClickListener {
                 onOverflowClicked(it, entry.id)
             }
-            if(entry.entryType == EntryType.EXCERCISE.toString()) typeIcon.setImageResource(R.drawable.excercise)
-            if(entry.entryType == EntryType.FOOD.toString()) typeIcon.setImageResource(R.drawable.calories)
+            if(entry.entryType == EntryType.EXCERCISE.toString()) typeIcon.setImageResource(R.drawable.excercise_white)
+            if(entry.entryType == EntryType.FOOD.toString()) typeIcon.setImageResource(R.drawable.calories_white)
 
 
         }
