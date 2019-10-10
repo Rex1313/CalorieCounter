@@ -24,6 +24,14 @@ class DayFragmentViewModel() : BaseViewModel() {
     val uiModelLiveData = MutableLiveData<DayScreenUIModel>()
     lateinit var dayDate: String
     val entryLiveData = MutableLiveData<Entry>()
+    val entryTypes = arrayListOf(
+        EntryTypeModel().apply {
+            type = EntryType.FOOD
+        },
+        EntryTypeModel().apply {
+            type = EntryType.EXCERCISE
+        }
+    )
 
     suspend fun getData() =
         withContext(Dispatchers.IO) {
@@ -65,9 +73,9 @@ class DayFragmentViewModel() : BaseViewModel() {
 
     }
 
-    suspend fun addNewEntry(id:Int?,inputCalories: String, inputName: String, entryType: String) {
+    suspend fun addNewEntry(id: Int?, inputCalories: String, inputName: String, entryType: String) {
         val calories =
-            if (entryType == EntryType.EXCERCISE.toString()) -CalculationUtils.calculateValueFromInput(
+            if (entryType == EntryType.EXCERCISE.toString() && inputCalories.toInt() > 0) -CalculationUtils.calculateValueFromInput(
                 inputCalories
             ) else {
                 CalculationUtils.calculateValueFromInput(inputCalories)
@@ -84,15 +92,8 @@ class DayFragmentViewModel() : BaseViewModel() {
         repository.removeEntryById(id)
     }
 
-    fun getEntryTypes(): ArrayList<EntryTypeModel> {
-        return arrayListOf(
-            EntryTypeModel().apply {
-                type = EntryType.FOOD
-            },
-            EntryTypeModel().apply {
-                type = EntryType.EXCERCISE
-            }
-        )
+    fun getEntryTypePosition(type: String): Int {
+        return entryTypes.indexOfFirst { it.type.toString() == type }
     }
 
     suspend fun getEntryById(id: Int?) {

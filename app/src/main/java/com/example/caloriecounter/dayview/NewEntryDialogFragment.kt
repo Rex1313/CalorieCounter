@@ -45,7 +45,7 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
 
         context?.let {
             val adapter = ArrayAdapter<EntryTypeModel>(
-                it, android.R.layout.simple_spinner_dropdown_item, fragmentViewModel.getEntryTypes()
+                it, android.R.layout.simple_spinner_dropdown_item, fragmentViewModel.entryTypes
             )
             spinner_category.adapter = adapter
 
@@ -61,7 +61,7 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
                 fragmentViewModel.entryLiveData.observe(this, Observer { entry ->
                     text_input_calories.setText(entry.entryCalories.format(0))
                     text_input_name.setText(entry.entryName)
-                    //spinner_category.setSelection(adapter.getPosition(EntryTypeModel()))
+                    spinner_category.setSelection(fragmentViewModel.getEntryTypePosition(entry.entryType))
                 })
 
             }

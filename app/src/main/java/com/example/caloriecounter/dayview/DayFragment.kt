@@ -92,20 +92,23 @@ class DayFragment : Fragment() {
 
                                 true
                             }
-                        R.id.menu_card_edit -> {
-                            //TODO code here for edit
-                            NewEntryDialogFragment.newInstance(id)
-                                .show(childFragmentManager, "NewEntry")
-                            Toast.makeText(context,"edit clicked",
-                                Toast.LENGTH_SHORT).show()
+                            R.id.menu_card_edit -> {
+                                NewEntryDialogFragment.newInstance(id)
+                                    .show(childFragmentManager, "NewEntry")
 
-                            true
-                        }
+
+                                true
+                            }
                             else -> false
                         }
                     }
 
                     popupMenu.show()
+                }
+                val onItemClicked: (Int?) -> Unit = {
+
+                    NewEntryDialogFragment.newInstance(it)
+                        .show(childFragmentManager, "NewEntry")
                 }
                 // RecyclerView node initialized here
                 recycler_view_food.apply {
@@ -113,7 +116,7 @@ class DayFragment : Fragment() {
                     // RecyclerView behavior
                     layoutManager = LinearLayoutManager(activity)
                     // set the custom adapter to the RecyclerView
-                    adapter = FoodRecycleListAdapter(uiModel.entries, myOverflowClicked)
+                    adapter = FoodRecycleListAdapter(uiModel.entries, myOverflowClicked,onItemClicked)
                 }
                 text_view_day.text = uiModel.dateDescription
                 text_view_calculation.text = uiModel.calculationText
