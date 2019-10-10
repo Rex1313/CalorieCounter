@@ -52,11 +52,6 @@ class SettingsFragment : Fragment() {
                         viewModel.addDailySetting(it.toString())
                     }
                 } else {
-                    Toast.makeText(
-                        context,
-                        "Limit cant be empty",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     GlobalScope.launch {
                         viewModel.addDailySetting("0")
                     }
