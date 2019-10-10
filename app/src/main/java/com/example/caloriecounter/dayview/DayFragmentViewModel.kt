@@ -23,7 +23,15 @@ class DayFragmentViewModel() : BaseViewModel() {
     val entriesLiveData = MutableLiveData<List<Entry>>()
     val uiModelLiveData = MutableLiveData<DayScreenUIModel>()
     lateinit var dayDate: String
-
+    val entryLiveData = MutableLiveData<Entry>()
+    val entryTypes = arrayListOf(
+        EntryTypeModel().apply {
+            type = EntryType.FOOD
+        },
+        EntryTypeModel().apply {
+            type = EntryType.EXCERCISE
+        }
+    )
 
     suspend fun getData() =
         withContext(Dispatchers.IO) {
@@ -36,11 +44,18 @@ class DayFragmentViewModel() : BaseViewModel() {
                 limit = setting.caloriesLimit.toFloat()
             )
             val dateDescription =
-               LocalDate.parse(dayDate).toString(DateUtils.WEEKDAY_FORMAT)
+                LocalDate.parse(dayDate).toString(DateUtils.WEEKDAY_FORMAT)
 
             withContext(Dispatchers.Main) {
                 uiModelLiveData.value = DayScreenUIModel(
-                    entries.map { UIEntry(it.entryName?:EntryConstants.NAME_DEFAULT_VALUE, "${it.entryCalories.format(0)} kcal", it.id, it.entryType) },
+                    entries.map {
+                        UIEntry(
+                            it.entryName ?: EntryConstants.NAME_DEFAULT_VALUE,
+                            "${it.entryCalories.format(0)} kcal",
+                            it.id,
+                            it.entryType
+                        )
+                    },
                     setting.caloriesLimit.toString(),
                     eatenCalories.toString(),
                     leftCalories.toString(), dayDate
@@ -58,14 +73,17 @@ class DayFragmentViewModel() : BaseViewModel() {
 
     }
 
-    suspend fun addNewEntry(inputCalories: String, inputName: String, entryType:String) {
-
-
-        val calories = if(entryType==EntryType.EXCERCISE.toString()) -CalculationUtils.calculateValueFromInput(inputCalories) else{CalculationUtils.calculateValueFromInput(inputCalories)}
-        val name = if (inputName.isEmpty())  null else {inputName}
-            repository.addEntry(Entry(null, dayDate, calories, name, entryType))
-
-
+    suspend fun addNewEntry(id: Int?, inputCalories: String, inputName: String, entryType: String) {
+        val calories =
+            if (entryType == EntryType.EXCERCISE.toString() && inputCalories.toInt() > 0) -CalculationUtils.calculateValueFromInput(
+                inputCalories
+            ) else {
+                CalculationUtils.calculateValueFromInput(inputCalories)
+            }
+        val name = if (inputName.isEmpty()) null else {
+            inputName
+        }
+        repository.addEntry(Entry(id, dayDate, calories, name, entryType))
     }
 
     suspend fun refreshData() = getData()
@@ -74,14 +92,35 @@ class DayFragmentViewModel() : BaseViewModel() {
         repository.removeEntryById(id)
     }
 
-    fun getEntryTypes():ArrayList<EntryTypeModel>{
-        return arrayListOf(
-            EntryTypeModel().apply {
-                type = EntryType.FOOD
-            },
-            EntryTypeModel().apply {
-                type = EntryType.EXCERCISE
+    fun getEntryTypePosition(type: String): Int {
+        return entryTypes.indexOfFirst { it.type.toString() == type }
+    }
+
+    suspend fun getEntryById(id: Int?) {
+        withContext(Dispatchers.IO) {
+            var entry = repository.getEntryById(id)
+
+
+            withContext(Dispatchers.Main) {
+                entryLiveData.value = entry
+
+
             }
-        )
+        }
+
+
+    }
+
+    suspend fun editEntry(id: Int?, inputCalories: String, inputName: String, entryType: String) {
+        val calories =
+            if (entryType == EntryType.EXCERCISE.toString()) -CalculationUtils.calculateValueFromInput(
+                inputCalories
+            ) else {
+                CalculationUtils.calculateValueFromInput(inputCalories)
+            }
+        val name = if (inputName.isEmpty()) null else {
+            inputName
+        }
+        repository.editEntry(Entry(id, dayDate, calories, name, entryType))
     }
 }
