@@ -36,11 +36,18 @@ class DayFragmentViewModel() : BaseViewModel() {
                 limit = setting.caloriesLimit.toFloat()
             )
             val dateDescription =
-               LocalDate.parse(dayDate).toString(DateUtils.WEEKDAY_FORMAT)
+                LocalDate.parse(dayDate).toString(DateUtils.WEEKDAY_FORMAT)
 
             withContext(Dispatchers.Main) {
                 uiModelLiveData.value = DayScreenUIModel(
-                    entries.map { UIEntry(it.entryName?:EntryConstants.NAME_DEFAULT_VALUE, "${it.entryCalories.format(0)} kcal", it.id, it.entryType) },
+                    entries.map {
+                        UIEntry(
+                            it.entryName ?: EntryConstants.NAME_DEFAULT_VALUE,
+                            "${it.entryCalories.format(0)} kcal",
+                            it.id,
+                            it.entryType
+                        )
+                    },
                     setting.caloriesLimit.toString(),
                     eatenCalories.toString(),
                     leftCalories.toString(), dayDate
@@ -58,12 +65,10 @@ class DayFragmentViewModel() : BaseViewModel() {
 
     }
 
-    suspend fun addNewEntry(inputCalories: String, inputName: String, entryType:String) {
-
-
-        val calories = if(entryType==EntryType.EXCERCISE.toString()) -CalculationUtils.calculateValueFromInput(inputCalories) else{CalculationUtils.calculateValueFromInput(inputCalories)}
-        val name = if (inputName.isEmpty())  null else {inputName}
-            repository.addEntry(Entry(null, dayDate, calories, name, entryType))
+    suspend fun addNewEntry(inputCalories: String, inputName: String, entryType: String) {
+        val calories = if (entryType == EntryType.EXCERCISE.toString()) -CalculationUtils.calculateValueFromInput(inputCalories) else { CalculationUtils.calculateValueFromInput(inputCalories) }
+        val name = if (inputName.isEmpty()) null else { inputName }
+        repository.addEntry(Entry(null, dayDate, calories, name, entryType))
 
 
     }
@@ -74,7 +79,7 @@ class DayFragmentViewModel() : BaseViewModel() {
         repository.removeEntryById(id)
     }
 
-    fun getEntryTypes():ArrayList<EntryTypeModel>{
+    fun getEntryTypes(): ArrayList<EntryTypeModel> {
         return arrayListOf(
             EntryTypeModel().apply {
                 type = EntryType.FOOD
@@ -83,5 +88,11 @@ class DayFragmentViewModel() : BaseViewModel() {
                 type = EntryType.EXCERCISE
             }
         )
+    }
+
+    suspend fun editEntry(id: Int?, inputCalories: String, inputName: String, entryType: String) {
+        val calories = if (entryType == EntryType.EXCERCISE.toString()) -CalculationUtils.calculateValueFromInput(inputCalories) else { CalculationUtils.calculateValueFromInput(inputCalories) }
+        val name = if (inputName.isEmpty()) null else { inputName }
+        repository.editEntry(Entry(id, dayDate, calories, name, entryType))
     }
 }

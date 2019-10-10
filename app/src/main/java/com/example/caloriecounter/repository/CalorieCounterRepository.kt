@@ -41,7 +41,6 @@ object CalorieCounterRepository {
     }
 
 
-
     suspend fun addEntry(entry: Entry) = withContext(Dispatchers.IO) {
         db?.entriesDao()?.insert(entry)
 
@@ -53,4 +52,8 @@ object CalorieCounterRepository {
 
     }
 
+    suspend fun editEntry(entry: Entry) = withContext(Dispatchers.IO) {
+        db?.entriesDao()?.insert(entry)
+
+    }
 }

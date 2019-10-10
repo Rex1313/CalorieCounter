@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
@@ -91,10 +92,13 @@ class DayFragment : Fragment() {
 
                                 true
                             }
-//                        R.id.menu_card_edit -> {
-//                            //TODO code here for edit
-//                            true
-//                        }
+                        R.id.menu_card_edit -> {
+                            //TODO code here for edit
+                            Toast.makeText(context,"edit clicked",
+                                Toast.LENGTH_SHORT).show()
+
+                            true
+                        }
                             else -> false
                         }
                     }

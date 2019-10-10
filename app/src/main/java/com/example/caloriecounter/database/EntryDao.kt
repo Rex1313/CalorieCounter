@@ -1,9 +1,6 @@
 package com.example.caloriecounter.database
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface EntryDao {
@@ -16,7 +13,7 @@ interface EntryDao {
     @Query("SELECT * FROM entries")
     fun getAll(): List<Entry>
 
-    @Insert()
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(entry: Entry)
 
 
