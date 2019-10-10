@@ -1,5 +1,6 @@
 package com.example.caloriecounter.dayview
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.caloriecounter.R
+import com.example.caloriecounter.base.format
 import com.example.caloriecounter.models.EntryTypeModel
 import kotlinx.android.synthetic.main.new_entry_fragment.*
 import kotlinx.coroutines.GlobalScope
@@ -50,11 +52,14 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
 
 
             if (id != null) {
+                text_view_add_new.setText(resources.getString(R.string.edit_entry));
+                button_add.setText(resources.getString(R.string.save))
+
                 GlobalScope.launch {
                     fragmentViewModel.getEntryById(id)
                 }
                 fragmentViewModel.entryLiveData.observe(this, Observer { entry ->
-                    // text_input_calories.setText(entry.entryCalories.toInt())
+                    text_input_calories.setText(entry.entryCalories.format(0))
                     text_input_name.setText(entry.entryName)
                     //spinner_category.setSelection(adapter.getPosition(EntryTypeModel()))
                 })

@@ -76,8 +76,6 @@ class DayFragmentViewModel() : BaseViewModel() {
             inputName
         }
         repository.addEntry(Entry(id, dayDate, calories, name, entryType))
-
-
     }
 
     suspend fun refreshData() = getData()
