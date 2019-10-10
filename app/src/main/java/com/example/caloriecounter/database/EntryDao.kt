@@ -9,6 +9,8 @@ interface EntryDao {
     @Query("SELECT * FROM entries where date(entry_date) == date(:date)")
     fun get(date: String): List<Entry>
 
+    @Query("SELECT * FROM entries where id = :id")
+    fun getById(id: Int?): Entry
 
     @Query("SELECT * FROM entries")
     fun getAll(): List<Entry>

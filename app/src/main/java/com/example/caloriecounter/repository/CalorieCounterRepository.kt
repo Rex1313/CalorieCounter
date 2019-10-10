@@ -40,6 +40,9 @@ object CalorieCounterRepository {
         return@withContext db?.entriesDao()?.get(date) ?: mutableListOf()
     }
 
+    suspend fun getEntryById(id: Int?) = withContext(Dispatchers.IO) {
+        return@withContext db?.entriesDao()?.getById(id)
+    }
 
     suspend fun addEntry(entry: Entry) = withContext(Dispatchers.IO) {
         db?.entriesDao()?.insert(entry)

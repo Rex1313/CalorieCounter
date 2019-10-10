@@ -94,6 +94,8 @@ class DayFragment : Fragment() {
                             }
                         R.id.menu_card_edit -> {
                             //TODO code here for edit
+                            NewEntryDialogFragment.newInstance(id)
+                                .show(childFragmentManager, "NewEntry")
                             Toast.makeText(context,"edit clicked",
                                 Toast.LENGTH_SHORT).show()
 
@@ -118,7 +120,7 @@ class DayFragment : Fragment() {
             }
         })
         floating_action_button_add_meal.setOnClickListener {
-            NewEntryDialogFragment.newInstance()
+            NewEntryDialogFragment.newInstance(null)
                 .show(childFragmentManager, "NewEntry")
         }
 

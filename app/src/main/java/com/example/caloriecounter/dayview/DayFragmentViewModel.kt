@@ -23,7 +23,7 @@ class DayFragmentViewModel() : BaseViewModel() {
     val entriesLiveData = MutableLiveData<List<Entry>>()
     val uiModelLiveData = MutableLiveData<DayScreenUIModel>()
     lateinit var dayDate: String
-
+    val entryLiveData = MutableLiveData<Entry>()
 
     suspend fun getData() =
         withContext(Dispatchers.IO) {
@@ -65,10 +65,17 @@ class DayFragmentViewModel() : BaseViewModel() {
 
     }
 
-    suspend fun addNewEntry(inputCalories: String, inputName: String, entryType: String) {
-        val calories = if (entryType == EntryType.EXCERCISE.toString()) -CalculationUtils.calculateValueFromInput(inputCalories) else { CalculationUtils.calculateValueFromInput(inputCalories) }
-        val name = if (inputName.isEmpty()) null else { inputName }
-        repository.addEntry(Entry(null, dayDate, calories, name, entryType))
+    suspend fun addNewEntry(id:Int?,inputCalories: String, inputName: String, entryType: String) {
+        val calories =
+            if (entryType == EntryType.EXCERCISE.toString()) -CalculationUtils.calculateValueFromInput(
+                inputCalories
+            ) else {
+                CalculationUtils.calculateValueFromInput(inputCalories)
+            }
+        val name = if (inputName.isEmpty()) null else {
+            inputName
+        }
+        repository.addEntry(Entry(id, dayDate, calories, name, entryType))
 
 
     }
@@ -90,9 +97,31 @@ class DayFragmentViewModel() : BaseViewModel() {
         )
     }
 
+    suspend fun getEntryById(id: Int?) {
+        withContext(Dispatchers.IO) {
+            var entry = repository.getEntryById(id)
+
+
+            withContext(Dispatchers.Main) {
+                entryLiveData.value = entry
+
+
+            }
+        }
+
+
+    }
+
     suspend fun editEntry(id: Int?, inputCalories: String, inputName: String, entryType: String) {
-        val calories = if (entryType == EntryType.EXCERCISE.toString()) -CalculationUtils.calculateValueFromInput(inputCalories) else { CalculationUtils.calculateValueFromInput(inputCalories) }
-        val name = if (inputName.isEmpty()) null else { inputName }
+        val calories =
+            if (entryType == EntryType.EXCERCISE.toString()) -CalculationUtils.calculateValueFromInput(
+                inputCalories
+            ) else {
+                CalculationUtils.calculateValueFromInput(inputCalories)
+            }
+        val name = if (inputName.isEmpty()) null else {
+            inputName
+        }
         repository.editEntry(Entry(id, dayDate, calories, name, entryType))
     }
 }

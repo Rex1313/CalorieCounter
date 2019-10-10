@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.caloriecounter.R
 import com.example.caloriecounter.models.EntryTypeModel
@@ -15,7 +16,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-class NewEntryDialogFragment() : DialogFragment() {
+class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
 
     lateinit var fragmentViewModel: DayFragmentViewModel
 
@@ -40,21 +41,6 @@ class NewEntryDialogFragment() : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         isCancelable = false
 
-        button_cancel.setOnClickListener {
-            dismiss()
-        }
-        button_add.setOnClickListener {
-
-            GlobalScope.launch {
-                fragmentViewModel.addNewEntry(
-                    text_input_calories.text.toString(),
-                    text_input_name.text.toString(),
-                    (spinner_category.selectedItem as EntryTypeModel).type.toString()
-                )
-                fragmentViewModel.refreshData()
-            }
-            dismiss()
-        }
         context?.let {
             val adapter = ArrayAdapter<EntryTypeModel>(
                 it, android.R.layout.simple_spinner_dropdown_item, fragmentViewModel.getEntryTypes()
@@ -62,15 +48,44 @@ class NewEntryDialogFragment() : DialogFragment() {
             spinner_category.adapter = adapter
 
 
+
+            if (id != null) {
+                GlobalScope.launch {
+                    fragmentViewModel.getEntryById(id)
+                }
+                fragmentViewModel.entryLiveData.observe(this, Observer { entry ->
+                    // text_input_calories.setText(entry.entryCalories.toInt())
+                    text_input_name.setText(entry.entryName)
+                    //spinner_category.setSelection(adapter.getPosition(EntryTypeModel()))
+                })
+
+            }
+            button_cancel.setOnClickListener {
+                dismiss()
+            }
+            button_add.setOnClickListener {
+
+                GlobalScope.launch {
+                    fragmentViewModel.addNewEntry(
+                        id,
+                        text_input_calories.text.toString(),
+                        text_input_name.text.toString(),
+                        (spinner_category.selectedItem as EntryTypeModel).type.toString()
+                    )
+                    fragmentViewModel.refreshData()
+                }
+                dismiss()
+            }
+
+
+
+            spinner_category
         }
-
-
-        spinner_category
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = NewEntryDialogFragment()
+        fun newInstance(id: Int?) = NewEntryDialogFragment(id)
     }
 
 }
