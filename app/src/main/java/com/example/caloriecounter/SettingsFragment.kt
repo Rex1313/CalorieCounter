@@ -36,34 +36,38 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SettingsFragmentViewModel::class.java)
-        GlobalScope.launch {
-            viewModel.getData(activity!!.applicationContext)
-        }
+        context?.let { context ->
+            GlobalScope.launch {
+                viewModel.getData(context)
+            }
 
-        viewModel.uiModelLiveData.observe(this, Observer { uiModel ->
-            text_input_daily_limit.setText(uiModel.calorieLimit)
-            text_input_username.setText(uiModel.username)
+            viewModel.uiModelLiveData.observe(this, Observer { uiModel ->
+                text_input_daily_limit.setText(uiModel.calorieLimit)
+                text_input_username.setText(uiModel.username)
 
-        })
-        text_input_daily_limit.onChange {
-            if (it.isNotEmpty()) {
-                GlobalScope.launch {
-                    viewModel.addDailySetting(it.toString())
+            })
+            text_input_daily_limit.onChange {
+                if (it.isNotEmpty()) {
+                    GlobalScope.launch {
+                        viewModel.addDailySetting(it.toString())
+                    }
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Limit cant be empty",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    GlobalScope.launch {
+                        viewModel.addDailySetting("0")
+                    }
                 }
             }
-            else {
-                Toast.makeText(activity!!.applicationContext,"Limit cant be empty",Toast.LENGTH_SHORT).show()
-                GlobalScope.launch {
-                    viewModel.addDailySetting("0")
-                }
+
+            text_input_username.onChange {
+                viewModel.addUsername(it.toString(), context)
+
             }
         }
-
-        text_input_username.onChange {
-            viewModel.addUsername(it.toString(), activity!!.applicationContext)
-
-        }
-
 
     }
 
