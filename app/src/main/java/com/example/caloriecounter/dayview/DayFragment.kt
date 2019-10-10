@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentActivity
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.caloriecounter.MainActivityViewModel
 import com.example.caloriecounter.R
+import kotlinx.android.synthetic.main.delete_confirmation_dialog.view.*
 import kotlinx.android.synthetic.main.food_card.*
 import kotlinx.android.synthetic.main.fragment_day.*
 import kotlinx.coroutines.GlobalScope
@@ -65,10 +67,28 @@ class DayFragment : Fragment() {
                     popupMenu.setOnMenuItemClickListener { item ->
                         when (item.itemId) {
                             R.id.menu_card_delete -> {
-                                GlobalScope.launch {
-                                    fragmentViewModel.deleteEntryById(id)
-                                    fragmentViewModel.refreshData()
+
+                                val deleteDialogView = LayoutInflater.from(context)
+                                    .inflate(R.layout.delete_confirmation_dialog, null)
+
+                                val dialogBuilder = AlertDialog.Builder(context)
+                                    .setView(deleteDialogView)
+                                    .setTitle("Delete entry")
+
+                                val deleteAlertDialog = dialogBuilder.show()
+
+                                deleteDialogView.dialog_delete.setOnClickListener {
+                                    GlobalScope.launch {
+                                        fragmentViewModel.deleteEntryById(id)
+                                        fragmentViewModel.refreshData()
+                                    }
+                                    deleteAlertDialog.dismiss()
+
                                 }
+                                deleteDialogView.dialog_cancel.setOnClickListener {
+                                    deleteAlertDialog.dismiss()
+                                }
+
                                 true
                             }
 //                        R.id.menu_card_edit -> {

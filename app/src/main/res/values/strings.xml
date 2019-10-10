@@ -25,5 +25,8 @@
     <string name="edit_entry">Edit entry</string>
     <string name="food">Food</string>
     <string name="excercise">Excercise</string>
+    <string name="delete">Delete</string>
+    <string name="delete_confirmation_text">Are you sure you want to delete entry?</string>
+    <string name="delete_confirmation_title">Delete entry</string>
 
 </resources>
