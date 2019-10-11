@@ -28,17 +28,37 @@ class CalculationUtils {
 
 
         fun calculateEquationsFromBrackets(inputString: String): String {
-            val bracketEquations = "(\\((.+?)\\))".toRegex()
-            val match = bracketEquations.findAll(inputString)
             var newString = inputString
-            match.iterator().forEach {
-                val (first, second) = it.destructured
-                val calculation = calculateValueFromInput(second).toString()
-                newString = newString.replace(first, calculation)
+            val firstBracket = getFirstBracketPosition(newString)
+            // If bracket found
+            if(firstBracket != -1) {
+                val bracketString = newString.slice(IntRange(firstBracket, findCorespondingBracketPosition(newString)))
+                val equation = newString.slice(IntRange(firstBracket+1, findCorespondingBracketPosition(newString)-1))
+                val calculation = calculateValueFromInput(equation).toString()
+                newString = newString.replace(bracketString, calculation)
             }
             if (newString.contains("("))
                 return calculateEquationsFromBrackets(newString)
             return newString
+        }
+
+        private fun getFirstBracketPosition(input: String):Int{
+            return input.indexOfFirst { it.toString() == "(" }
+        }
+
+        private fun findCorespondingBracketPosition(input: String): Int {
+            val positionOpeningBracket = getFirstBracketPosition(input)
+            var level = 1
+            for (i in positionOpeningBracket+1 until input.length) {
+                when (input.get(i).toString()) {
+                    ")" -> level--
+                    "(" -> level++
+                }
+                if (level == 0) {
+                    return i
+                }
+            }
+            return -1
         }
 
 
