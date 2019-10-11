@@ -77,4 +77,11 @@ class CalculationUtilsTest {
         val value = CalculationUtils.calculateValueFromInput(testValue)
         assertThat("Value from (21-15) * 0.6 + 123.5 /2 should be 65.35", value == 65.35F)
     }
+
+    @Test
+    fun calculate_bracketInBracketCalculation(){
+        val testValue = "((2+3) * 1 + (3-2)*2) /2"
+        val value = CalculationUtils.calculateValueFromInput(testValue)
+        assertThat("Value from (21-15) * 0.6 + 123.5 /2 should be 3.5", value == 3.5F)
+    }
 }
