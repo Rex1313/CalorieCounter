@@ -79,9 +79,20 @@ class CalculationUtilsTest {
     }
 
     @Test
-    fun calculate_bracketInBracketCalculation(){
-        val testValue = "((2+3) * 1 + (3-2)*2) /2"
+    fun calculation_nestedBracketCalculation(){
+        val testValue = "((3-1)*15-39) * 0.5"
         val value = CalculationUtils.calculateValueFromInput(testValue)
-        assertThat("Value from (21-15) * 0.6 + 123.5 /2 should be 3.5", value == 3.5F)
+        assertThat("Value from (21-15*(3-1)) * 0.5 should be -4.5", value == -4.5F)
     }
+
+    @Test
+    fun calculation_complexNestedBracketCalculation(){
+        val testValue =  "((1.3*40)+20+(130*5) + 30 + (66*2))/2"
+        val value = CalculationUtils.calculateValueFromInput(testValue)
+        println("calculation is $value")
+        assertThat("Value from  ((1.3*40)+20+(130*5) + 30 + (66*2))/2 should be 442", value == 442F)
+    }
+
+
+
 }
