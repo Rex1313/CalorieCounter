@@ -2,19 +2,17 @@ package com.example.caloriecounter
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import com.github.debop.kodatimes.now
+import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.settings_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import androidx.lifecycle.Observer
 import com.example.caloriecounter.base.onChange
+import kotlinx.android.synthetic.main.import_export_confirmation_dialog.view.*
 import java.util.*
 
 
@@ -60,6 +58,48 @@ class SettingsFragment : Fragment() {
 
             text_input_username.onChange {
                 viewModel.addUsername(it.toString(), context)
+
+            }
+            button_export.setOnClickListener {
+                val dialogView = LayoutInflater.from(context)
+                    .inflate(R.layout.import_export_confirmation_dialog, null)
+
+                val dialogBuilder = AlertDialog.Builder(context)
+                    .setView(dialogView)
+                    .setTitle("Export")
+
+                val alertDialog = dialogBuilder.show()
+                dialogView.text_view_dialog_text_import_export.text =
+                    resources.getString(R.string.confirmation_text_export)
+                dialogView.dialog_ok_import_export.setOnClickListener {
+                    //TODO logic
+                    alertDialog.dismiss()
+
+                }
+                dialogView.dialog_cancel_import_export.setOnClickListener {
+                    alertDialog.dismiss()
+                }
+
+            }
+            button_import.setOnClickListener {
+                val dialogView = LayoutInflater.from(context)
+                    .inflate(R.layout.import_export_confirmation_dialog, null)
+
+                val dialogBuilder = AlertDialog.Builder(context)
+                    .setView(dialogView)
+                    .setTitle("Import")
+
+                val alertDialog = dialogBuilder.show()
+                dialogView.text_view_dialog_text_import_export.text =
+                    resources.getString(R.string.confirmation_text_import)
+                dialogView.dialog_ok_import_export.setOnClickListener {
+                    //TODO logic
+                    alertDialog.dismiss()
+
+                }
+                dialogView.dialog_cancel_import_export.setOnClickListener {
+                    alertDialog.dismiss()
+                }
 
             }
         }
