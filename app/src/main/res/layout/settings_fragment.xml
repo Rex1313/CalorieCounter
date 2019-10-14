@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_header"
-            android:textSize="@dimen/text_medium"/>
+            android:textSize="@dimen/text_medium" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout_daily_limit"
@@ -34,7 +34,7 @@
                 android:id="@+id/text_input_daily_limit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"/>
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,6 +54,19 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/button_export"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below='@id/text_input_layout_username'
+            android:text="@string/export" />
+
+        <Button
+            android:id="@+id/button_import"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below='@id/button_export'
+            android:text="@string/import_data" />
 
 
     </RelativeLayout>

@@ -29,6 +29,13 @@
     <string name="save">Save</string>
     <string name="delete_confirmation_text">Are you sure you want to delete entry?</string>
     <string name="delete_confirmation_title">Delete entry</string>
+    <string name="export">Export</string>
+    <string name="import_data">Import</string>
+    <string name="ok">Ok</string>
+    <string name="yes">Yes</string>
+    <string name="confirmation_text_import">Are you sure to Import data?</string>
+    <string name="confirmation_text_export">Are you sure to Export data?</string>
+    <string name="confirmation_text">Are you sure?</string>
 
 
 </resources>
