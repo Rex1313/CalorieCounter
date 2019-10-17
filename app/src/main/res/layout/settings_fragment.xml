@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -26,15 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below='@id/text_view_welcome'
-            android:hint="@string/settings_calorie_limit"
-
-            >
+            android:hint="@string/settings_calorie_limit">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_daily_limit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:clickable="true"
+                android:focusable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,14 +41,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below='@id/text_input_layout_daily_limit'
-            android:hint="@string/settings_username"
-
-            >
+            android:hint="@string/settings_username">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_username"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
