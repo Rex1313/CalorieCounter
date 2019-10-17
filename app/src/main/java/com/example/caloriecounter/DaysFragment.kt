@@ -43,7 +43,15 @@ class DaysFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar?.show()
-        val adapter = DayFragmentViewPagerAdapter(childFragmentManager, LocalDate.now())
+        loadAdapter(LocalDate.now())
+        activityViewModel.loadData.observe(this, Observer {
+            loadAdapter(LocalDate.parse(it))
+        })
+    }
+
+
+    fun loadAdapter(date: LocalDate) {
+        val adapter = DayFragmentViewPagerAdapter(childFragmentManager, date)
         viewpager.adapter = adapter
         viewpager.setCurrentItem(ViewPagerValues.LIMIT_SWIPING_BACK)
         viewpager.offscreenPageLimit = 0

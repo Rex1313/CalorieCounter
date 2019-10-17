@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.caloriecounter.R
 import com.example.caloriecounter.base.format
+import com.example.caloriecounter.base.onChange
 import com.example.caloriecounter.models.EntryTypeModel
 import kotlinx.android.synthetic.main.new_entry_fragment.*
 import kotlinx.coroutines.GlobalScope
@@ -69,19 +70,26 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
                 dismiss()
             }
             button_add.setOnClickListener {
-
-                GlobalScope.launch {
-                    fragmentViewModel.addNewEntry(
-                        id,
-                        text_input_calories.text.toString(),
-                        text_input_name.text.toString(),
-                        (spinner_category.selectedItem as EntryTypeModel).type.toString()
-                    )
-                    fragmentViewModel.refreshData()
+                if (text_input_calories.text.toString().isNotEmpty()) {
+                    GlobalScope.launch {
+                        fragmentViewModel.addNewEntry(
+                            id,
+                            text_input_calories.text.toString(),
+                            text_input_name.text.toString(),
+                            (spinner_category.selectedItem as EntryTypeModel).type.toString()
+                        )
+                        fragmentViewModel.refreshData()
+                    }
+                    dismiss()
+                } else {
+                    text_input_layout_calories.setError(resources.getString(R.string.calories_empty_error));
                 }
-                dismiss()
             }
-
+            text_input_calories.onChange {
+                if (it.isNotEmpty()) {
+                    text_input_layout_calories.setError(null);
+                }
+            }
 
 
             spinner_category

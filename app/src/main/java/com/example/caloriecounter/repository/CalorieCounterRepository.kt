@@ -7,6 +7,8 @@ import com.example.caloriecounter.database.CalorieCounterDatabase
 import com.example.caloriecounter.database.DailySetting
 import com.example.caloriecounter.database.DatabaseConstants
 import com.example.caloriecounter.database.Entry
+import com.example.caloriecounter.utils.export.CsvConverter
+import com.example.caloriecounter.utils.export.ImportExportValues
 import kotlinx.coroutines.*
 
 object CalorieCounterRepository {
@@ -57,6 +59,29 @@ object CalorieCounterRepository {
 
     suspend fun editEntry(entry: Entry) = withContext(Dispatchers.IO) {
         db?.entriesDao()?.insert(entry)
+    }
 
+    suspend fun exportAllEntriesToCSV() = withContext(Dispatchers.IO){
+        val entries  = db?.entriesDao()?.getAll()
+        entries?.let {
+            CsvConverter.saveToCsv(it, ImportExportValues.ENTRIES_CSV_FILE)
+        }
+    }
+
+    suspend fun exportDailySettingsToCSV() = withContext(Dispatchers.IO){
+        val dailySettings = db?.dailySettingsDao()?.getAll()
+        dailySettings?.let {
+            CsvConverter.saveToCsv(it, ImportExportValues.DAILY_SETTINGS_CSV_FILE)
+        }
+    }
+
+    suspend fun importAllEntriesFromCSV() = withContext(Dispatchers.IO){
+        val entries = CsvConverter.readFromCsv<Entry>(ImportExportValues.ENTRIES_CSV_FILE)
+        db?.entriesDao()?.insertAll(entries)
+
+    }
+    suspend fun importAllDailySettingsFromCSV() = withContext(Dispatchers.IO){
+        val dailySettings = CsvConverter.readFromCsv<DailySetting>(ImportExportValues.DAILY_SETTINGS_CSV_FILE)
+        db?.dailySettingsDao()?.insertAll(dailySettings)
     }
 }

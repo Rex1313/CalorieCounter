@@ -1,11 +1,14 @@
 package com.example.caloriecounter
 
 import android.content.Context
+import android.util.Log
 import android.util.Log.println
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.example.caloriecounter.database.CalorieCounterDatabase
 import com.example.caloriecounter.database.DailySetting
+import com.example.caloriecounter.database.Entry
+import com.example.caloriecounter.models.EntryType
 import com.example.caloriecounter.repository.CalorieCounterRepository
 import com.example.caloriecounter.repository.CalorieCounterRepository.db
 import io.mockk.impl.annotations.RelaxedMockK
@@ -118,6 +121,31 @@ class RepositoryUnitTest {
                 assertThat("Gets Closest Date", it.startDate == "2018-01-15")
             }
         }
+    }
+
+    @Test
+    fun test_importDataFromCSV() {
+        val testData = arrayListOf<Entry>(
+            Entry(1, "1200-12-12", 1200f, "Some", EntryType.FOOD.toString()),
+            Entry(2, "1200-12-13", 1300f, "Some", EntryType.FOOD.toString()),
+            Entry(3, "1200-12-12", 120f, "Some", EntryType.FOOD.toString())
+        )
+        runBlocking {
+            GlobalScope.async {
+                repository.db?.entriesDao()?.insertAll(testData)
+                repository.exportAllEntriesToCSV()
+                repository.db?.entriesDao()?.deleteAllEntries()
+                repository.importAllEntriesFromCSV()
+                repository.db?.entriesDao()?.getAll()?.first()
+
+            }.let {entry->
+                assertThat(
+                    "Entry is inserted and imported: ",
+                    entry.await()?.date == "1200-12-12" ?: false
+                )
+            }
+        }
+
     }
 
 

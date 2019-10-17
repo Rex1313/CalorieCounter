@@ -2,20 +2,19 @@ package com.example.caloriecounter
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.text.format.DateUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import com.github.debop.kodatimes.now
+import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.settings_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import androidx.lifecycle.Observer
 import com.example.caloriecounter.base.onChange
-import java.util.*
+import kotlinx.android.synthetic.main.import_export_confirmation_dialog.view.*
+import org.joda.time.LocalDate
 
 
 class SettingsFragment : Fragment() {
@@ -25,6 +24,7 @@ class SettingsFragment : Fragment() {
     }
 
     private lateinit var viewModel: SettingsFragmentViewModel
+    private lateinit var activityViewModel: MainActivityViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +36,9 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SettingsFragmentViewModel::class.java)
+       activity?.let {
+        activityViewModel =    ViewModelProviders.of(it).get(MainActivityViewModel::class.java)
+       }
         context?.let { context ->
             GlobalScope.launch {
                 viewModel.getData(context)
@@ -60,6 +63,55 @@ class SettingsFragment : Fragment() {
 
             text_input_username.onChange {
                 viewModel.addUsername(it.toString(), context)
+
+            }
+            button_export.setOnClickListener {
+                val dialogView = LayoutInflater.from(context)
+                    .inflate(R.layout.import_export_confirmation_dialog, null)
+
+                val dialogBuilder = AlertDialog.Builder(context)
+                    .setView(dialogView)
+                    .setTitle("Export")
+
+                val alertDialog = dialogBuilder.show()
+                dialogView.text_view_dialog_text_import_export.text =
+                    resources.getString(R.string.confirmation_text_export)
+                dialogView.dialog_ok_import_export.setOnClickListener {
+                    GlobalScope.launch {
+                        viewModel.exportDataToCSV()
+                    }
+                    alertDialog.dismiss()
+
+                }
+                dialogView.dialog_cancel_import_export.setOnClickListener {
+                    alertDialog.dismiss()
+                }
+
+            }
+            button_import.setOnClickListener {
+                val dialogView = LayoutInflater.from(context)
+                    .inflate(R.layout.import_export_confirmation_dialog, null)
+
+                val dialogBuilder = AlertDialog.Builder(context)
+                    .setView(dialogView)
+                    .setTitle("Import")
+
+                val alertDialog = dialogBuilder.show()
+                dialogView.text_view_dialog_text_import_export.text =
+                    resources.getString(R.string.confirmation_text_import)
+                dialogView.dialog_ok_import_export.setOnClickListener {
+                    GlobalScope.launch {
+                        viewModel.importDataToCSV()
+                        activityViewModel.refreshDataWithDate(LocalDate.now().toString(com.example.caloriecounter.utils.DateUtils.DB_DATE_FORMAT))
+                        viewModel.getData(context)
+                    }
+
+                    alertDialog.dismiss()
+
+                }
+                dialogView.dialog_cancel_import_export.setOnClickListener {
+                    alertDialog.dismiss()
+                }
 
             }
         }
