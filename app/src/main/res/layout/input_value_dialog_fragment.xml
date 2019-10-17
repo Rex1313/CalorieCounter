@@ -20,7 +20,6 @@
             android:gravity="center_horizontal"
             android:paddingTop="@dimen/spacer_small"
             android:paddingBottom="@dimen/spacer_medium"
-            android:text="@string/change_settings_title"
             android:textSize="@dimen/text_medium" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -28,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below='@id/text_view_input_value_title'
-            android:hint="@string/hint"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText

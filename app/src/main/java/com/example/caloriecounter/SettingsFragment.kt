@@ -48,11 +48,11 @@ class SettingsFragment : Fragment() {
             }
 
             viewModel.uiModelLiveData.observe(this, Observer { uiModel ->
-                text_view_calories_settings.text = uiModel.calorieLimit
-                text_view_name_settings.text = uiModel.username
+                text_input_daily_limit.setText(uiModel.calorieLimit)
+                text_input_username.setText(uiModel.username)
 
             })
-            text_view_calories_settings.setOnClickListener {
+            text_input_daily_limit.setOnClickListener {
                 val onSaveClicked: (String) -> Unit = {
                     if (it.isNotEmpty()) {
                         GlobalScope.launch {
@@ -69,14 +69,15 @@ class SettingsFragment : Fragment() {
                 InputValueDialogFragment.newInstance(
                     InputType.TYPE_CLASS_NUMBER,
                     resources.getString(R.string.settings_calorie_limit),
-                    it.text_view_calories_settings.text.toString(),
+                    resources.getString(R.string.change_settings_title),
+                    it.text_input_daily_limit.text.toString(),
                     onSaveClicked
                 )
                     .show(childFragmentManager, "SetCalories")
 
             }
 
-            text_view_name_settings.setOnClickListener {
+            text_input_username.setOnClickListener {
                 val onSaveClicked: (String) -> Unit = {
                     viewModel.addUsername(it, context)
                     GlobalScope.launch {
@@ -87,7 +88,8 @@ class SettingsFragment : Fragment() {
                 InputValueDialogFragment.newInstance(
                     InputType.TYPE_CLASS_TEXT,
                     resources.getString(R.string.settings_username),
-                    it.text_view_name_settings.text.toString(),
+                    resources.getString(R.string.change_settings_title),
+                    it.text_input_username.text.toString(),
                     onSaveClicked
                 )
                     .show(childFragmentManager, "SetUsername")

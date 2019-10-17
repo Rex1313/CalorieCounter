@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 class InputValueDialogFragment(
     val inputType: Int,
     val hint: String,
+    val title: String,
     val oryginalValue: String,
     val onSaveClicked: (newValue: String) -> Unit
 
@@ -42,6 +43,7 @@ class InputValueDialogFragment(
             text_input_layout_input_value.hint = hint
             text_input_input_value.inputType = inputType
             text_input_input_value.setText(oryginalValue)
+            text_view_input_value_title.text = title
 
             button_cancel_input_value.setOnClickListener {
                 dismiss()
@@ -61,8 +63,9 @@ class InputValueDialogFragment(
         fun newInstance(
             inputType: Int,
             hint: String,
+            title: String,
             oryginalValue: String,
             onSaveClicked: (newValue: String) -> Unit
-        ) = InputValueDialogFragment(inputType, hint, oryginalValue, onSaveClicked)
+        ) = InputValueDialogFragment(inputType, hint, title, oryginalValue, onSaveClicked)
     }
 }
