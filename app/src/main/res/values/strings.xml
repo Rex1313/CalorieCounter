@@ -36,6 +36,7 @@
     <string name="confirmation_text_import">Are you sure to Import data?</string>
     <string name="confirmation_text_export">Are you sure to Export data?</string>
     <string name="confirmation_text">Are you sure?</string>
+    <string name="calories_empty_error">You need to enter calories</string>
 
 
 </resources>
