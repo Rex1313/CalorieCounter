@@ -1,52 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".dayview.DayFragment">
 
-    <RelativeLayout
-        android:id="@+id/relative_layout_top"
+
+
+    <TextView
+        android:id="@+id/text_view_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextOnBackgroundMediumEmphasis"
+        android:textSize="@dimen/title_text_size"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/small_margin"
+        app:layout_constraintBottom_toBottomOf="@+id/separator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+    <TextView
+        android:id="@+id/textview_day_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/day"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_day"
+        android:textSize="@dimen/subheader_text_size"
+        />
+    <TextView
+        android:id="@+id/text_view_calories_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below='@id/text_view_day'
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/calories_left_text"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/separator" />
+
+
+    <TextView
+        android:id="@+id/calories_left_decoration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/left_text_main_screen"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintEnd_toEndOf="@+id/text_view_calories_left"
+        app:layout_constraintTop_toBottomOf="@id/text_view_calories_left" />
+
+
+    <ImageView
+        android:id="@+id/imageview_eaten_icon"
+        android:layout_width="@dimen/imageview_main_icons_size"
+        android:layout_height="@dimen/imageview_main_icons_size"
+        android:background="@drawable/calories_eaten"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/textview_calories_eaten"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        app:layout_constraintVertical_bias="0.491" />
+
+    <TextView
+        android:id="@+id/textview_calories_eaten"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/colorTextOnBackgroundMediumEmphasis"
+        android:textSize="@dimen/calories_eaten_text"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toEndOf="@id/imageview_eaten_icon"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@color/colorPrimary">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/card_padding"
+        android:layout_marginEnd="@dimen/card_padding"
+        android:max="100"
+        android:minHeight="@dimen/main_progress_height"
+        android:progressDrawable="@drawable/progress_main"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/text_view_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/card_padding"
-            android:text="@string/day"
-            android:textColor="@color/title_material_colour_opposite"
-            android:textSize="@dimen/title_text_size"
-            android:textStyle="bold"
-
-            />
-
-        <TextView
-            android:id="@+id/text_view_calculation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below='@id/text_view_day'
-            android:paddingTop="@dimen/spacer_medium"
-            android:paddingBottom="@dimen/spacer_medium"
-            android:text="@string/text_day_calculation"
-            android:textColor="@color/subtitle_material_colour_opposite"
-            android:textSize="@dimen/subheader_text_size" />
+    <ImageView
+        android:id="@+id/imageview_limit_icon"
+        android:layout_width="@dimen/imageview_main_icons_size"
+        android:layout_height="@dimen/imageview_main_icons_size"
+        android:background="@drawable/calories_limit"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/textview_limit"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
 
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/textview_limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/colorTextOnBackgroundMediumEmphasis"
+        android:textSize="@dimen/calories_eaten_text"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageview_limit_icon"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/colorTextOnBackgroundHighEmphasis"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/recycler_view_food"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below='@id/relative_layout_top'
+        android:layout_height="0dp"
         android:scrollbars="vertical"
-
-        />
+        android:layout_marginTop="@dimen/cardview_separation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_action_button_add_meal"
@@ -56,5 +152,38 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        app:srcCompat="@drawable/add_white_24dp" />
-</RelativeLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/add_black_24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="319dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="186dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

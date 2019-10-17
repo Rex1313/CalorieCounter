@@ -3,6 +3,7 @@
 
     <string name="day">Today</string>
     <string name="text_day_calculation">Limit- eaten calories = left today</string>
+    <string name="text_calories_left">Calories left</string>
     <string name="text_day_label_name">Name</string>
     <string name="text_day_label_calories">Calories</string>
     <string name="card_item_name">bread</string>
@@ -37,6 +38,11 @@
     <string name="confirmation_text_export">Are you sure to Export data?</string>
     <string name="confirmation_text">Are you sure?</string>
     <string name="calories_empty_error">You need to enter calories</string>
+    <string name="left_text_main_screen">left</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="kcal">kcal</string>
+    <string name="toolbar_main_title">Calories Counter</string>
 
 
 </resources>

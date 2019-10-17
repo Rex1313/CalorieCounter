@@ -1,7 +1,9 @@
 package com.example.caloriecounter.dayview
 
 import androidx.lifecycle.MutableLiveData
+import com.example.caloriecounter.R
 import com.example.caloriecounter.base.BaseViewModel
+import com.example.caloriecounter.base.ResourceProvider
 import com.example.caloriecounter.base.format
 import com.example.caloriecounter.database.DailySetting
 import com.example.caloriecounter.database.Entry
@@ -17,6 +19,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import org.joda.time.LocalDate
+import java.util.function.ToDoubleFunction
 
 class DayFragmentViewModel() : BaseViewModel() {
 
@@ -43,23 +46,32 @@ class DayFragmentViewModel() : BaseViewModel() {
                 entries = entries,
                 limit = setting.caloriesLimit.toFloat()
             )
-            val dateDescription =
-                LocalDate.parse(dayDate).toString(DateUtils.WEEKDAY_FORMAT)
+            var dateDescription = LocalDate.parse(dayDate).toString(DateUtils.WEEKDAY_FORMAT)
+            if (LocalDate.parse(dayDate).isEqual(LocalDate.now())) {
+                dateDescription = "${ResourceProvider.getString(R.string.today)} ($dateDescription)"
+            }
+            if (LocalDate.parse(dayDate).isEqual(LocalDate.now().minusDays(1))) {
+                dateDescription =
+                    "${ResourceProvider.getString(R.string.yesterday)} ($dateDescription)"
+            }
 
             withContext(Dispatchers.Main) {
                 uiModelLiveData.value = DayScreenUIModel(
                     entries.map {
                         UIEntry(
                             it.entryName ?: EntryConstants.NAME_DEFAULT_VALUE,
-                            "${it.entryCalories.format(0)} kcal",
+                            "${it.entryCalories.format(0)} ${ResourceProvider.getString(R.string.kcal)}",
                             it.id,
                             it.entryType
                         )
                     },
                     setting.caloriesLimit.toString(),
                     eatenCalories.toString(),
-                    leftCalories.toString(), dayDate
-                ).apply { this.dateDescription = "$dateDescription ($dayDate)" }
+                    leftCalories.toString(),
+                    LocalDate.parse(dayDate).toString(DateUtils.DATE_UI_FORMAT),
+                    getProgress(setting.caloriesLimit.toString(), eatenCalories.toString()).toInt(),
+                    isLimitExceeded(setting.caloriesLimit.toString(), eatenCalories.toString())
+                ).apply { this.dateDescription = dateDescription }
             }
         }
 
@@ -122,5 +134,13 @@ class DayFragmentViewModel() : BaseViewModel() {
             inputName
         }
         repository.editEntry(Entry(id, dayDate, calories, name, entryType))
+    }
+
+    private fun getProgress(limit: String, eatenCalories: String): Float {
+        return (eatenCalories.toFloat() / limit.toFloat() * 100)
+    }
+
+    private fun isLimitExceeded(limit: String, eatenCalories: String): Boolean {
+        return getProgress(limit, eatenCalories) > 100
     }
 }

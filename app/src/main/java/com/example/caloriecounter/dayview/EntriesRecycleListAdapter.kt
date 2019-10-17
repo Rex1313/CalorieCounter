@@ -13,11 +13,12 @@ import com.example.caloriecounter.models.UIEntry
 import kotlinx.android.synthetic.main.food_card.view.*
 
 
-class FoodRecycleListAdapter(
+class EntriesRecycleListAdapter(
     val entries: List<UIEntry>,
     val onOverflowClicked: (view: View, id: Int?) -> Unit,
-    val onItemClicked: (id: Int?) -> Unit
-) : RecyclerView.Adapter<FoodRecycleListAdapter.FoodCardViewHolder>() {
+    val onItemClicked: (id: Int?) -> Unit,
+    val onItemLongClicked:(id:Int?) -> Unit
+) : RecyclerView.Adapter<EntriesRecycleListAdapter.FoodCardViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodCardViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -37,7 +38,6 @@ class FoodRecycleListAdapter(
         private var name: TextView? = null
         private var menuIcon: ImageView? = null
         private var typeIcon: ImageView
-
         init {
             calories = itemView.text_view_title
             name = itemView.text_view_subtitle
@@ -56,10 +56,12 @@ class FoodRecycleListAdapter(
             itemView.setOnClickListener {
                 onItemClicked(entry.id)
             }
-            if (entry.entryType == EntryType.EXCERCISE.toString()) typeIcon.setImageResource(R.drawable.excercise)
-            if (entry.entryType == EntryType.FOOD.toString()) typeIcon.setImageResource(R.drawable.calories)
-
-
+            itemView.setOnLongClickListener {
+                onItemLongClicked(entry.id)
+                true
+            }
+            if(entry.entryType == EntryType.EXCERCISE.toString()) typeIcon.setImageResource(R.drawable.excercise_white)
+            if(entry.entryType == EntryType.FOOD.toString()) typeIcon.setImageResource(R.drawable.calories_white)
         }
 
     }

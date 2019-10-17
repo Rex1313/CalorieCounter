@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     app:cardCornerRadius="4dp"
     app:cardElevation="@dimen/cardview_default_elevation"
+
     android:layout_marginBottom="@dimen/cardview_separation"
     >
 
@@ -14,6 +15,7 @@
         android:id="@+id/relative_layout_wrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorBackgroundAccent"
         android:padding="@dimen/card_padding"
         android:foreground="?attr/selectableItemBackground"
 
@@ -31,7 +33,7 @@
             android:layout_height="wrap_content"
             android:gravity="start"
             android:text=""
-            android:textColor="@color/title_material_colour"
+            android:textColor="@color/colorTextOnBackgroundHighEmphasis"
             android:textSize="@dimen/title_text_size"
             android:layout_toEndOf="@id/imageview_type"
             android:textStyle="bold"
@@ -44,14 +46,14 @@
             android:layout_below="@id/text_view_title"
             android:text="@string/card_item_calories"
             android:layout_toEndOf="@id/imageview_type"
-            android:textColor="@color/subtitle_material_colour"
+            android:textColor="@color/colorTextOnBackgroundMediumEmphasis"
             android:textSize="@dimen/subheader_text_size" />
 
        <ImageView
            android:layout_width="24dp"
            android:layout_height="24dp"
            android:id="@+id/image_view_menu"
-           android:background="@drawable/more_vert_black_24dp"
+           android:background="@drawable/outline_more_vert_white_18dp"
            android:layout_alignParentEnd="true"
            android:layout_centerVertical="true"
            />

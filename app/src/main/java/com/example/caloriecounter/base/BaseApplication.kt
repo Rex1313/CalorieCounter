@@ -11,5 +11,6 @@ class BaseApplication: Application() {
         super.onCreate()
         CalorieCounterRepository.initDatabase(this)
         CsvConverter.dataDirectory ="${Environment.getExternalStorageDirectory().path}/CalorieCounter/"
+        ResourceProvider.application = this
     }
 }
