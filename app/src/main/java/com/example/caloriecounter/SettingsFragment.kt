@@ -2,6 +2,7 @@ package com.example.caloriecounter
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.text.format.DateUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 import androidx.lifecycle.Observer
 import com.example.caloriecounter.base.onChange
 import kotlinx.android.synthetic.main.import_export_confirmation_dialog.view.*
-import java.util.*
+import org.joda.time.LocalDate
 
 
 class SettingsFragment : Fragment() {
@@ -23,6 +24,7 @@ class SettingsFragment : Fragment() {
     }
 
     private lateinit var viewModel: SettingsFragmentViewModel
+    private lateinit var activityViewModel: MainActivityViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +36,9 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SettingsFragmentViewModel::class.java)
+       activity?.let {
+        activityViewModel =    ViewModelProviders.of(it).get(MainActivityViewModel::class.java)
+       }
         context?.let { context ->
             GlobalScope.launch {
                 viewModel.getData(context)
@@ -72,7 +77,9 @@ class SettingsFragment : Fragment() {
                 dialogView.text_view_dialog_text_import_export.text =
                     resources.getString(R.string.confirmation_text_export)
                 dialogView.dialog_ok_import_export.setOnClickListener {
-                    //TODO logic
+                    GlobalScope.launch {
+                        viewModel.exportDataToCSV()
+                    }
                     alertDialog.dismiss()
 
                 }
@@ -93,7 +100,12 @@ class SettingsFragment : Fragment() {
                 dialogView.text_view_dialog_text_import_export.text =
                     resources.getString(R.string.confirmation_text_import)
                 dialogView.dialog_ok_import_export.setOnClickListener {
-                    //TODO logic
+                    GlobalScope.launch {
+                        viewModel.importDataToCSV()
+                        activityViewModel.refreshDataWithDate(LocalDate.now().toString(com.example.caloriecounter.utils.DateUtils.DB_DATE_FORMAT))
+                        viewModel.getData(context)
+                    }
+
                     alertDialog.dismiss()
 
                 }

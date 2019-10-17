@@ -26,13 +26,23 @@ class SettingsFragmentViewModel : BaseViewModel() {
         SharedPreferencesUtils.setString("username", username, context)
     }
 
+    suspend fun exportDataToCSV()= withContext(Dispatchers.IO){
+        repository.exportAllEntriesToCSV()
+        repository.exportDailySettingsToCSV()
+    }
+
+    suspend fun importDataToCSV() = withContext(Dispatchers.IO){
+        repository.importAllEntriesFromCSV()
+        repository.importAllDailySettingsFromCSV()
+    }
+
+
     suspend fun getData(context: Context) =
         withContext(Dispatchers.IO) {
             val today = LocalDate.now().toString(DateUtils.DB_DATE_FORMAT)
             val calorieLimit = repository.getDailySetting(today)?.caloriesLimit.toString()
             val username = SharedPreferencesUtils.getString("username", context)
             withContext(Dispatchers.Main) {
-
                 uiModelLiveData.value = SettingsUIModel(calorieLimit, username)
             }
         }
