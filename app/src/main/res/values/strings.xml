@@ -44,5 +44,11 @@
     <string name="kcal">kcal</string>
     <string name="toolbar_main_title">Calories Counter</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="change_settings_title">Change your setting</string>
+    <string name="setting">setting</string>
+    <string name="hint">type here</string>
+
 
 </resources>
