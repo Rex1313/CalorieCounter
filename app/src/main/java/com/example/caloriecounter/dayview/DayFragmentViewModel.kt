@@ -19,6 +19,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import org.joda.time.LocalDate
+import java.util.function.ToDoubleFunction
 
 class DayFragmentViewModel() : BaseViewModel() {
 
@@ -68,7 +69,7 @@ class DayFragmentViewModel() : BaseViewModel() {
                     eatenCalories.toString(),
                     leftCalories.toString(),
                     LocalDate.parse(dayDate).toString(DateUtils.DATE_UI_FORMAT),
-                    getProgress(setting.caloriesLimit.toString(), eatenCalories.toString()),
+                    getProgress(setting.caloriesLimit.toString(), eatenCalories.toString()).toInt(),
                     isLimitExceeded(setting.caloriesLimit.toString(), eatenCalories.toString())
                 ).apply { this.dateDescription = dateDescription }
             }
@@ -135,8 +136,8 @@ class DayFragmentViewModel() : BaseViewModel() {
         repository.editEntry(Entry(id, dayDate, calories, name, entryType))
     }
 
-    private fun getProgress(limit: String, eatenCalories: String): Int {
-        return (eatenCalories.toFloat() / limit.toFloat() * 100).toInt()
+    private fun getProgress(limit: String, eatenCalories: String): Float {
+        return (eatenCalories.toFloat() / limit.toFloat() * 100)
     }
 
     private fun isLimitExceeded(limit: String, eatenCalories: String): Boolean {

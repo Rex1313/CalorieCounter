@@ -58,6 +58,7 @@
         app:layout_constraintEnd_toEndOf="@+id/text_view_calories_left"
         app:layout_constraintTop_toBottomOf="@id/text_view_calories_left" />
 
+
     <ImageView
         android:id="@+id/imageview_eaten_icon"
         android:layout_width="@dimen/imageview_main_icons_size"
@@ -66,8 +67,8 @@
         app:layout_constraintBottom_toTopOf="@id/guideline"
         app:layout_constraintEnd_toStartOf="@+id/textview_calories_eaten"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        app:layout_constraintVertical_bias="0.491" />
 
     <TextView
         android:id="@+id/textview_calories_eaten"
@@ -175,7 +176,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="206dp" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
