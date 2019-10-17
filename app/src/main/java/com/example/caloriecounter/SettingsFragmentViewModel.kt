@@ -26,12 +26,12 @@ class SettingsFragmentViewModel : BaseViewModel() {
         SharedPreferencesUtils.setString("username", username, context)
     }
 
-    suspend fun exportDataToCSV()= withContext(Dispatchers.IO){
+    suspend fun exportDataToCSV() = withContext(Dispatchers.IO) {
         repository.exportAllEntriesToCSV()
         repository.exportDailySettingsToCSV()
     }
 
-    suspend fun importDataToCSV() = withContext(Dispatchers.IO){
+    suspend fun importDataToCSV() = withContext(Dispatchers.IO) {
         repository.importAllEntriesFromCSV()
         repository.importAllDailySettingsFromCSV()
     }
@@ -46,4 +46,6 @@ class SettingsFragmentViewModel : BaseViewModel() {
                 uiModelLiveData.value = SettingsUIModel(calorieLimit, username)
             }
         }
+
+
 }

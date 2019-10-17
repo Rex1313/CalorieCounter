@@ -2,6 +2,7 @@ package com.example.caloriecounter
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.text.InputType
 import android.text.format.DateUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +14,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import androidx.lifecycle.Observer
 import com.example.caloriecounter.base.onChange
+import com.example.caloriecounter.dayview.NewEntryDialogFragment
 import kotlinx.android.synthetic.main.import_export_confirmation_dialog.view.*
+import kotlinx.android.synthetic.main.settings_fragment.view.*
 import org.joda.time.LocalDate
 
 
@@ -36,42 +39,67 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SettingsFragmentViewModel::class.java)
-       activity?.let {
-        activityViewModel =    ViewModelProviders.of(it).get(MainActivityViewModel::class.java)
-       }
+        activity?.let {
+            activityViewModel = ViewModelProviders.of(it).get(MainActivityViewModel::class.java)
+        }
         context?.let { context ->
             GlobalScope.launch {
                 viewModel.getData(context)
             }
 
             viewModel.uiModelLiveData.observe(this, Observer { uiModel ->
-                text_input_daily_limit.setText(uiModel.calorieLimit)
-                text_input_username.setText(uiModel.username)
+                text_view_calories_settings.text = uiModel.calorieLimit
+                text_view_name_settings.text = uiModel.username
 
             })
-            text_input_daily_limit.onChange {
-                if (it.isNotEmpty()) {
-                    GlobalScope.launch {
-                        viewModel.addDailySetting(it.toString())
-                    }
-                } else {
-                    GlobalScope.launch {
-                        viewModel.addDailySetting("0")
+            text_view_calories_settings.setOnClickListener {
+                val onSaveClicked: (String) -> Unit = {
+                    if (it.isNotEmpty()) {
+                        GlobalScope.launch {
+                            viewModel.addDailySetting(it)
+                            viewModel.getData(context)
+                        }
+                    } else {
+                        GlobalScope.launch {
+                            viewModel.addDailySetting("0")
+                            viewModel.getData(context)
+                        }
                     }
                 }
+                InputValueDialogFragment.newInstance(
+                    InputType.TYPE_CLASS_NUMBER,
+                    resources.getString(R.string.settings_calorie_limit),
+                    it.text_view_calories_settings.text.toString(),
+                    onSaveClicked
+                )
+                    .show(childFragmentManager, "SetCalories")
+
             }
 
-            text_input_username.onChange {
-                viewModel.addUsername(it.toString(), context)
+            text_view_name_settings.setOnClickListener {
+                val onSaveClicked: (String) -> Unit = {
+                    viewModel.addUsername(it, context)
+                    GlobalScope.launch {
+                        viewModel.getData(context)
+                    }
+                }
 
+                InputValueDialogFragment.newInstance(
+                    InputType.TYPE_CLASS_TEXT,
+                    resources.getString(R.string.settings_username),
+                    it.text_view_name_settings.text.toString(),
+                    onSaveClicked
+                )
+                    .show(childFragmentManager, "SetUsername")
             }
+
             button_export.setOnClickListener {
                 val dialogView = LayoutInflater.from(context)
                     .inflate(R.layout.import_export_confirmation_dialog, null)
 
                 val dialogBuilder = AlertDialog.Builder(context)
                     .setView(dialogView)
-                    .setTitle("Export")
+                    .setTitle(resources.getString(R.string.export))
 
                 val alertDialog = dialogBuilder.show()
                 dialogView.text_view_dialog_text_import_export.text =
@@ -94,7 +122,7 @@ class SettingsFragment : Fragment() {
 
                 val dialogBuilder = AlertDialog.Builder(context)
                     .setView(dialogView)
-                    .setTitle("Import")
+                    .setTitle(resources.getString(R.string.import_data))
 
                 val alertDialog = dialogBuilder.show()
                 dialogView.text_view_dialog_text_import_export.text =
