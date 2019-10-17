@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#9fa8da</color>
-    <color name="colorPrimaryDark">#7BC4E7</color>
+    <color name="colorPrimaryDark">@color/colorBackgroundAccent</color>
     <color name="colorAccent">#EEEEEE</color>
 
+    <color name="colorSecondary">@color/colorAccent</color>
+
     <color name="colorBackground">#121212</color>
+    <color name="colorBackgroundAccent">#282828</color>
+
+    <color name="errorColour">#CF6679</color>
 
     <color name="title_material_colour">#DE000000</color>
     <color name="colorTextOnBackgroundMediumEmphasis">#99FFFFFF</color>
     <color name="colorTextOnBackgroundHighEmphasis">#DEFFFFFF</color>
+    <color name="colorTextOnBackgroundDisabled">#61FFFFFF</color>
     <color name="subtitle_material_colour_opposite">#99FFFFFF</color>
 </resources>

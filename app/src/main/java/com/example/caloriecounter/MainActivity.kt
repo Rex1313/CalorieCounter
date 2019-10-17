@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         NavigationUI.setupActionBarWithNavController(this, navHost.navController)
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+        supportActionBar?.setTitle(R.string.toolbar_main_title)
 
 
     }

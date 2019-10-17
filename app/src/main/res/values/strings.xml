@@ -30,6 +30,11 @@
     <string name="save">Save</string>
     <string name="delete_confirmation_text">Are you sure you want to delete entry?</string>
     <string name="delete_confirmation_title">Delete entry</string>
+    <string name="left_text_main_screen">left</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="kcal">kcal</string>
+    <string name="toolbar_main_title">Calories Counter</string>
 
 
 </resources>

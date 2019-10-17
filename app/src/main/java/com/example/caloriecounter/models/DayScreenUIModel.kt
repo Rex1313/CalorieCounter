@@ -7,10 +7,12 @@ class DayScreenUIModel(
     val limit: String,
     val eatenCalories: String,
     val leftCalories: String,
-    val date: String
+    val date: String,
+    val progress: Int = 0,
+    val isLimitExceed: Boolean = false
 ) {
 
-    var dateDescription:String? = null
+    var dateDescription: String? = null
     var calculationText = "$limit -  $eatenCalories = $leftCalories"
 
 }

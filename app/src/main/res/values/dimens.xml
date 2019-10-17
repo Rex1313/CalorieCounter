@@ -7,6 +7,8 @@
     <dimen name="spacer_large">30dp</dimen>
     <dimen name="new_entry_dialog_height">320dp</dimen>
 
+
+    <dimen name="small_margin">8dp</dimen>
     <dimen name="card_padding">16dp</dimen>
     <dimen name="header_subheader_separation">28dp</dimen>
 
@@ -14,11 +16,13 @@
     <dimen name="subheader_text_size">14dp</dimen>
     <dimen name="card_view_height">80dp</dimen>
     <dimen name="imageview_card_size">48dp</dimen>
+    <dimen name="imageview_main_icons_size">80dp</dimen>
     <dimen name="cardview_separation">8dp</dimen>
 
 
     <dimen name="calories_left_text">48dp</dimen>
     <dimen name="calories_eaten_text">30dp</dimen>
     <dimen name="calories_limit_text">30dp</dimen>
+    <dimen name="main_progress_height">10dp</dimen>
 
 </resources>

@@ -15,7 +15,7 @@
         android:id="@+id/relative_layout_wrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackground"
+        android:background="@color/colorBackgroundAccent"
         android:padding="@dimen/card_padding"
         android:foreground="?attr/selectableItemBackground"
 
@@ -53,7 +53,7 @@
            android:layout_width="24dp"
            android:layout_height="24dp"
            android:id="@+id/image_view_menu"
-           android:background="@drawable/more_vert_black_24dp"
+           android:background="@drawable/outline_more_vert_white_18dp"
            android:layout_alignParentEnd="true"
            android:layout_centerVertical="true"
            />
