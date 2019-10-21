@@ -219,12 +219,7 @@ class RepositoryUnitTest {
                     if (it.id == 4) {
                         assertThat(
                             "Favourite is edited :",
-                            it.id == 4 ?: "not edited "
-                        )
-                    } else {
-                        assertThat(
-                            "Favourite is not edited :",
-                            it.id == 4 ?: "not edited "
+                            it.name == "dancing cookie" ?: "not edited "
                         )
                     }
                 }
@@ -248,12 +243,17 @@ class RepositoryUnitTest {
                 repository.db?.favouritesDao()
                     ?.deleteByFavouriteId(2)
                 repository.db?.favouritesDao()
-                    ?.getById(2)
-            }.let { fav ->
-                assertThat(
-                    "Favourite is deleted :",
-                    fav.await()?.id == 2 ?: "not deleted "
-                )
+                    ?.getAllFavourites()
+            }.let { all ->
+                all.await()?.forEach {
+                    if (it.id == 2) {
+                        assertThat(
+                            "Favourite is not deleted :",
+                            it.id == 2 ?: "not deleted "
+                        )
+                    }
+                }
+
             }
         }
 
