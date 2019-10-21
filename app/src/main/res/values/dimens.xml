@@ -5,7 +5,7 @@
     <dimen name="spacer_small">10dp</dimen>
     <dimen name="text_medium">20sp</dimen>
     <dimen name="spacer_large">30dp</dimen>
-    <dimen name="new_entry_dialog_height">320dp</dimen>
+    <dimen name="new_entry_dialog_height">370dp</dimen>
 
 
     <dimen name="small_margin">8dp</dimen>

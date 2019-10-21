@@ -49,6 +49,7 @@
     <string name="change_settings_title">Change your setting</string>
     <string name="setting">setting</string>
     <string name="hint">type here</string>
+    <string name="add_to_favorite">Add to Favorite</string>
 
 
 </resources>
