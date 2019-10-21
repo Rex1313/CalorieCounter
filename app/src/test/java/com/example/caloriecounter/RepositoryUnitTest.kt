@@ -150,7 +150,7 @@ class RepositoryUnitTest {
     }
 
     @Test
-    fun test_addFavourites() {
+    fun test_addFavourite() {
         val testData = arrayListOf<Favourite>(
             Favourite(1, 256.toFloat(), "peroni small", EntryType.FOOD.toString()),
             Favourite(2, 300.toFloat(), "cookie", EntryType.FOOD.toString()),
@@ -168,31 +168,6 @@ class RepositoryUnitTest {
                 assertThat(
                     "Favourite is added :",
                     fav.await()?.name == "cookie2" ?: false
-                )
-            }
-        }
-
-    }
-
-    @Test
-    fun test_addFavouritesFail() {
-        val testData = arrayListOf<Favourite>(
-            Favourite(1, 256.toFloat(), "peroni small", EntryType.FOOD.toString()),
-            Favourite(2, 300.toFloat(), "cookie", EntryType.FOOD.toString()),
-            Favourite(3, 400.toFloat(), "tomato", EntryType.FOOD.toString()),
-            Favourite(4, 500.toFloat(), "dance", EntryType.EXCERCISE.toString())
-        )
-        runBlocking {
-            GlobalScope.async {
-                repository.db?.favouritesDao()?.insertAll(testData);
-                repository.db?.favouritesDao()
-                    ?.insert(Favourite(null, 400.toFloat(), "cookie", EntryType.FOOD.toString()))
-                repository.db?.favouritesDao()
-                    ?.getByNameAndType("cookie", EntryType.FOOD.toString())?.first()
-            }.let { fav ->
-                assertThat(
-                    "Favourite is not added :",
-                    fav.await()?.value == 300.toFloat() ?: false
                 )
             }
         }
@@ -283,7 +258,7 @@ class RepositoryUnitTest {
     }
 
     @Test
-    fun test_searchFavourite() {
+    fun test_searchFavouritesByNameAndType() {
         val testData = arrayListOf<Favourite>(
             Favourite(1, 256.toFloat(), "peroni small", EntryType.FOOD.toString()),
             Favourite(2, 300.toFloat(), "cookie", EntryType.FOOD.toString()),
@@ -305,6 +280,53 @@ class RepositoryUnitTest {
 
     }
 
+    @Test
+    fun test_searchFavouritesByName() {
+        val testData = arrayListOf<Favourite>(
+            Favourite(1, 256.toFloat(), "peroni small", EntryType.FOOD.toString()),
+            Favourite(2, 300.toFloat(), "cookie", EntryType.FOOD.toString()),
+            Favourite(3, 400.toFloat(), "tomato", EntryType.FOOD.toString()),
+            Favourite(4, 500.toFloat(), "dance", EntryType.EXCERCISE.toString())
+        )
+        runBlocking {
+            GlobalScope.async {
+                repository.db?.favouritesDao()?.insertAll(testData);
+                repository.db?.favouritesDao()
+                    ?.getByName("cookie")?.first()
+            }.let { fav ->
+                assertThat(
+                    "Favourite name by search :",
+                    fav.await()?.name == "cookie" ?: false
+                )
+            }
+        }
+
+    }
+
+    @Test
+    fun test_getFavouritesAlphabetical() {
+        val testData = arrayListOf<Favourite>(
+            Favourite(1, 256.toFloat(), "peroni small", EntryType.FOOD.toString()),
+            Favourite(2, 300.toFloat(), "cookie", EntryType.FOOD.toString()),
+            Favourite(3, 400.toFloat(), "tomato", EntryType.FOOD.toString()),
+            Favourite(4, 500.toFloat(), "dance", EntryType.EXCERCISE.toString())
+        )
+        runBlocking {
+            GlobalScope.async {
+                repository.db?.favouritesDao()?.insertAll(testData);
+                repository.db?.favouritesDao()
+                    ?.getAllFavouritesAlphabetical()
+            }.let { all ->
+                all.await()?.forEach{
+
+                    println("Favourite by name is: ${it.name}")
+
+                }
+
+            }
+        }
+
+    }
     @After
     fun closeDb() {
         repository.db?.close()

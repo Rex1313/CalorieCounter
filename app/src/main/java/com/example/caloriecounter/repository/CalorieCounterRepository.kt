@@ -59,16 +59,16 @@ object CalorieCounterRepository {
     }
 
 
-    suspend fun searchFavouriteByNameAndType(name: String, type: String) =
+    suspend fun searchFavouritesByNameAndType(name: String, type: String) =
         withContext(Dispatchers.IO) {
             return@withContext db?.favouritesDao()?.getByNameAndType(name, type)
         }
 
-    suspend fun searchFavouriteByName(name: String) = withContext(Dispatchers.IO) {
+    suspend fun searchFavouritesByName(name: String) = withContext(Dispatchers.IO) {
         return@withContext db?.favouritesDao()?.getByName(name)
     }
 
-    suspend fun addToFavourite(value: Float, name: String, type: String): Boolean =
+    suspend fun addFavourite(value: Float, name: String, type: String): Boolean =
         withContext(Dispatchers.IO) {
             if (db?.favouritesDao()?.getByNameAndType(name, type).isNullOrEmpty()) {
                 db?.favouritesDao()?.insert(Favourite(null, value, name, type))

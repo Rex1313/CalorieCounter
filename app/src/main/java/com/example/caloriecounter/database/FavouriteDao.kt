@@ -31,6 +31,6 @@ interface FavouriteDao {
     @Query("SELECT * FROM favourites")
     fun getAllFavourites(): List<Favourite>
 
-    @Query("SELECT * FROM favourites ORDER BY name DESC ")
+    @Query("SELECT * FROM favourites ORDER BY name ASC")
     fun getAllFavouritesAlphabetical(): List<Favourite>
 }
