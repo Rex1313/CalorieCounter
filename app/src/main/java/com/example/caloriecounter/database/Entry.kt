@@ -8,12 +8,12 @@ import com.example.caloriecounter.CsvConvertible
 @Entity(tableName = "entries")
 class Entry(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int?, @ColumnInfo(name =EntryConstants.COLUMN_DATE) val date:String, @ColumnInfo(
-        name = EntryConstants.COLUMN_CALORIES
-    ) val entryCalories: Float, @ColumnInfo(name = EntryConstants.COLUMN_NAME) val entryName: String? = EntryConstants.NAME_DEFAULT_VALUE
-, @ColumnInfo(name = EntryConstants.COLUMN_ENTRY_TYPE) val entryType:String):CsvConvertible {
+        name = EntryConstants.COLUMN_VALUE
+    ) val entryValue: Float, @ColumnInfo(name = EntryConstants.COLUMN_NAME) val entryName: String? = EntryConstants.NAME_DEFAULT_VALUE
+    , @ColumnInfo(name = EntryConstants.COLUMN_ENTRY_TYPE) val entryType:String):CsvConvertible {
 
 
    override fun toCsv(): String {
-        return "null|$date|$entryCalories|$entryName|$entryType"
+        return "null|$date|$entryValue|$entryName|$entryType"
     }
 }

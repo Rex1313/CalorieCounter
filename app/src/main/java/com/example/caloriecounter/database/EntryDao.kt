@@ -18,7 +18,6 @@ interface EntryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(entry: Entry)
 
-
     @Insert()
     fun insertAll(entries: List<Entry>)
 

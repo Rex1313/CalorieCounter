@@ -1,13 +1,12 @@
 package com.example.caloriecounter.utils
 
 import com.example.caloriecounter.database.Entry
-import org.joda.time.LocalDate
 
 
 class CalculationUtils {
     companion object {
         fun calculateEatenCalories(entries: List<Entry>): Int {
-            return entries.sumBy { it.entryCalories.toInt() }
+            return entries.sumBy { it.entryValue.toInt() }
 
         }
 
