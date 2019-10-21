@@ -116,17 +116,17 @@ class DayFragmentViewModel() : BaseViewModel() {
         }
     }
 
-    suspend fun editEntry(id: Int?, inputCalories: String, inputName: String, entryType: String) {
-        val calories =
+    suspend fun editEntry(id: Int?, inputValue: String, inputName: String, entryType: String) {
+        val value =
             if (entryType == EntryType.EXCERCISE.toString()) -CalculationUtils.calculateValueFromInput(
-                inputCalories
+                inputValue
             ) else {
-                CalculationUtils.calculateValueFromInput(inputCalories)
+                CalculationUtils.calculateValueFromInput(inputValue)
             }
         val name = if (inputName.isEmpty()) null else {
             inputName
         }
-        repository.editEntry(Entry(id, dayDate, calories, name, entryType))
+        repository.editEntry(Entry(id, dayDate, value, name, entryType))
     }
 
     private fun getProgress(limit: String, eatenCalories: String): Float {
