@@ -4,7 +4,7 @@ import androidx.room.*
 
 @Dao
 interface FavouriteDao {
-    @Query("SELECT * FROM favourites where CONTAINS(name, :name) and type=:type")
+    @Query("SELECT * FROM favourites where name LIKE '%' || :name || '%' and type=:type")
     fun getByNameAndType(name: String, type: String): List<Favourite>
 
     @Query("SELECT * FROM favourites where id = :id")
@@ -19,4 +19,12 @@ interface FavouriteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun edit(newFavourite: Favourite)
 
+    @Insert()
+    fun insertAll(favourites: List<Favourite>)
+
+    @Query("DELETE FROM favourites")
+    fun deleteAllFavourites()
+
+    @Query("SELECT * FROM favourites")
+    fun getAllFavourites(): List<Favourite>
 }
