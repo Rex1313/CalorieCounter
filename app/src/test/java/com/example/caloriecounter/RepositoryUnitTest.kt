@@ -167,7 +167,7 @@ class RepositoryUnitTest {
             }.let { fav ->
                 assertThat(
                     "Favourite is added :",
-                    fav.await()?.name == "cookie2" ?: "not added "
+                    fav.await()?.name == "cookie2" ?: false
                 )
             }
         }
@@ -192,7 +192,7 @@ class RepositoryUnitTest {
             }.let { fav ->
                 assertThat(
                     "Favourite is not added :",
-                    fav.await()?.value == 300.toFloat() ?: "error"
+                    fav.await()?.value == 300.toFloat() ?: false
                 )
             }
         }
@@ -219,7 +219,7 @@ class RepositoryUnitTest {
                     if (it.id == 4) {
                         assertThat(
                             "Favourite is edited :",
-                            it.name == "dancing cookie" ?: "not edited "
+                            it.name == "dancing cookie" ?: false
                         )
                     }
                 }
@@ -249,7 +249,7 @@ class RepositoryUnitTest {
                     if (it.id == 2) {
                         assertThat(
                             "Favourite is not deleted :",
-                            it.id == 2 ?: "not deleted "
+                            it.id == 2 ?: false
                         )
                     }
                 }
@@ -275,7 +275,7 @@ class RepositoryUnitTest {
             }.let { fav ->
                 assertThat(
                     "Favourite name by Id :",
-                    fav.await()?.name == "tomato" ?: "error "
+                    fav.await()?.name == "tomato" ?: false
                 )
             }
         }
@@ -298,7 +298,7 @@ class RepositoryUnitTest {
             }.let { fav ->
                 assertThat(
                     "Favourite name by search :",
-                    fav.await()?.name == "cookie" ?: "error "
+                    fav.await()?.name == "cookie" ?: false
                 )
             }
         }
