@@ -58,7 +58,7 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
                     fragmentViewModel.getEntryById(id)
                 }
                 fragmentViewModel.entryLiveData.observe(this, Observer { entry ->
-                    text_input_value.setText(entry.entryValue.format(0))
+                    text_input_calories.setText(entry.entryValue.format(0))
                     text_input_name.setText(entry.entryName)
                     spinner_category.setSelection(fragmentViewModel.getEntryTypePosition(entry.entryType))
                 })
@@ -68,11 +68,11 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
                 dismiss()
             }
             button_add.setOnClickListener {
-                if (text_input_value.text.toString().isNotEmpty()) {
+                if (text_input_calories.text.toString().isNotEmpty()) {
                     GlobalScope.launch {
                         fragmentViewModel.addNewEntry(
                             id,
-                            text_input_value.text.toString(),
+                            text_input_calories.text.toString(),
                             text_input_name.text.toString(),
                             (spinner_category.selectedItem as EntryTypeModel).type.toString()
                         )
@@ -80,12 +80,12 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
                     }
                     dismiss()
                 } else {
-                    text_input_layout_value.setError(resources.getString(R.string.value_empty_error));
+                    text_input_layout_calories.setError(resources.getString(R.string.value_empty_error));
                 }
             }
-            text_input_value.onChange {
+            text_input_calories.onChange {
                 if (it.isNotEmpty()) {
-                    text_input_layout_value.setError(null);
+                    text_input_layout_calories.setError(null);
                 }
             }
 
