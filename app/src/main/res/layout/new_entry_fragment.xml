@@ -61,8 +61,7 @@
             android:layout_marginTop="@dimen/spacer_medium"
             android:layout_marginBottom="@dimen/spacer_medium"
             android:text="@string/add_to_favorite"
-            android:layout_below="@id/text_input_layout_name"
-            android:button="@android:drawable/btn_star"/>
+            android:layout_below="@id/text_input_layout_name"/>
 
         <Spinner
             android:id="@+id/spinner_category"
