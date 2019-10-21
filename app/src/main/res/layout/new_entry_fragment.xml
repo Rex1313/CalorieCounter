@@ -24,7 +24,7 @@
             android:textSize="@dimen/text_medium" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_layout_calories"
+            android:id="@+id/text_input_layout_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below='@id/text_view_add_new'
@@ -32,7 +32,7 @@
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_input_calories"
+                android:id="@+id/text_input_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:digits="1234567890-+()*/."
@@ -44,7 +44,7 @@
             android:id="@+id/text_input_layout_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below='@id/text_input_layout_calories'
+            android:layout_below='@id/text_input_layout_value'
             android:hint="@string/popup_name">
 
             <com.google.android.material.textfield.TextInputEditText
