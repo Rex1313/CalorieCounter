@@ -59,19 +59,22 @@ object CalorieCounterRepository {
     }
 
 
-    suspend fun searchFavourite(name: String, type: String) = withContext(Dispatchers.IO) {
-        return@withContext db?.favouritesDao()?.getByNameAndType(name, type)
+    suspend fun searchFavouriteByNameAndType(name: String, type: String) =
+        withContext(Dispatchers.IO) {
+            return@withContext db?.favouritesDao()?.getByNameAndType(name, type)
+        }
+
+    suspend fun searchFavouriteByName(name: String) = withContext(Dispatchers.IO) {
+        return@withContext db?.favouritesDao()?.getByName(name)
     }
 
-    suspend fun addToFavourite(value: Float, name: String, type: String):Boolean =
+    suspend fun addToFavourite(value: Float, name: String, type: String): Boolean =
         withContext(Dispatchers.IO) {
-            try {
+            if (db?.favouritesDao()?.getByNameAndType(name, type).isNullOrEmpty()) {
                 db?.favouritesDao()?.insert(Favourite(null, value, name, type))
                 return@withContext true
-            } catch (err: SQLiteException) {
-                println("catch exception $err")
-                return@withContext false
             }
+            return@withContext false
         }
 
     suspend fun deleteFavouriteById(id: Int?) = withContext(Dispatchers.IO) {
@@ -84,6 +87,10 @@ object CalorieCounterRepository {
 
     suspend fun editFavourite(favourite: Favourite) = withContext(Dispatchers.IO) {
         db?.favouritesDao()?.edit(favourite);
+    }
+
+    suspend fun getAllFavouritesAlphabetical() = withContext(Dispatchers.IO) {
+        return@withContext db?.favouritesDao()?.getAllFavouritesAlphabetical()
     }
 
     suspend fun exportAllEntriesToCSV() = withContext(Dispatchers.IO) {

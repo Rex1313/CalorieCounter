@@ -7,10 +7,13 @@ interface FavouriteDao {
     @Query("SELECT * FROM favourites where name LIKE '%' || :name || '%' and type=:type")
     fun getByNameAndType(name: String, type: String): List<Favourite>
 
+    @Query("SELECT * FROM favourites where name LIKE '%' || :name || '%'")
+    fun getByName(name: String): List<Favourite>
+
     @Query("SELECT * FROM favourites where id = :id")
     fun getById(id: Int?): Favourite
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert()
     fun insert(favourite: Favourite)
 
     @Query("DELETE FROM favourites WHERE id = :id")
@@ -27,4 +30,7 @@ interface FavouriteDao {
 
     @Query("SELECT * FROM favourites")
     fun getAllFavourites(): List<Favourite>
+
+    @Query("SELECT * FROM favourites ORDER BY name DESC ")
+    fun getAllFavouritesAlphabetical(): List<Favourite>
 }
