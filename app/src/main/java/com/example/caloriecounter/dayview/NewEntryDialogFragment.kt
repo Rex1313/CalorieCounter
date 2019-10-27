@@ -60,7 +60,7 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
                     fragmentViewModel.getEntryById(id)
                 }
                 fragmentViewModel.entryLiveData.observe(this, Observer { entry ->
-                    text_input_calories.setText(entry.entryCalories.format(0))
+                    text_input_calories.setText(entry.entryValue.format(0))
                     text_input_name.setText(entry.entryName)
                     spinner_category.setSelection(fragmentViewModel.getEntryTypePosition(entry.entryType))
                 })
@@ -86,7 +86,7 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
                     }
 
                 } else {
-                    text_input_layout_calories.setError(resources.getString(R.string.calories_empty_error));
+                    text_input_layout_calories.setError(resources.getString(R.string.value_empty_error));
                 }
             }
             text_input_calories.onChange {

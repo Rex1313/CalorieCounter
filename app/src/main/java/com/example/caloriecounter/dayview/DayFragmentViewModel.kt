@@ -19,7 +19,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import org.joda.time.LocalDate
-import java.util.function.ToDoubleFunction
 
 class DayFragmentViewModel() : BaseViewModel() {
 
@@ -60,7 +59,7 @@ class DayFragmentViewModel() : BaseViewModel() {
                     entries.map {
                         UIEntry(
                             it.entryName ?: EntryConstants.NAME_DEFAULT_VALUE,
-                            "${it.entryCalories.format(0)} ${ResourceProvider.getString(R.string.kcal)}",
+                            "${it.entryValue.format(0)} ${ResourceProvider.getString(R.string.kcal)}",
                             it.id,
                             it.entryType
                         )
@@ -85,17 +84,17 @@ class DayFragmentViewModel() : BaseViewModel() {
 
     }
 
-    suspend fun addNewEntry(id: Int?, inputCalories: String, inputName: String, entryType: String) {
-        val calories =
-            if (entryType == EntryType.EXCERCISE.toString() && inputCalories.toInt() > 0) -CalculationUtils.calculateValueFromInput(
-                inputCalories
+    suspend fun addNewEntry(id: Int?, inputValue: String, inputName: String, entryType: String) {
+        val value =
+            if (entryType == EntryType.EXCERCISE.toString() && inputValue.toInt() > 0) -CalculationUtils.calculateValueFromInput(
+                inputValue
             ) else {
-                CalculationUtils.calculateValueFromInput(inputCalories)
+                CalculationUtils.calculateValueFromInput(inputValue)
             }
         val name = if (inputName.isEmpty()) null else {
             inputName
         }
-        repository.addEntry(Entry(id, dayDate, calories, name, entryType))
+        repository.addEntry(Entry(id, dayDate, value, name, entryType))
     }
 
     suspend fun refreshData() = getData()
@@ -111,29 +110,23 @@ class DayFragmentViewModel() : BaseViewModel() {
     suspend fun getEntryById(id: Int?) {
         withContext(Dispatchers.IO) {
             var entry = repository.getEntryById(id)
-
-
             withContext(Dispatchers.Main) {
                 entryLiveData.value = entry
-
-
             }
         }
-
-
     }
 
-    suspend fun editEntry(id: Int?, inputCalories: String, inputName: String, entryType: String) {
-        val calories =
+    suspend fun editEntry(id: Int?, inputValue: String, inputName: String, entryType: String) {
+        val value =
             if (entryType == EntryType.EXCERCISE.toString()) -CalculationUtils.calculateValueFromInput(
-                inputCalories
+                inputValue
             ) else {
-                CalculationUtils.calculateValueFromInput(inputCalories)
+                CalculationUtils.calculateValueFromInput(inputValue)
             }
         val name = if (inputName.isEmpty()) null else {
             inputName
         }
-        repository.editEntry(Entry(id, dayDate, calories, name, entryType))
+        repository.editEntry(Entry(id, dayDate, value, name, entryType))
     }
 
     private fun getProgress(limit: String, eatenCalories: String): Float {

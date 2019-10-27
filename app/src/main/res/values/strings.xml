@@ -37,7 +37,7 @@
     <string name="confirmation_text_import">Are you sure to Import data?</string>
     <string name="confirmation_text_export">Are you sure to Export data?</string>
     <string name="confirmation_text">Are you sure?</string>
-    <string name="calories_empty_error">You need to enter calories</string>
+    <string name="value_empty_error">You need to enter value</string>
     <string name="left_text_main_screen">left</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
@@ -49,6 +49,7 @@
     <string name="change_settings_title">Change your setting</string>
     <string name="setting">setting</string>
     <string name="hint">type here</string>
+    <string name="add_to_favourites">Add to Favourites</string>
 
 
 </resources>
