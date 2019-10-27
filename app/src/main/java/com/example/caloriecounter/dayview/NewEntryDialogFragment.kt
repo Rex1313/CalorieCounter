@@ -1,11 +1,9 @@
 package com.example.caloriecounter.dayview
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
@@ -17,6 +15,8 @@ import com.example.caloriecounter.models.EntryTypeModel
 import kotlinx.android.synthetic.main.new_entry_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
+import com.example.caloriecounter.utils.WidgetUtils
 
 
 class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
@@ -79,8 +79,12 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
                             (spinner_category.selectedItem as EntryTypeModel).type.toString()
                         )
                         fragmentViewModel.refreshData()
+                        activity?.let {
+                            WidgetUtils.requestUpdateSimpleWidgets(it.application)
+                        }
+                        dismiss()
                     }
-                    dismiss()
+
                 } else {
                     text_input_layout_calories.setError(resources.getString(R.string.calories_empty_error));
                 }

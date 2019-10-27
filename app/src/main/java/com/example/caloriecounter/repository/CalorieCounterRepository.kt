@@ -3,13 +3,20 @@ package com.example.caloriecounter.repository
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.example.caloriecounter.R
+import com.example.caloriecounter.base.ResourceProvider
 import com.example.caloriecounter.database.CalorieCounterDatabase
 import com.example.caloriecounter.database.DailySetting
 import com.example.caloriecounter.database.DatabaseConstants
 import com.example.caloriecounter.database.Entry
+import com.example.caloriecounter.models.SimpleWidgetModel
+import com.example.caloriecounter.utils.CalculationUtils
+import com.example.caloriecounter.utils.DateUtils
 import com.example.caloriecounter.utils.export.CsvConverter
 import com.example.caloriecounter.utils.export.ImportExportValues
+import kotlinx.android.synthetic.main.fragment_day.view.*
 import kotlinx.coroutines.*
+import org.joda.time.LocalDate
 
 object CalorieCounterRepository {
 
@@ -48,9 +55,15 @@ object CalorieCounterRepository {
 
     suspend fun addEntry(entry: Entry) = withContext(Dispatchers.IO) {
         db?.entriesDao()?.insert(entry)
-
     }
 
+    suspend fun getWidgetInfo()= withContext(Dispatchers.IO){
+        val todayDate = LocalDate.now().toString(DateUtils.DB_DATE_FORMAT)
+        val dailySettings = db?.dailySettingsDao()?.get(todayDate)
+        val entries = db?.entriesDao()?.get(todayDate)
+       val leftCalories = CalculationUtils.calculateLeftCalories(entries?: mutableListOf(), dailySettings?.firstOrNull()?.caloriesLimit?.toFloat()?:0f)
+        return@withContext SimpleWidgetModel("${leftCalories} ${ResourceProvider.getString(R.string.kcal)}")
+    }
 
     suspend fun removeEntryById(id: Int?) = withContext(Dispatchers.IO) {
         db?.entriesDao()?.deleteByEntryId(id)
