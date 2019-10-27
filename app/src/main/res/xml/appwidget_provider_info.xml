@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="@dimen/widget_width_small"
+    android:minHeight="@dimen/widget_height_small"
+    android:updatePeriodMillis="180000"
+    android:previewImage="@drawable/calorie_counter_icon"
+    android:initialLayout="@layout/app_widget_simple"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen">
+</appwidget-provider>
