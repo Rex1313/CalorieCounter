@@ -1,5 +1,6 @@
 package com.example.caloriecounter
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -36,6 +37,10 @@ class SplashScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as AppCompatActivity).supportActionBar?.hide()
+
+        video_view_welcome.setVideoURI(Uri.parse("android.resource://"+ (activity as AppCompatActivity).getPackageName() + "/raw/berry2"))
+        video_view_welcome.start()
+
         val dayFragment = DaysFragment.newInstance()
         button_welcome.setOnClickListener {
             findNavController().navigate(R.id.action_splashScreenFragment_to_daysFragment)
