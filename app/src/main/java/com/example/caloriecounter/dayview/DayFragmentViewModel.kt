@@ -136,4 +136,11 @@ class DayFragmentViewModel() : BaseViewModel() {
     private fun isLimitExceeded(limit: String, eatenCalories: String): Boolean {
         return getProgress(limit, eatenCalories) > 100
     }
+
+    suspend fun addToFavourites(name: String, calories: String, type: String): Boolean {
+        if (repository.searchFavouritesByName(name).isNullOrEmpty()) {
+            repository.addFavourite(calories.toFloat(), name, type)
+            return true
+        } else return false
+    }
 }

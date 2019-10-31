@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -70,6 +71,37 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
                 dismiss()
             }
             button_add.setOnClickListener {
+                if (checkbox_favourite.isChecked) {
+                    if (text_input_name.text.toString().isNotEmpty() && text_input_calories.text.toString().isNotEmpty()) {
+                        GlobalScope.launch {
+                            if (fragmentViewModel.addToFavourites(
+                                    text_input_name.text.toString(),
+                                    text_input_calories.text.toString(),
+                                    (spinner_category.selectedItem as EntryTypeModel).type.toString()
+                                )
+                            ) {
+//                                Toast.makeText(context, "Added to Favourites", Toast.LENGTH_SHORT)
+//                                .show()
+                                println("Added to Favourites")
+                            } else {
+//                                Toast.makeText(
+//                                    context,
+//                                    "Name exist, not added to Favourites",
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+                                println("Name exist, not added to Favourites")
+
+                            }
+                        }
+                    } else {
+                        if (text_input_calories.text.toString().isEmpty()) {
+                            text_input_layout_calories.setError(resources.getString(R.string.value_empty_error_fav));
+                        }
+                        if (text_input_name.text.toString().isEmpty()) {
+                            text_input_layout_name.setError(resources.getString(R.string.value_empty_error_fav));
+                        }
+                    }
+                }
                 if (text_input_calories.text.toString().isNotEmpty()) {
                     GlobalScope.launch {
                         fragmentViewModel.addNewEntry(
@@ -78,6 +110,7 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
                             text_input_name.text.toString(),
                             (spinner_category.selectedItem as EntryTypeModel).type.toString()
                         )
+
                         fragmentViewModel.refreshData()
                         activity?.let {
                             WidgetUtils.requestUpdateSimpleWidgets(it.application)
@@ -94,7 +127,11 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
                     text_input_layout_calories.setError(null);
                 }
             }
-
+            text_input_name.onChange {
+                if (it.isNotEmpty()) {
+                    text_input_layout_name.setError(null);
+                }
+            }
 
             spinner_category
         }

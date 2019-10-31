@@ -38,6 +38,7 @@
     <string name="confirmation_text_export">Are you sure to Export data?</string>
     <string name="confirmation_text">Are you sure?</string>
     <string name="value_empty_error">You need to enter value</string>
+    <string name="value_empty_error_fav">You need to enter value to save to Favourites</string>
     <string name="left_text_main_screen">left</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
