@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import androidx.lifecycle.Observer
 import com.example.caloriecounter.base.onChange
 import com.example.caloriecounter.dayview.NewEntryDialogFragment
+import com.example.caloriecounter.utils.WidgetUtils
 import kotlinx.android.synthetic.main.import_export_confirmation_dialog.view.*
 import kotlinx.android.synthetic.main.settings_fragment.view.*
 import org.joda.time.LocalDate
@@ -65,6 +66,10 @@ class SettingsFragment : Fragment() {
                             viewModel.getData(context)
                         }
                     }
+                    activity?.let {
+                        WidgetUtils.requestUpdateSimpleWidgets(it.application)
+                    }
+
                 }
                 InputValueDialogFragment.newInstance(
                     InputType.TYPE_CLASS_NUMBER,
