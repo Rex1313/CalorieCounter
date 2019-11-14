@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
@@ -11,7 +12,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.caloriecounter.R
 import com.example.caloriecounter.base.format
 import com.example.caloriecounter.base.onChange
+import com.example.caloriecounter.database.Favourite
 import com.example.caloriecounter.models.EntryTypeModel
+import com.example.caloriecounter.models.UIFavorite
 import kotlinx.android.synthetic.main.new_entry_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -43,6 +46,30 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
         isCancelable = false
 
         context?.let {
+
+            fragmentViewModel.favoritesLiveData.observe(this, Observer {
+                val autocompleteAdapter = ArrayAdapter<UIFavorite>(
+                    context, android.R.layout.simple_spinner_dropdown_item, it
+                )
+                text_input_name.setThreshold(1)
+                text_input_name.setAdapter(autocompleteAdapter)
+                text_input_name.setOnItemClickListener(object : AdapterView.OnItemClickListener {
+                    override fun onItemClick(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+
+                        val selectedItem = (parent?.adapter?.getItem(position) as UIFavorite)
+                        text_input_calories.setText(selectedItem.calories.toString())
+                        text_input_name.setText(selectedItem.name)
+                    }
+
+                })
+            })
+
+
             val adapter = ArrayAdapter<EntryTypeModel>(
                 it, android.R.layout.simple_spinner_dropdown_item, fragmentViewModel.entryTypes
             )
@@ -70,6 +97,15 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
             button_add.setOnClickListener {
                 if (text_input_calories.text.toString().isNotEmpty()) {
                     GlobalScope.launch {
+                        if (checkbox_favourite.isChecked) {
+                            fragmentViewModel.addNewFavorite(
+                                text_input_calories.text.toString(),
+                                text_input_name.text.toString(),
+                                (spinner_category.selectedItem as EntryTypeModel).type.toString()
+                            )
+                        }
+
+
                         fragmentViewModel.addNewEntry(
                             id,
                             text_input_calories.text.toString(),

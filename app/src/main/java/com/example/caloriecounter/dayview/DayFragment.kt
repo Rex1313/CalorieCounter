@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.caloriecounter.MainActivityViewModel
 import com.example.caloriecounter.R
+import com.example.caloriecounter.base.ResourceProvider
 import kotlinx.android.synthetic.main.delete_confirmation_dialog.view.*
 import kotlinx.android.synthetic.main.fragment_day.*
 import kotlinx.coroutines.GlobalScope
@@ -46,12 +47,12 @@ class DayFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_day, container, false)
     }
 
-    fun showDeleteDialog(context:Context, entryId:Int?){
+    fun showDeleteDialog(context: Context, entryId: Int?) {
         val deleteDialogView = LayoutInflater.from(context)
             .inflate(R.layout.delete_confirmation_dialog, null)
         val dialogBuilder = AlertDialog.Builder(context)
             .setView(deleteDialogView)
-            .setTitle("Delete entry")
+            .setTitle(ResourceProvider.getString(R.string.delete_dialog_title))
 
         val deleteAlertDialog = dialogBuilder.show()
 
@@ -68,6 +69,10 @@ class DayFragment : Fragment() {
         }
     }
 
+    fun showEditDialogFragment(entryId: Int?) {
+        NewEntryDialogFragment.newInstance(entryId)
+            .show(childFragmentManager, "NewEntry")
+    }
 
     // You can use this for accessing the views they will be iniflated here
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -105,11 +110,10 @@ class DayFragment : Fragment() {
                     popupMenu.show()
                 }
                 val onItemClicked: (Int?) -> Unit = {
-                    NewEntryDialogFragment.newInstance(it)
-                        .show(childFragmentManager, "NewEntry")
+                    showEditDialogFragment(it)
                 }
 
-                val onItemLongClicked: (Int?)-> Unit = {
+                val onItemLongClicked: (Int?) -> Unit = {
                     showDeleteDialog(context, it)
                 }
                 // RecyclerView node initialized here
@@ -119,7 +123,12 @@ class DayFragment : Fragment() {
                     layoutManager = LinearLayoutManager(activity)
                     // set the custom adapter to the RecyclerView
                     adapter =
-                        EntriesRecycleListAdapter(uiModel.entries, myOverflowClicked, onItemClicked, onItemLongClicked)
+                        EntriesRecycleListAdapter(
+                            uiModel.entries,
+                            myOverflowClicked,
+                            onItemClicked,
+                            onItemLongClicked
+                        )
                 }
                 text_view_day.text = uiModel.date
                 textview_day_info.text = uiModel.dateDescription
@@ -128,13 +137,35 @@ class DayFragment : Fragment() {
                 textview_limit.text = uiModel.limit
                 progress.setProgress(uiModel.progress)
                 if (uiModel.isLimitExceed) {
-                    progress.progressDrawable = resources.getDrawable(R.drawable.progress_main_exceeded, null)
-                    text_view_calories_left.setTextColor(resources.getColor(R.color.errorColour, null))
-                    calories_left_decoration.setTextColor(resources.getColor(R.color.errorColour, null))
-                }else{
-                    progress.progressDrawable = resources.getDrawable(R.drawable.progress_main, null)
-                    text_view_calories_left.setTextColor(resources.getColor(R.color.colorPrimary, null))
-                    calories_left_decoration.setTextColor(resources.getColor(R.color.colorPrimary, null))
+                    progress.progressDrawable =
+                        resources.getDrawable(R.drawable.progress_main_exceeded, null)
+                    text_view_calories_left.setTextColor(
+                        resources.getColor(
+                            R.color.errorColour,
+                            null
+                        )
+                    )
+                    calories_left_decoration.setTextColor(
+                        resources.getColor(
+                            R.color.errorColour,
+                            null
+                        )
+                    )
+                } else {
+                    progress.progressDrawable =
+                        resources.getDrawable(R.drawable.progress_main, null)
+                    text_view_calories_left.setTextColor(
+                        resources.getColor(
+                            R.color.colorPrimary,
+                            null
+                        )
+                    )
+                    calories_left_decoration.setTextColor(
+                        resources.getColor(
+                            R.color.colorPrimary,
+                            null
+                        )
+                    )
                 }
 
             }

@@ -8,10 +8,8 @@ import com.example.caloriecounter.base.format
 import com.example.caloriecounter.database.DailySetting
 import com.example.caloriecounter.database.Entry
 import com.example.caloriecounter.database.EntryConstants
-import com.example.caloriecounter.models.DayScreenUIModel
-import com.example.caloriecounter.models.EntryType
-import com.example.caloriecounter.models.EntryTypeModel
-import com.example.caloriecounter.models.UIEntry
+import com.example.caloriecounter.database.Favourite
+import com.example.caloriecounter.models.*
 import com.example.caloriecounter.utils.CalculationUtils
 import com.example.caloriecounter.utils.DateUtils
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +22,7 @@ class DayFragmentViewModel() : BaseViewModel() {
 
     val entriesLiveData = MutableLiveData<List<Entry>>()
     val uiModelLiveData = MutableLiveData<DayScreenUIModel>()
+    val favoritesLiveData = MutableLiveData<List<UIFavorite>>()
     lateinit var dayDate: String
     val entryLiveData = MutableLiveData<Entry>()
     val entryTypes = arrayListOf(
@@ -37,6 +36,9 @@ class DayFragmentViewModel() : BaseViewModel() {
 
     suspend fun getData() =
         withContext(Dispatchers.IO) {
+            val favourites = repository.getAllFavouritesAlphabetical()
+
+
             val entries = repository.getEntriesForDate(dayDate)
 
             val setting = repository.getDailySetting(dayDate) ?: DailySetting(dayDate, 1500)
@@ -55,6 +57,9 @@ class DayFragmentViewModel() : BaseViewModel() {
             }
 
             withContext(Dispatchers.Main) {
+                favoritesLiveData.value = favourites?.map {
+                    UIFavorite(it.name, it.value.format(0), it.id, it.type)
+                }
                 uiModelLiveData.value = DayScreenUIModel(
                     entries.map {
                         UIEntry(
@@ -135,5 +140,15 @@ class DayFragmentViewModel() : BaseViewModel() {
 
     private fun isLimitExceeded(limit: String, eatenCalories: String): Boolean {
         return getProgress(limit, eatenCalories) > 100
+    }
+
+    suspend fun addNewFavorite(inputValue: String, inputName: String, entryType: String) {
+        val value =
+            if (entryType == EntryType.EXCERCISE.toString()) -CalculationUtils.calculateValueFromInput(
+                inputValue
+            ) else {
+                CalculationUtils.calculateValueFromInput(inputValue)
+            }
+        repository.addFavourite(value, inputName, entryType)
     }
 }
