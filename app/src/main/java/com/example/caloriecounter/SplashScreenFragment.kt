@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.splash_screen_fragment.*
 import com.example.caloriecounter.utils.VIDEO_HEIGHT
+import com.example.caloriecounter.utils.VIDEO_URL
 import com.example.caloriecounter.utils.VIDEO_WIDTH
 import com.example.caloriecounter.utils.getScreenHeight
 
@@ -54,8 +55,7 @@ class SplashScreenFragment : Fragment() {
 
     }
     private fun playVideo() {
-        val videoUrl="android.resource://"+ (activity as AppCompatActivity).getPackageName() + "/raw/berry2"
-        val url = Uri.parse(videoUrl)
+        val url = Uri.parse(VIDEO_URL)
         video_view_welcome.setVideoURI(url)
         val params = video_view_welcome.layoutParams
         params.width = (getScreenHeight() * VIDEO_WIDTH / VIDEO_HEIGHT).toInt()
