@@ -17,14 +17,10 @@ import com.example.caloriecounter.utils.VIDEO_WIDTH
 import com.example.caloriecounter.utils.getScreenHeight
 
 
-
-
-
-
 class SplashScreenFragment : Fragment() {
 
 
-    lateinit var viewmodel:SplashScreenFragmentViewModel
+    lateinit var viewmodel: SplashScreenFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,11 +30,11 @@ class SplashScreenFragment : Fragment() {
         context?.let {
             if (viewmodel.getWelcomeScreenViewed(it)) {
                 findNavController().navigate(R.id.action_splashScreenFragment_to_daysFragment)
-            }else{
+            } else {
                 viewmodel.setWelcomeScreenViewed(it)
             }
         }
-       return inflater.inflate(R.layout.splash_screen_fragment, container, false)
+        return inflater.inflate(R.layout.splash_screen_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,6 +50,7 @@ class SplashScreenFragment : Fragment() {
         }
 
     }
+
     private fun playVideo() {
         val url = Uri.parse(VIDEO_URL)
         video_view_welcome.setVideoURI(url)
@@ -62,6 +59,7 @@ class SplashScreenFragment : Fragment() {
         video_view_welcome.layoutParams = params
         video_view_welcome.start()
     }
+
     companion object {
         fun newInstance() = SplashScreenFragment()
     }

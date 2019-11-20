@@ -27,15 +27,13 @@
     <dimen name="input_value_dialog_height">200dp</dimen>
 
 
-
     <!-- WIDGET -->
     <dimen name="widget_calories_text_size">24dp</dimen>
     <dimen name="widget_add_size">20dp</dimen>
     <dimen name="widget_width_small">200dp</dimen>
     <dimen name="widget_height_small">80dp</dimen>
     <dimen name="widget_add_button_size">50dp</dimen>
-    <dimen name="welcome_screen_title">60sp</dimen>
-    <dimen name="welcome_screen_button">28sp</dimen>
+    <dimen name="welcome_screen_title">60dp</dimen>
 
 
 </resources>
