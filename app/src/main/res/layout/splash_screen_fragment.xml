@@ -3,26 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/spacer_large"
     tools:context=".SplashScreenFragment">
+
+    <VideoView
+        android:id="@+id/video_view_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/text_view_welcome" />
-
-    <ImageView
-        android:id="@+id/splash_screen_logo"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacer_large"
-        android:src="@drawable/calorie_counter_icon" />
+        android:layout_marginTop="@dimen/spacer_large"
+        android:fontFamily="@font/days_one"
+        android:gravity="top|center"
+        android:text="@string/toolbar_main_title"
+        android:textSize="@dimen/welcome_screen_title" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/spacer_large"
         android:text="@string/buttons_splash_screen" />
+
 </FrameLayout>

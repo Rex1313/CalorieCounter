@@ -1,11 +1,17 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="materialButtonStyle">@style/AppStyle.Button</item>
     </style>
 
+    <style name="AppStyle.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
 </resources>
