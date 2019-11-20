@@ -5,10 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".SplashScreenFragment">
 
-        <TextureView android:id="@+id/video_view_welcome"
+        <VideoView
+            android:id="@+id/video_view_welcome"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </TextureView>
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+        </VideoView>
 
     <TextView
         android:layout_width="match_parent"
@@ -19,14 +21,14 @@
         android:text="@string/toolbar_main_title"
         android:textSize="@dimen/welcome_screen_title" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_welcome"
         android:layout_marginBottom="@dimen/spacer_large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorTextOnBackgroundHighEmphasis"
-        android:textSize="@dimen/welcome_screen_button"
-        android:padding="@dimen/card_padding"
         android:layout_gravity="bottom|center"
-        android:text="@string/buttons_splash_screen" />
+        android:text="@string/buttons_splash_screen"
+
+        />
+
 </FrameLayout>
