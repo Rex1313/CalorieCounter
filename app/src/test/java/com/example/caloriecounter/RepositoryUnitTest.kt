@@ -308,7 +308,7 @@ class RepositoryUnitTest {
         val testData = arrayListOf<Favourite>(
             Favourite(1, 256.toFloat(), "peroni small", EntryType.FOOD.toString()),
             Favourite(2, 300.toFloat(), "cookie", EntryType.FOOD.toString()),
-            Favourite(3, 400.toFloat(), "tomato", EntryType.FOOD.toString()),
+            Favourite(3, 400.toFloat(), "Tomato", EntryType.FOOD.toString()),
             Favourite(4, 500.toFloat(), "dance", EntryType.EXCERCISE.toString())
         )
         runBlocking {
@@ -327,6 +327,10 @@ class RepositoryUnitTest {
         }
 
     }
+
+
+
+
     @After
     fun closeDb() {
         repository.db?.close()

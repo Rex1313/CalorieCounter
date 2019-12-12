@@ -48,14 +48,10 @@ class NewFavouriteDialogFragment(val id: Int?) : DialogFragment() {
         context?.let {
 
 
-
-
             val adapter = ArrayAdapter<EntryTypeModel>(
                 it, android.R.layout.simple_spinner_dropdown_item, fragmentViewModel.entryTypes
             )
             spinner_category_favourite.adapter = adapter
-
-
 
             if (id != null) {
                 text_view_add_new_favourite.setText(resources.getString(R.string.edit_entry));
@@ -91,10 +87,23 @@ class NewFavouriteDialogFragment(val id: Int?) : DialogFragment() {
                         fragmentViewModel.refreshData()
                     }
                     dismiss()
+                } else if (id == null && text_input_calories_favourite.text.toString().isNotEmpty() && text_input_name_favourite.text.toString().isNotEmpty()) {
+
+                    GlobalScope.launch {
+                        fragmentViewModel.addFavorite(
+                            text_input_name_favourite.text.toString(),
+                            text_input_calories_favourite.text.toString(),
+                            (spinner_category_favourite.selectedItem as EntryTypeModel).type
+                        )
+                        fragmentViewModel.refreshData()
+                        dismiss()
+                    }
+
                 } else {
                     text_input_layout_calories_favourite.setError(resources.getString(R.string.value_empty_error))
                     text_input_layout_name_favourite.setError(resources.getString(R.string.value_empty_error))
                 }
+
             }
             text_input_calories_favourite.onChange {
                 if (it.isNotEmpty()) {

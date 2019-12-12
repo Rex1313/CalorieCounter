@@ -93,6 +93,10 @@ object CalorieCounterRepository {
         return@withContext db?.favouritesDao()?.getAllFavouritesAlphabetical()
     }
 
+    suspend fun getFavoritesStartingWith(query:String) = withContext(Dispatchers.IO){
+        return@withContext db?.favouritesDao()?.getStartsWith(query)
+    }
+
     suspend fun exportAllEntriesToCSV() = withContext(Dispatchers.IO) {
         val entries = db?.entriesDao()?.getAll()
         entries?.let {

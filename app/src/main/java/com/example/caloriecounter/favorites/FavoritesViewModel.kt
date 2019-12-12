@@ -15,6 +15,7 @@ class FavoritesViewModel : BaseViewModel() {
     val favoritesLiveData = MutableLiveData<List<UIFavorite>>()
     val favoriteLiveData = MutableLiveData<UIFavorite>()
 
+
     val entryTypes = arrayListOf(
         EntryTypeModel().apply {
             type = EntryType.FOOD
@@ -35,7 +36,14 @@ class FavoritesViewModel : BaseViewModel() {
             favoritesLiveData.value =
                 entries?.map { UIFavorite(it.name, it.value.toString(), it.id, it.type) }
         }
+    }
 
+    suspend fun filterFavorites(query: String) = withContext(Dispatchers.IO) {
+        val entries = repository.getFavoritesStartingWith(query)
+        withContext(Dispatchers.Main) {
+            favoritesLiveData.value =
+                entries?.map { UIFavorite(it.name, it.value.toString(), it.id, it.type) }
+        }
     }
 
     suspend fun refreshData() = getFavorites()
@@ -62,6 +70,10 @@ class FavoritesViewModel : BaseViewModel() {
 
     suspend fun editFavouriteById(id: Int?, name: String, value: String, entryType: EntryType) {
         repository.editFavourite(Favourite(id, value.toFloat(), name, entryType.toString()))
+    }
+
+    suspend fun addFavorite(name: String, value: String, entryType: EntryType) {
+        repository.addFavourite(value.toFloat(), name, entryType.toString())
     }
 
     fun getEntryTypePosition(type: String): Int {
