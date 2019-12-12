@@ -61,7 +61,7 @@ class NewFavouriteDialogFragment(val id: Int?) : DialogFragment() {
                     fragmentViewModel.getFavouriteById(id)
                 }
                 fragmentViewModel.favoriteLiveData.observe(this, Observer { favourite ->
-                    text_input_calories_favourite.setText(favourite.calories.format(0))
+                    text_input_calories_favourite.setText(favourite.calories.toDouble().format(0))
                     text_input_name_favourite.setText(favourite.name)
                     spinner_category_favourite.setSelection(
                         fragmentViewModel.getEntryTypePosition(
