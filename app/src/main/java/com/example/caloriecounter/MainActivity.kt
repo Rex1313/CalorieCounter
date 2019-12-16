@@ -57,7 +57,11 @@ class MainActivity : AppCompatActivity() {
             navHost.navController.navigate(R.id.action_settings)
             true
         }
+        R.id.action_favorites -> {
+            navHost.navController.navigate(R.id.favoritesFragment)
+            true
 
+        }
 
         else -> {
             // If we got here, the user's action was not recognized.

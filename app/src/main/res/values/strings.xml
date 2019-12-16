@@ -50,6 +50,8 @@
     <string name="setting">setting</string>
     <string name="hint">type here</string>
     <string name="add_to_favourites">Add to Favourites</string>
+    <string name="action_favorites">Favorites</string>
+    <string name="delete_dialog_title">Delete</string>
 
 
 </resources>

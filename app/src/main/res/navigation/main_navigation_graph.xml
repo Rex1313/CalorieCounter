@@ -26,4 +26,9 @@
         android:id="@+id/action_settings"
         android:name="com.example.caloriecounter.SettingsFragment"
         android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.caloriecounter.favorites.FavoritesFragment"
+        android:label="FavoritesFragment"
+        tools:layout="@layout/favorites_fragment" />
 </navigation>
