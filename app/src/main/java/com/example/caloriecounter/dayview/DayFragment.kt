@@ -6,9 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.DrawableUtils
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -17,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.caloriecounter.MainActivityViewModel
 import com.example.caloriecounter.R
 import com.example.caloriecounter.base.ResourceProvider
+import com.example.caloriecounter.utils.WidgetUtils
 import kotlinx.android.synthetic.main.delete_confirmation_dialog.view.*
 import kotlinx.android.synthetic.main.fragment_day.*
 import kotlinx.coroutines.GlobalScope
@@ -60,6 +59,10 @@ class DayFragment : Fragment() {
             GlobalScope.launch {
                 fragmentViewModel.deleteEntryById(entryId)
                 fragmentViewModel.refreshData()
+                activity?.let {
+
+                    WidgetUtils.requestUpdateSimpleWidgets(it.application)
+                }
             }
             deleteAlertDialog.dismiss()
 
@@ -69,16 +72,21 @@ class DayFragment : Fragment() {
         }
     }
 
-    fun showEditDialogFragment(entryId: Int?) {
-        NewEntryDialogFragment.newInstance(entryId)
+
+    fun showNewEntryDialogFragment(id:Int?){
+        NewEntryDialogFragment.newInstance(id)
             .show(childFragmentManager, "NewEntry")
     }
+
 
     // You can use this for accessing the views they will be iniflated here
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
+
+        if(activityViewModel.newEntryRequest) showNewEntryDialogFragment(null)
+        activityViewModel.newEntryRequest = false
 
         GlobalScope.launch {
             fragmentViewModel.getData()
@@ -110,7 +118,7 @@ class DayFragment : Fragment() {
                     popupMenu.show()
                 }
                 val onItemClicked: (Int?) -> Unit = {
-                    showEditDialogFragment(it)
+                    showNewEntryDialogFragment(it)
                 }
 
                 val onItemLongClicked: (Int?) -> Unit = {

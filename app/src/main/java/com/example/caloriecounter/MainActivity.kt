@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.caloriecounter.utils.WidgetUtils
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,7 +30,15 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
         supportActionBar?.setTitle(R.string.toolbar_main_title)
 
+    }
 
+
+    override fun onResume() {
+        super.onResume()
+        val widgetExtra = intent?.extras?.get(WidgetUtils.PENDING_INTENT_START_ACTIVITY)
+        widgetExtra?.let {
+            viewModel.showNewEntryFromWidget()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -19,6 +19,8 @@ import kotlinx.android.synthetic.main.new_entry_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+import com.example.caloriecounter.utils.WidgetUtils
+
 
 class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
 
@@ -113,8 +115,12 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
                             (spinner_category.selectedItem as EntryTypeModel).type.toString()
                         )
                         fragmentViewModel.refreshData()
+                        activity?.let {
+                            WidgetUtils.requestUpdateSimpleWidgets(it.application)
+                        }
+                        dismiss()
                     }
-                    dismiss()
+
                 } else {
                     text_input_layout_calories.setError(resources.getString(R.string.value_empty_error));
                 }
