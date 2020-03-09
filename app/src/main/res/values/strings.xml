@@ -52,6 +52,10 @@
     <string name="add_to_favourites">Add to Favourites</string>
     <string name="action_favorites">Favorites</string>
     <string name="delete_dialog_title">Delete</string>
+    <string name="your_data">Records data</string>
+    <string name="your_profile">Profile</string>
+
+
 
 
 </resources>
