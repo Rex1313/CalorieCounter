@@ -6,13 +6,13 @@ import androidx.room.*
 interface EntryDao {
 
 
-    @Query("SELECT * FROM entries where date(entry_date) == date(:date)")
+    @Query("SELECT * FROM entries where date(entry_date) == date(:date) and updated != $UPDATE_STATUS_DELETED")
     fun get(date: String): List<Entry>
 
-    @Query("SELECT * FROM entries where id = :id")
+    @Query("SELECT * FROM entries where id = :id and updated != $UPDATE_STATUS_DELETED")
     fun getById(id: Int?): Entry
 
-    @Query("SELECT * FROM entries")
+    @Query("SELECT * FROM entries where updated != $UPDATE_STATUS_DELETED")
     fun getAll(): List<Entry>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -21,9 +21,12 @@ interface EntryDao {
     @Insert()
     fun insertAll(entries: List<Entry>)
 
-    @Query("DELETE FROM entries WHERE id = :id")
+    @Query("DELETE FROM entries WHERE id = :id and updated != $UPDATE_STATUS_DELETED")
     fun deleteByEntryId(id: Int?)
 
-    @Query("DELETE FROM entries")
+    @Query("UPDATE entries set updated = $UPDATE_STATUS_DELETED WHERE id = :id")
+    fun markAsDeletedById(id:Int?)
+
+    @Query("DELETE FROM entries where updated != $UPDATE_STATUS_DELETED")
     fun deleteAllEntries()
 }

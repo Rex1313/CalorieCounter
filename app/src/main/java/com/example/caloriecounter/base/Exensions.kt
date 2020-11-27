@@ -21,3 +21,5 @@ fun EditText.onChange(cb: (String) -> Unit) {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
     })
 }
+
+fun ByteArray.toHex() = joinToString("") { "%02x".format(it) }

@@ -9,6 +9,7 @@
 
 
     <dimen name="small_margin">8dp</dimen>
+    <dimen name="large_margin">20dp</dimen>
     <dimen name="card_padding">16dp</dimen>
     <dimen name="header_subheader_separation">28dp</dimen>
 
@@ -24,6 +25,7 @@
     <dimen name="calories_eaten_text">22dp</dimen>
     <dimen name="calories_limit_text">22dp</dimen>
     <dimen name="main_progress_height">10dp</dimen>
+    <dimen name="progress_cirlce_dimension">50dp</dimen>
     <dimen name="input_value_dialog_height">200dp</dimen>
 
 

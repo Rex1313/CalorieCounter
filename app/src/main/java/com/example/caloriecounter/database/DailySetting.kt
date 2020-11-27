@@ -10,7 +10,7 @@ class DailySetting(
     @PrimaryKey @ColumnInfo(name = DailySettingConstants.COLUMN_DATE) val startDate: String, @ColumnInfo(
         name = DailySettingConstants.COLUMN_CALORIES_LIMIT
     ) val caloriesLimit: Int
-):CsvConvertible {
+, @ColumnInfo(name = DailySettingConstants.COLUMN_UPDATE) val update:Int = UPDATE_STATUS_SYNCED):CsvConvertible {
     override fun toCsv(): String {
         return "$startDate|$caloriesLimit"
     }

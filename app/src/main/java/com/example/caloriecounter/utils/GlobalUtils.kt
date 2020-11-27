@@ -1,6 +1,8 @@
 package com.example.caloriecounter.utils
 
 import android.content.res.Resources
+import java.nio.charset.StandardCharsets.UTF_8
+import java.security.MessageDigest
 
 const val VIDEO_WIDTH = 876
 const val VIDEO_HEIGHT = 1080
@@ -13,3 +15,5 @@ fun getScreenWidth(): Float {
 fun getScreenHeight(): Float {
     return Resources.getSystem().displayMetrics.heightPixels.toFloat()
 }
+
+fun md5(str: String): ByteArray = MessageDigest.getInstance("MD5").digest(str.toByteArray(UTF_8))

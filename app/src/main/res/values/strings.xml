@@ -54,8 +54,19 @@
     <string name="delete_dialog_title">Delete</string>
     <string name="your_data">Records data</string>
     <string name="your_profile">Profile</string>
-
-
+    <string name="action_register">Register</string>
+    <string name="registration_name">Name</string>
+    <string name="registration_age">Age</string>
+    <string name="button_register">Register</string>
+    <string name="registration_text">Type just your username and password (twice) then click \"Register\"</string>
+    <string name="registration_password">Password</string>
+    <string name="registration_password_confirmation">Password ( Re-Type )</string>
+    <string name="error_name_must_not_be_blank">Name musn\'t be blank</string>
+    <string name="error_password_doesnt_match">Password has to be the same in both fields</string>
+    <string name="error_password_cannot_be_blank">Password cannot be blank</string>
+    <string name="error_unknown">Unknown Error</string>
+    <string name="please_wait">Please Wait ...</string>
+    <string name="user_created_successfully">User Created Successfully</string>
 
 
 </resources>

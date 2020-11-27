@@ -112,8 +112,8 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
                             id,
                             text_input_calories.text.toString(),
                             text_input_name.text.toString(),
-                            (spinner_category.selectedItem as EntryTypeModel).type.toString()
-                        )
+                            (spinner_category.selectedItem as EntryTypeModel).type.toString())
+                        fragmentViewModel.tryUploadChanges()
                         fragmentViewModel.refreshData()
                         activity?.let {
                             WidgetUtils.requestUpdateSimpleWidgets(it.application)

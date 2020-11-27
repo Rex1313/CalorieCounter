@@ -60,7 +60,10 @@ class MainActivity : AppCompatActivity() {
         R.id.action_favorites -> {
             navHost.navController.navigate(R.id.favoritesFragment)
             true
-
+        }
+        R.id.action_register -> {
+            navHost.navController.navigate(R.id.registerFragment)
+            true
         }
 
         else -> {

@@ -10,7 +10,7 @@ class Favourite(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int?, @ColumnInfo(
         name = FavouriteConstants.COLUMN_VALUE
     ) val value: Float, @ColumnInfo(name = FavouriteConstants.COLUMN_NAME) val name: String
-    , @ColumnInfo(name = FavouriteConstants.COLUMN_TYPE) val type: String
+    , @ColumnInfo(name = FavouriteConstants.COLUMN_TYPE) val type: String,@ColumnInfo(name = FavouriteConstants.COLUMN_UPDATE) val update:Int = UPDATE_STATUS_SYNCED
 ) {
 
 }

@@ -25,6 +25,10 @@ android {
     testOptions {
         unitTests.includeAndroidResources = true
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -41,6 +45,10 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     // JODA TIME
     implementation "joda-time:joda-time:2.10.4"
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     implementation "androidx.room:room-runtime:$room_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'

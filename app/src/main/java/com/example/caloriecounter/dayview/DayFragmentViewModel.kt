@@ -5,10 +5,7 @@ import com.example.caloriecounter.R
 import com.example.caloriecounter.base.BaseViewModel
 import com.example.caloriecounter.base.ResourceProvider
 import com.example.caloriecounter.base.format
-import com.example.caloriecounter.database.DailySetting
-import com.example.caloriecounter.database.Entry
-import com.example.caloriecounter.database.EntryConstants
-import com.example.caloriecounter.database.Favourite
+import com.example.caloriecounter.database.*
 import com.example.caloriecounter.models.*
 import com.example.caloriecounter.utils.CalculationUtils
 import com.example.caloriecounter.utils.DateUtils
@@ -99,7 +96,7 @@ class DayFragmentViewModel() : BaseViewModel() {
         val name = if (inputName.isEmpty()) null else {
             inputName
         }
-        repository.addEntry(Entry(id, dayDate, value, name, entryType))
+        repository.addEntry(Entry(id, dayDate, value, name, entryType, if(id==null)UPDATE_STATUS_NEW else UPDATE_STATUS_UPDATED))
     }
 
     suspend fun refreshData() = getData()
@@ -150,5 +147,9 @@ class DayFragmentViewModel() : BaseViewModel() {
                 CalculationUtils.calculateValueFromInput(inputValue)
             }
         repository.addFavourite(value, inputName, entryType)
+    }
+
+    suspend fun tryUploadChanges() {
+        repository.uploadData();
     }
 }

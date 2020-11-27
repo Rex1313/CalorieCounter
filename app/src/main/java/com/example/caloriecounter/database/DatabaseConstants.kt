@@ -5,7 +5,8 @@ class DatabaseConstants {
         const val DATABASE_NAME = "calorie_counter"
         const val DAILY_SETTING_TABLE_NAME = "daily_settings"
         const val ENTRIES_TABLE_NAME = "entries"
-        const val DATABASE_VERSION = 1
+        const val USER_SETTINGS_TABLE_NAME = "user_settings"
+        const val DATABASE_VERSION = 2
 
     }
 }

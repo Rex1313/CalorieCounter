@@ -6,6 +6,6 @@ class FavouriteConstants {
         const val COLUMN_NAME = "name"
         const val COLUMN_VALUE = "value"
         const val COLUMN_TYPE = "type"
-
+        const val COLUMN_UPDATE = "updated"
     }
 }

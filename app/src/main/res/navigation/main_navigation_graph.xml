@@ -31,4 +31,10 @@
         android:name="com.example.caloriecounter.favorites.FavoritesFragment"
         android:label="FavoritesFragment"
         tools:layout="@layout/favorites_fragment" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.caloriecounter.register.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register"
+        />
 </navigation>
