@@ -1,19 +1,12 @@
 package com.example.caloriecounter
 
 import android.content.Context
-import android.util.Log
-import android.util.Log.println
-import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.example.caloriecounter.database.CalorieCounterDatabase
 import com.example.caloriecounter.database.DailySetting
 import com.example.caloriecounter.database.Entry
 import com.example.caloriecounter.database.Favourite
 import com.example.caloriecounter.models.EntryType
 import com.example.caloriecounter.repository.CalorieCounterRepository
-import com.example.caloriecounter.repository.CalorieCounterRepository.db
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.mockk
 import kotlinx.coroutines.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
@@ -137,7 +130,7 @@ class RepositoryUnitTest {
                 repository.exportAllEntriesToCSV()
                 repository.db?.entriesDao()?.deleteAllEntries()
                 repository.importAllEntriesFromCSV()
-                repository.db?.entriesDao()?.getAll()?.first()
+                repository.db?.entriesDao()?.getAllButDeleted()?.first()
 
             }.let { entry ->
                 assertThat(

@@ -2,6 +2,7 @@ package com.example.caloriecounter.repository
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.room.Room
 import com.example.caloriecounter.R
 import com.example.caloriecounter.base.ResourceProvider
@@ -14,6 +15,7 @@ import com.example.caloriecounter.utils.CalculationUtils
 import com.example.caloriecounter.utils.DateUtils
 import com.example.caloriecounter.utils.export.CsvConverter
 import com.example.caloriecounter.utils.export.ImportExportValues
+import com.example.caloriecounter.utils.getRandomUUID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.joda.time.LocalDate
@@ -34,7 +36,7 @@ object CalorieCounterRepository {
             app,
             CalorieCounterDatabase::class.java,
             DatabaseConstants.DATABASE_NAME
-        ).build()
+        ).addMigrations(CalorieCounterDatabase.MIGRATION_2_3).build()
 
     }
 
@@ -56,12 +58,18 @@ object CalorieCounterRepository {
     }
 
     suspend fun addDailySetting(dailySetting: DailySetting) = withContext(Dispatchers.IO) {
-        db?.dailySettingsDao()?.insert(dailySetting)
+        val dSetting = db?.dailySettingsDao()?.get(dailySetting.startDate)
+        if (dSetting?.size ?: 0 == 0) { // Entry doesn't exist insert it
+            db?.dailySettingsDao()?.insert(dailySetting)
+        } else { // entry exist so update it with regard to unique id
+            db?.dailySettingsDao()?.update(dailySetting, dSetting?.first()?.id ?: "")
+        }
+
     }
 
     suspend fun getDailySetting(date: String): DailySetting? = withContext(Dispatchers.IO) {
         return@withContext db?.dailySettingsDao()?.get(date)?.firstOrNull()
-            ?: DailySetting("1920-12-12", 1200)
+            ?: DailySetting(getRandomUUID(),"1920-12-12", 1200)
     }
 
     // Date needs to be in format YYYY-mm-DD
@@ -69,7 +77,7 @@ object CalorieCounterRepository {
         return@withContext db?.entriesDao()?.get(date) ?: mutableListOf()
     }
 
-    suspend fun getEntryById(id: Int?) = withContext(Dispatchers.IO) {
+    suspend fun getEntryById(id: String) = withContext(Dispatchers.IO) {
         return@withContext db?.entriesDao()?.getById(id)
     }
 
@@ -88,9 +96,12 @@ object CalorieCounterRepository {
         return@withContext SimpleWidgetModel("${leftCalories} ${ResourceProvider.getString(R.string.kcal)}")
     }
 
-    suspend fun removeEntryById(id: Int?) = withContext(Dispatchers.IO) {
-        db?.entriesDao()?.markAsDeletedById(id)
+    suspend fun removeDailySettingById(id: String) = withContext(Dispatchers.IO) {
+        db?.dailySettingsDao()?.markAsDeletedById(id)
+    }
 
+    suspend fun removeEntryById(id: String?) = withContext(Dispatchers.IO) {
+        db?.entriesDao()?.markAsDeletedById(id)
     }
 
     suspend fun editEntry(entry: Entry) = withContext(Dispatchers.IO) {
@@ -109,9 +120,13 @@ object CalorieCounterRepository {
 
     suspend fun addFavourite(value: Float, name: String, type: String): Boolean =
         withContext(Dispatchers.IO) {
-            if (db?.favouritesDao()?.getByNameAndType(name, type).isNullOrEmpty()) {
+            val fav = db?.favouritesDao()?.getByNameAndType(name, type);
+            if (fav.isNullOrEmpty()) {
                 db?.favouritesDao()?.insert(Favourite(null, value, name, type))
                 return@withContext true
+            }else{
+                db?.favouritesDao()?.edit(Favourite(fav.first().id, value, name, type))
+                return@withContext true;
             }
             return@withContext false
         }
@@ -137,7 +152,7 @@ object CalorieCounterRepository {
     }
 
     suspend fun exportAllEntriesToCSV() = withContext(Dispatchers.IO) {
-        val entries = db?.entriesDao()?.getAll()
+        val entries = db?.entriesDao()?.getAllButDeleted()
         entries?.let {
             CsvConverter.saveToCsv(it, ImportExportValues.ENTRIES_CSV_FILE)
         }
@@ -168,15 +183,54 @@ object CalorieCounterRepository {
             val entries =
                 db?.entriesDao()?.getAll()?.filterNot { it.update == UPDATE_STATUS_SYNCED }
             entries?.forEach {
-                apiService.uploadEntry(token, it)
-
-                if(it.update== UPDATE_STATUS_DELETED){// We do not want to display deleted entries, or update its status to synced. We want to remove it from DB altogether after successful sync
-                    removeEntryById(it.id)
+                Log.d("Entries to upload :", " ${it.toString()}")
+                val response = apiService.uploadEntry(token, it)
+                if (response.status == "Success") {
+                    setEntrySynced(it)
                 }
-                else { // OTHERWISE WE GONNA CHANGE ENTRY UPDATE STATUS TO SYNCED
-                    editEntry(Entry(id = it.id, date = it.date, entryValue = it.entryValue, entryName = it.entryName, entryType = it.entryType, update = UPDATE_STATUS_SYNCED ))
+
+            }
+
+        val dailysetting = db?.dailySettingsDao()?.getAll()?.filterNot { it.update == UPDATE_STATUS_SYNCED }
+            dailysetting?.forEach {
+                val response = apiService.uploadDailySetting(token, it)
+                if(response.status=="Success"){
+                    setDailySettingSynced(dailySetting = it)
                 }
             }
+        }
+
+
+    }
+
+    private suspend fun setEntrySynced(entry: Entry) {
+        if (entry.update == UPDATE_STATUS_DELETED) {// We do not want to display deleted entries, or update its status to synced. We want to remove it from DB altogether after successful sync
+            removeEntryById(entry.id)
+        } else { // OTHERWISE WE GONNA CHANGE ENTRY UPDATE STATUS TO SYNCED
+            editEntry(
+                Entry(
+                    id = entry.id,
+                    date = entry.date,
+                    entryValue = entry.entryValue,
+                    entryName = entry.entryName,
+                    entryType = entry.entryType,
+                    update = UPDATE_STATUS_SYNCED
+                )
+            )
+        }
+    }
+    private suspend fun setDailySettingSynced(dailySetting: DailySetting) {
+        if (dailySetting.update == UPDATE_STATUS_DELETED) {// We do not want to display deleted entries, or update its status to synced. We want to remove it from DB altogether after successful sync
+            removeDailySettingById(dailySetting.id)
+        } else { // OTHERWISE WE GONNA CHANGE ENTRY UPDATE STATUS TO SYNCED
+            addDailySetting(
+                DailySetting(
+                    id = dailySetting.id,
+                    startDate = dailySetting.startDate,
+                    caloriesLimit = dailySetting.caloriesLimit,
+                    update = UPDATE_STATUS_SYNCED
+                )
+            )
         }
     }
 

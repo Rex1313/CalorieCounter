@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import com.example.caloriecounter.utils.WidgetUtils
 
 
-class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
+class NewEntryDialogFragment(val id: String?) : DialogFragment() {
 
     lateinit var fragmentViewModel: DayFragmentViewModel
 
@@ -138,7 +138,7 @@ class NewEntryDialogFragment(val id: Int?) : DialogFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(id: Int?) = NewEntryDialogFragment(id)
+        fun newInstance(id: String?) = NewEntryDialogFragment(id)
     }
 
 }

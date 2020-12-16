@@ -7,10 +7,10 @@ import com.example.caloriecounter.CsvConvertible
 
 @Entity(tableName = DatabaseConstants.USER_SETTINGS_TABLE_NAME)
 class UserSettings(
-    @PrimaryKey @ColumnInfo(name = UserSettingsConstants.COLUMN_USERNAME) val username: String, @ColumnInfo(
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = UserSettingsConstants.COLUMN_ID) val id:Int? , @ColumnInfo(name = UserSettingsConstants.COLUMN_USERNAME) val username: String, @ColumnInfo(
         name = UserSettingsConstants.COLUMN_PWD
     ) val password: String
-, @ColumnInfo(name = UserSettingsConstants.COLUMN_TOKEN) val token:String):CsvConvertible {
+    , @ColumnInfo(name = UserSettingsConstants.COLUMN_TOKEN) val token:String):CsvConvertible {
     override fun toCsv(): String {
         return "$username|$password"
     }

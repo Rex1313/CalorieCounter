@@ -46,7 +46,7 @@ class DayFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_day, container, false)
     }
 
-    fun showDeleteDialog(context: Context, entryId: Int?) {
+    fun showDeleteDialog(context: Context, entryId: String?) {
         val deleteDialogView = LayoutInflater.from(context)
             .inflate(R.layout.delete_confirmation_dialog, null)
         val dialogBuilder = AlertDialog.Builder(context)
@@ -59,6 +59,7 @@ class DayFragment : Fragment() {
             GlobalScope.launch {
                 fragmentViewModel.deleteEntryById(entryId)
                 fragmentViewModel.refreshData()
+                fragmentViewModel.tryUploadChanges()
                 activity?.let {
 
                     WidgetUtils.requestUpdateSimpleWidgets(it.application)
@@ -73,7 +74,7 @@ class DayFragment : Fragment() {
     }
 
 
-    fun showNewEntryDialogFragment(id:Int?){
+    fun showNewEntryDialogFragment(id:String?){
         NewEntryDialogFragment.newInstance(id)
             .show(childFragmentManager, "NewEntry")
     }
@@ -95,7 +96,7 @@ class DayFragment : Fragment() {
 
         fragmentViewModel.uiModelLiveData.observe(this, Observer { uiModel ->
             context?.let { context ->
-                val myOverflowClicked: (view: View, id: Int?) -> Unit = { view: View, id: Int? ->
+                val myOverflowClicked: (view: View, id: String?) -> Unit = { view: View, id: String? ->
                     val popupMenu = PopupMenu(context, view)
                     popupMenu.menuInflater.inflate(R.menu.food_card_menu, popupMenu.menu)
                     popupMenu.setOnMenuItemClickListener { item ->
@@ -117,11 +118,11 @@ class DayFragment : Fragment() {
 
                     popupMenu.show()
                 }
-                val onItemClicked: (Int?) -> Unit = {
+                val onItemClicked: (String?) -> Unit = {
                     showNewEntryDialogFragment(it)
                 }
 
-                val onItemLongClicked: (Int?) -> Unit = {
+                val onItemLongClicked: (String?) -> Unit = {
                     showDeleteDialog(context, it)
                 }
                 // RecyclerView node initialized here

@@ -15,9 +15,9 @@ import kotlinx.android.synthetic.main.food_card.view.*
 
 class EntriesRecycleListAdapter(
     val entries: List<UIEntry>,
-    val onOverflowClicked: (view: View, id: Int?) -> Unit,
-    val onItemClicked: (id: Int?) -> Unit,
-    val onItemLongClicked:(id:Int?) -> Unit
+    val onOverflowClicked: (view: View, id: String?) -> Unit,
+    val onItemClicked: (id: String?) -> Unit,
+    val onItemLongClicked:(id:String?) -> Unit
 ) : RecyclerView.Adapter<EntriesRecycleListAdapter.FoodCardViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodCardViewHolder {

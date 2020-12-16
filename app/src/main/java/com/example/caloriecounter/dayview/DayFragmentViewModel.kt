@@ -9,6 +9,7 @@ import com.example.caloriecounter.database.*
 import com.example.caloriecounter.models.*
 import com.example.caloriecounter.utils.CalculationUtils
 import com.example.caloriecounter.utils.DateUtils
+import com.example.caloriecounter.utils.getRandomUUID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -38,7 +39,7 @@ class DayFragmentViewModel() : BaseViewModel() {
 
             val entries = repository.getEntriesForDate(dayDate)
 
-            val setting = repository.getDailySetting(dayDate) ?: DailySetting(dayDate, 1500)
+            val setting = repository.getDailySetting(dayDate) ?: DailySetting(getRandomUUID(),dayDate, 1500)
             val eatenCalories = CalculationUtils.calculateEatenCalories(entries = entries)
             val leftCalories = CalculationUtils.calculateLeftCalories(
                 entries = entries,
@@ -86,7 +87,7 @@ class DayFragmentViewModel() : BaseViewModel() {
 
     }
 
-    suspend fun addNewEntry(id: Int?, inputValue: String, inputName: String, entryType: String) {
+    suspend fun addNewEntry(id: String?, inputValue: String, inputName: String, entryType: String) {
         val value =
             if (entryType == EntryType.EXCERCISE.toString() && inputValue.toInt() > 0) -CalculationUtils.calculateValueFromInput(
                 inputValue
@@ -96,12 +97,21 @@ class DayFragmentViewModel() : BaseViewModel() {
         val name = if (inputName.isEmpty()) null else {
             inputName
         }
-        repository.addEntry(Entry(id, dayDate, value, name, entryType, if(id==null)UPDATE_STATUS_NEW else UPDATE_STATUS_UPDATED))
+        repository.addEntry(
+            Entry(
+                id?: getRandomUUID(),
+                dayDate,
+                value,
+                name,
+                entryType,
+                if (id == null) UPDATE_STATUS_NEW else UPDATE_STATUS_UPDATED
+            )
+        )
     }
 
     suspend fun refreshData() = getData()
 
-    suspend fun deleteEntryById(id: Int?) {
+    suspend fun deleteEntryById(id: String?) {
         repository.removeEntryById(id)
     }
 
@@ -109,7 +119,7 @@ class DayFragmentViewModel() : BaseViewModel() {
         return entryTypes.indexOfFirst { it.type.toString() == type }
     }
 
-    suspend fun getEntryById(id: Int?) {
+    suspend fun getEntryById(id: String) {
         withContext(Dispatchers.IO) {
             var entry = repository.getEntryById(id)
             withContext(Dispatchers.Main) {
@@ -118,7 +128,7 @@ class DayFragmentViewModel() : BaseViewModel() {
         }
     }
 
-    suspend fun editEntry(id: Int?, inputValue: String, inputName: String, entryType: String) {
+    suspend fun editEntry(id: String, inputValue: String, inputName: String, entryType: String) {
         val value =
             if (entryType == EntryType.EXCERCISE.toString()) -CalculationUtils.calculateValueFromInput(
                 inputValue
@@ -150,6 +160,10 @@ class DayFragmentViewModel() : BaseViewModel() {
     }
 
     suspend fun tryUploadChanges() {
-        repository.uploadData();
+        try {
+            repository.uploadData();
+        } catch (e: Exception) {
+
+        }
     }
 }

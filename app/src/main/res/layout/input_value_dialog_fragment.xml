@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:layout_height="wrap_content">
 
     <RelativeLayout
@@ -11,6 +12,7 @@
         android:padding="@dimen/spacer_small"
         android:paddingStart="@dimen/spacer_large"
         android:paddingEnd="@dimen/spacer_large"
+        android:background="@color/colorPrimaryDark"
         tools:context=".InputValueDialogFragment">
 
         <TextView

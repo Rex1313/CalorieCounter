@@ -8,6 +8,7 @@ import com.example.caloriecounter.models.EntryType
 import com.example.caloriecounter.models.EntryTypeModel
 import com.example.caloriecounter.models.UIEntry
 import com.example.caloriecounter.models.UIFavorite
+import com.example.caloriecounter.utils.CalculationUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -69,11 +70,23 @@ class FavoritesViewModel : BaseViewModel() {
     }
 
     suspend fun editFavouriteById(id: Int?, name: String, value: String, entryType: EntryType) {
-        repository.editFavourite(Favourite(id, value.toFloat(), name, entryType.toString()))
+        val favoriteValue =
+            if (entryType == EntryType.EXCERCISE) -CalculationUtils.calculateValueFromInput(
+                value
+            ) else {
+                CalculationUtils.calculateValueFromInput(value)
+            }
+        repository.editFavourite(Favourite(id, favoriteValue, name, entryType.toString()))
     }
 
     suspend fun addFavorite(name: String, value: String, entryType: EntryType) {
-        repository.addFavourite(value.toFloat(), name, entryType.toString())
+        val favoriteValue =
+            if (entryType == EntryType.EXCERCISE) -CalculationUtils.calculateValueFromInput(
+                value
+            ) else {
+                CalculationUtils.calculateValueFromInput(value)
+            }
+        repository.addFavourite(favoriteValue, name, entryType.toString())
     }
 
     fun getEntryTypePosition(type: String): Int {

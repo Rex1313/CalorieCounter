@@ -77,7 +77,7 @@ class RegisterViewModel : BaseViewModel() {
     }
 
 
-    fun getUserSettingsModel(username: String, pwdMd5: String, token: String) =  UserSettings(username, pwdMd5, token)
+    fun getUserSettingsModel(username: String, pwdMd5: String, token: String) =  UserSettings(null,username, pwdMd5, token)
 
 
 }

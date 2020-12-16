@@ -3,6 +3,8 @@ package com.example.caloriecounter.utils.export
 import com.example.caloriecounter.CsvConvertible
 import com.example.caloriecounter.database.DailySetting
 import com.example.caloriecounter.database.Entry
+import com.example.caloriecounter.database.UPDATE_STATUS_NEW
+import com.example.caloriecounter.utils.getRandomUUID
 import java.io.File
 
 class CsvConverter {
@@ -33,11 +35,12 @@ class CsvConverter {
                     when (T::class) {
                         Entry::class -> {
                             list.add(
-                                Entry(null,
+                                Entry(if(values[0].toString()== "null") getRandomUUID()else{values[0]},
                                     values[1],
                                     values[2].toFloat(),
                                     values[3],
-                                    values[4]
+                                    values[4],
+                                    UPDATE_STATUS_NEW
                                 ) as T
                             )
                         }
@@ -45,7 +48,8 @@ class CsvConverter {
                             list.add(
                                 DailySetting(
                                     values[0],
-                                    values[1].toInt()
+                                    values[1],
+                                    values[2].toInt()
                                 ) as T
                             )
                         }

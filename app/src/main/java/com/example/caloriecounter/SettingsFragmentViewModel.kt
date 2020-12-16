@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.example.caloriecounter.base.BaseViewModel
 import com.example.caloriecounter.database.DailySetting
+import com.example.caloriecounter.database.UPDATE_STATUS_NEW
 import com.example.caloriecounter.models.SettingsUIModel
 import com.example.caloriecounter.utils.DateUtils
+import com.example.caloriecounter.utils.getRandomUUID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.joda.time.LocalDate
@@ -18,7 +20,11 @@ class SettingsFragmentViewModel : BaseViewModel() {
 
     suspend fun addDailySetting(calorieLimit: String) {
         val startDate = LocalDate.now().toString(DateUtils.DB_DATE_FORMAT)
-        repository.addDailySetting(DailySetting(startDate, calorieLimit.toInt()))
+        repository.addDailySetting(DailySetting(getRandomUUID(), startDate, calorieLimit.toInt(), UPDATE_STATUS_NEW))
+        val user = repository.getUserSetting();
+        user?.let {
+            repository.uploadData()
+        }
     }
 
 
